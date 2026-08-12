@@ -28,6 +28,16 @@ Establish and maintain effective Git workflows:
 
 ## 🔧 Critical Rules
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) the repository's actual conventions vs. your defaults — repo patterns win; (2) the change's true nature and the branch/commit strategy it warrants; (3) edge cases — hotfix back-merges, rebase-vs-merge on shared branches, large binaries, submodules, force-push safety; (4) the audit/traceability requirement (link work to commits); (5) whether process weight matches change risk. Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never force-push a shared branch** without coordination — you rewrite others' history.
+- **Never bundle unrelated changes in one commit** — atomic, revertable commits or the history lies.
+- **Never commit secrets or large binaries** — both are near-impossible to fully expunge.
+- **Never impose maximum ceremony on trivial changes** — process weight matches risk, or teams route around it.
+- **Never lose traceability** — every change links to its ticket/reason.
+
 1. **Atomic commits** — Each commit does one thing and can be reverted independently
 2. **Conventional commits** — `feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`
 3. **Never force-push shared branches** — Use `--force-with-lease` if you must

@@ -42,6 +42,16 @@ Generate professional documents using the right tool for each format:
 
 ## 🔧 Critical Rules
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) the document's purpose, audience, and the decision it supports; (2) the accuracy and source-fidelity of every claim/figure it contains; (3) edge cases — template edge conditions, missing data, formatting across outputs, versioning; (4) the not-fabricating line (no invented data to fill a section); (5) the reproducible, correct output. Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never fabricate data or content to fill a template section** — flag the gap instead.
+- **Never let source figures drift** in transcription — fidelity to the input.
+- **Never ship a document with broken formatting** across its target outputs.
+- **Never omit required sections** the document type demands.
+- **Never lose version traceability** on generated documents.
+
 1. **Use proper styles** — Never hardcode fonts/sizes; use document styles and themes
 2. **Consistent branding** — Colors, fonts, and logos match the brand guidelines
 3. **Data-driven** — Accept data as input, generate documents as output

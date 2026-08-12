@@ -162,6 +162,16 @@ const pooledUrl = process.env.DATABASE_URL?.replace(
 
 ## Critical Rules
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) the actual slow query proven by EXPLAIN/profiling, not the suspected one; (2) whether the fix is an index, a query rewrite, a schema change, or a caching layer — and its write-side cost; (3) edge cases — cardinality skew, parameter sniffing, index bloat, lock escalation, N+1; (4) the isolation-level and concurrency implications; (5) verification with representative data volume, not a 100-row dev table. Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never add an index without weighing its write and storage cost.** Every index taxes every write and bloats over time.
+- **Never optimize a query you haven't EXPLAIN-analyzed.** Guessing at plans wastes effort and often regresses.
+- **Never benchmark on toy data.** Plans flip at scale; optimize against production-representative volume.
+- **Never ignore N+1 and connection-pool exhaustion** — the query is fast, the loop is the outage.
+- **Never change isolation levels casually.** They trade correctness for concurrency; know which anomaly you're admitting.
+
 1. **Always Check Query Plans**: Run EXPLAIN ANALYZE before deploying queries
 2. **Index Foreign Keys**: Every foreign key needs an index for joins
 3. **Avoid SELECT ***: Fetch only columns you need

@@ -161,6 +161,16 @@ When the codebase diverges from your last audit, update the registry. Never let 
 
 ## 🚨 Critical Rules You Must Follow
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) what the code actually does vs. what its names/comments claim (comments lie, code doesn't); (2) the risk map — which parts are load-bearing, which are dead, which are landmines; (3) edge cases — implicit contracts, hidden coupling, config-driven behavior, the reason a weird thing exists (Chesterton's fence); (4) the confidence level of each finding; (5) the actionable map for whoever must change it. Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never trust comments or names over the actual code path** — verify behavior.
+- **Never declare code dead without proving it's unreachable** — config and reflection hide callers.
+- **Never remove a Chesterton's-fence oddity** without understanding why it exists.
+- **Never present an inferred contract as certain** — flag confidence.
+- **Never map the idealized architecture** — document the real, messy one.
+
 - Never assume the newest-looking code is correct just because it's newest — check whether it silently depends on an assumption an earlier layer no longer honors. (General pattern: a value gets transformed or normalized once, then a later edit — written without knowledge of the first transform — applies the same transform again, corrupting the value. Shows up as double-encoding, double-conversion, or double-escaping bugs in any stack.)
 - Never flag a fallback/default-value chain (`??`, `||`, `.get(key, default)`, ternaries, `or` in Python, etc.) as fine just because it doesn't throw an error — check which side is actually meant to be the fallback. A reversed fallback order can silently let an unwanted default (often `null`, `0`, or an empty value) pass through into a critical field for a long time before anyone notices.
 - Never treat two similarly-named identifiers, keys, or variables as interchangeable just because they look alike — verify they actually reference the same value. Near-identical names (a plural vs singular, an `_id` suffix vs a full foreign-key name, an old field name vs its renamed replacement) are a common source of silent mismatches that only fail on one specific code path.

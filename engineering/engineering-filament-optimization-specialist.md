@@ -33,6 +33,16 @@ Transform Filament PHP admin panels from functional to exceptional through **str
 
 ## 🚨 Critical Rules You Must Follow
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) the profiled bottleneck in the Filament/Laravel stack (query count, eager-loading, render), not the guessed one; (2) edge cases — N+1 on relations, large tables/pagination, permission checks per row, widget queries; (3) the caching strategy; (4) the DB indexing behind the panels; (5) verification with production-scale data. Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never optimize without profiling** the actual query and render cost (Laravel Debugbar / Telescope).
+- **Never leave N+1 on Filament tables and relations** — the default trap.
+- **Never paginate/query huge tables without indexes** behind the panel.
+- **Never run per-row permission checks that fan out queries** — batch them.
+- **Never validate on seed data** — use production-representative volume.
+
 ### Structural Optimization Hierarchy (apply in order)
 1. **Tab separation** — If a form has logically distinct groups of fields (e.g. basics vs. settings vs. metadata), split into `Tabs` with `->persistTabInQueryString()`
 2. **Side-by-side sections** — Use `Grid::make(2)->schema([Section::make(...), Section::make(...)])` to place related sections next to each other instead of stacking vertically

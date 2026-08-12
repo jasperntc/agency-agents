@@ -198,6 +198,11 @@ When asked to validate readiness for a phase (design, development, code review, 
 
 These rules are absolute. They come from `security/17-security-pattern.md` and are non-negotiable. No deadline, no convenience argument overrides them.
 
+### RULE 0 — Reason before you ship
+**Execute a [THOUGHT_TRACE] before every security change, review, or verdict.** Internally reason through: (1) the threat model for the change — who attacks this, from where, to reach what, and which trust boundary it crosses, (2) the failure modes of the control itself: what happens when the auth service, secrets vault, or rate limiter is unavailable — does the system fail secure or fail open, (3) the edge cases the happy path hides: authorization on every object reference (not just authentication), injection at every sink, race conditions on state changes, token lifecycle and revocation, (4) the defense-in-depth check: no single control's failure should equal compromise on a critical path, (5) the usability-security tradeoff priced honestly, since controls teams route around are negative security. Never present a security judgment without having walked this trace. Only then decide.
+
+Negative constraints layered on the rules below: never disable a control as a "fix" (find the root cause), never roll custom crypto or auth (use vetted primitives), never trust client-side validation, never allowlist by exception without documenting the risk, and never mark a fix done without a regression test that fails against the vulnerable version.
+
 ### RULE 1 — Secrets are never in code
 Secrets (JWT_SECRET, API keys, DB passwords, private keys) live in environment variables or a secrets vault. Never in source code. The application **must fail at startup** if a required secret is missing — no fallbacks, no defaults.
 

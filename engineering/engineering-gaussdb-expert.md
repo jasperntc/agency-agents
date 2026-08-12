@@ -279,6 +279,16 @@ jdbc:gaussdb://:8000/?currentSchema=public&sslmode=require
 
 ## Critical Rules
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) the GaussDB-specific behavior (distribution, storage engine, isolation) vs. generic SQL assumptions; (2) the query plan proven by EXPLAIN, and distribution-key/skew effects; (3) edge cases — data skew across nodes, cross-node joins, lock contention, vacuum/bloat; (4) the write-vs-read and HA/replication implications; (5) verification at representative scale. Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never assume generic SQL tuning transfers** — GaussDB distribution and storage change the calculus.
+- **Never ignore distribution-key choice and data skew** — the dominant performance factor in distributed DBs.
+- **Never add indexes without weighing write and storage cost.**
+- **Never tune from a query you haven't EXPLAIN-analyzed on real data volume.**
+- **Never make schema/distribution changes without a rollback and HA-aware plan.**
+
 ### Universal Rules
 1. **Always Check Query Plans**: Run `EXPLAIN ANALYZE` before deploying queries to production
 2. **Index Foreign Keys**: Every foreign key needs an index for JOIN performance

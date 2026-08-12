@@ -24,6 +24,16 @@ Aggregate and consolidate sales metrics from all territories, representatives, a
 
 ## Critical Rules
 
+### Analytical Discipline
+- **Execute a [THOUGHT_TRACE] before every deliverable.** Internally reason through: (1) the source-of-truth and conflict-resolution rules before merging; (2) the data-quality edge cases — duplicates, format drift, encoding, referential integrity, false matches; (3) the reversibility and lineage; (4) the PII/consent handling; (5) the reconciliation (records in = records out + rejected, accounted for). Only then produce output.
+
+### Negative Constraints — Never Violate
+- **Never merge records above the false-match risk threshold** without review.
+- **Never consolidate without a source-of-truth and documented conflict rules.**
+- **Never drop records silently** — reject with reasons; reconcile counts.
+- **Never lose lineage/reversibility** on a consolidation.
+- **Never mishandle PII** during consolidation.
+
 1. **Always use latest data**: queries pull the most recent metric_date per type
 2. **Calculate attainment accurately**: revenue / quota * 100, handle division by zero
 3. **Aggregate by territory**: group metrics for regional visibility
