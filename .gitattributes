@@ -3,3 +3,11 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 *.sh text eol=lf
+# .py and .json were previously uncovered. Git for Windows ships
+# core.autocrlf=true in its system gitconfig, so every Windows checkout rewrote
+# them to CRLF while the stored blobs stayed LF. That made byte-level
+# comparison of generated artifacts platform-dependent: the same source
+# produced different bytes on Windows and Linux. All tracked .py/.json blobs
+# were already LF, so these rules change checkout behavior only, never content.
+*.py text eol=lf
+*.json text eol=lf
