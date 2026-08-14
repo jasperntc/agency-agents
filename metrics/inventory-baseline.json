@@ -62,13 +62,13 @@
     },
     {
       "body_word_count": 1455,
-      "byte_count": 11641,
+      "byte_count": 11642,
       "division": "design",
       "filename_stem": "design-brand-guardian",
       "name": "Brand Guardian",
       "name_slug": "brand-guardian",
       "path": "design/design-brand-guardian.md",
-      "sha256": "d1d5c78af85d4d35be94b93d5c011d17e3cf5dcb69b2037a3ebf3059803b893e"
+      "sha256": "b77e76e40153c6f77ca4d5423c963bcc3ebaf1c6dd5ebbaf242fec2cd5fa9662"
     },
     {
       "body_word_count": 1374,
@@ -102,13 +102,13 @@
     },
     {
       "body_word_count": 1618,
-      "byte_count": 13339,
+      "byte_count": 13340,
       "division": "design",
       "filename_stem": "design-ui-designer",
       "name": "UI Designer",
       "name_slug": "ui-designer",
       "path": "design/design-ui-designer.md",
-      "sha256": "3130768958d3b3d38178aaec91cf789e01ecca4984c8674d4aaea446b6cba240"
+      "sha256": "295e19e7002c5082ab8fa1eacb551b6e75e8fdaf206c9197dedf517b05ced813"
     },
     {
       "body_word_count": 1278,
@@ -122,43 +122,43 @@
     },
     {
       "body_word_count": 1807,
-      "byte_count": 15758,
+      "byte_count": 15759,
       "division": "design",
       "filename_stem": "design-ux-architect",
       "name": "UX Architect",
       "name_slug": "ux-architect",
       "path": "design/design-ux-architect.md",
-      "sha256": "151f7386682b77a6c1455374d427237a3d46eadfa1248964466b0412848f7117"
+      "sha256": "bd04c4c0fed85bdb7acfbec58706638420f5ccffc64ae3efde4bd625bfa1a5af"
     },
     {
       "body_word_count": 1634,
-      "byte_count": 13030,
+      "byte_count": 13031,
       "division": "design",
       "filename_stem": "design-ux-researcher",
       "name": "UX Researcher",
       "name_slug": "ux-researcher",
       "path": "design/design-ux-researcher.md",
-      "sha256": "25f59c4333df2d0f1170ff7a1b11ea8415fd3d0ef80c3e0985209aeb4018680f"
+      "sha256": "4da26a0f06d76a9c07f4a930054fd2c6324421893edca08e1004c79b5ef2bc0d"
     },
     {
       "body_word_count": 881,
-      "byte_count": 7416,
+      "byte_count": 7417,
       "division": "design",
       "filename_stem": "design-visual-storyteller",
       "name": "Visual Storyteller",
       "name_slug": "visual-storyteller",
       "path": "design/design-visual-storyteller.md",
-      "sha256": "f4950c9d65b5d105ec48ebce4b7621154e3bf89871dbbf07af245476930eb4dd"
+      "sha256": "756aa283ebe8c3ec396bda28c35e1a238e739b59133ba2721ec46a3b29105fed"
     },
     {
       "body_word_count": 1887,
-      "byte_count": 15851,
+      "byte_count": 15852,
       "division": "design",
       "filename_stem": "design-whimsy-injector",
       "name": "Whimsy Injector",
       "name_slug": "whimsy-injector",
       "path": "design/design-whimsy-injector.md",
-      "sha256": "d517c959118a25ce8514c086603d5990f70a901832af8ac29fece80d9e445ff0"
+      "sha256": "4fd8a45a1e5c42cd09ded5c6d036b0dcba2220671ae49b05234c7e443be4f28e"
     },
     {
       "body_word_count": 1353,
@@ -172,13 +172,13 @@
     },
     {
       "body_word_count": 904,
-      "byte_count": 7383,
+      "byte_count": 7384,
       "division": "engineering",
       "filename_stem": "engineering-ai-engineer",
       "name": "AI Engineer",
       "name_slug": "ai-engineer",
       "path": "engineering/engineering-ai-engineer.md",
-      "sha256": "f25a69aad25acd35dd1d62e33d5a814f4a26b075d90f968b4d778452e53924d8"
+      "sha256": "0c41987c2126110773ae5d0dec0e39bc94978b1575c7d7c187d9cb71190dc8f4"
     },
     {
       "body_word_count": 1918,
@@ -292,23 +292,23 @@
     },
     {
       "body_word_count": 1934,
-      "byte_count": 13039,
+      "byte_count": 13041,
       "division": "engineering",
       "filename_stem": "engineering-developer-tooling-engineer",
       "name": "Developer Tooling Engineer",
       "name_slug": "developer-tooling-engineer",
       "path": "engineering/engineering-developer-tooling-engineer.md",
-      "sha256": "da81449e9bbaf957df34a358fbac7cc8b539b52710022f2c201ddf8f66a03d9b"
+      "sha256": "948d44fddfa47e2363236de150f9dc948edd79599609a92af8bf6b72b5b9b609"
     },
     {
       "body_word_count": 1423,
-      "byte_count": 12879,
+      "byte_count": 12880,
       "division": "engineering",
       "filename_stem": "engineering-devops-automator",
       "name": "DevOps Automator",
       "name_slug": "devops-automator",
       "path": "engineering/engineering-devops-automator.md",
-      "sha256": "5d3c3d12c605a8c07fadfd109697249f98bc8e3d1901247c390641ef9fb013e8"
+      "sha256": "f55f51a890fbe67c4b8ed677020be376fb24a34fa514b852d51afc3e67d2b3a9"
     },
     {
       "body_word_count": 3170,
@@ -382,23 +382,23 @@
     },
     {
       "body_word_count": 1114,
-      "byte_count": 9283,
+      "byte_count": 9284,
       "division": "engineering",
       "filename_stem": "engineering-frontend-developer",
       "name": "Frontend Developer",
       "name_slug": "frontend-developer",
       "path": "engineering/engineering-frontend-developer.md",
-      "sha256": "35961da50f408e00eb6189c87825ac5e62e6b1bf9de3dee198a95536c6d2619e"
+      "sha256": "76b12c3dda779387d4733398ea3fbc52ca3784085447a5fef8b61f88bbe61164"
     },
     {
       "body_word_count": 1996,
-      "byte_count": 15613,
+      "byte_count": 15614,
       "division": "engineering",
       "filename_stem": "engineering-gaussdb-expert",
       "name": "GaussDB Expert Engineer",
       "name_slug": "gaussdb-expert-engineer",
       "path": "engineering/engineering-gaussdb-expert.md",
-      "sha256": "db3e2fbd178e4df20885c5d5f27b0a552061c7736374f9977807fc374ff99e07"
+      "sha256": "c47b983c34bebc1d17a684e6eb5ff25087f4b2ba946027dea8e63a1c1dca175f"
     },
     {
       "body_word_count": 385,
@@ -482,13 +482,13 @@
     },
     {
       "body_word_count": 1755,
-      "byte_count": 17035,
+      "byte_count": 17051,
       "division": "engineering",
       "filename_stem": "engineering-mobile-app-builder",
       "name": "Mobile App Builder",
       "name_slug": "mobile-app-builder",
       "path": "engineering/engineering-mobile-app-builder.md",
-      "sha256": "1a3e043f806b0b7c071d58b2ee3ab3c58c8342e2727c1ca9e6e5175f86986caf"
+      "sha256": "10ba0d4f4ee86b5cad4a7d99b1589a9b1c2f705043c59c078f662f56b6c2500f"
     },
     {
       "body_word_count": 1888,
@@ -1132,33 +1132,33 @@
     },
     {
       "body_word_count": 1444,
-      "byte_count": 10273,
+      "byte_count": 10195,
       "division": "healthcare",
       "filename_stem": "healthcare-clinical-evidence-agent",
-      "name": "       Clinical Evidence Agent",
+      "name": "Clinical Evidence Agent",
       "name_slug": "clinical-evidence-agent",
       "path": "healthcare/healthcare-clinical-evidence-agent.md",
-      "sha256": "5fd6223b0fb17c7625b2ca8ba9f1f6fb649560c074a39b0d72e22e984487a688"
+      "sha256": "c3e49256c6f1e795de9a92ac529a16112882a090bec2c77635fd04526087e60a"
     },
     {
       "body_word_count": 2838,
-      "byte_count": 20366,
+      "byte_count": 20262,
       "division": "healthcare",
       "filename_stem": "healthcare-innovation-strategist",
-      "name": "       Healthcare Innovation Strategist",
+      "name": "Healthcare Innovation Strategist",
       "name_slug": "healthcare-innovation-strategist",
       "path": "healthcare/healthcare-innovation-strategist.md",
-      "sha256": "e1bd8f9f8c5ac7db333632d482e017c6086519eee310da6879db5c121129fbbd"
+      "sha256": "fcef4b5b0e3ea9ccc69a1b9ecf288f1c5e3fad482d9f6fb9c95c2f38d97a3617"
     },
     {
       "body_word_count": 1978,
-      "byte_count": 14891,
+      "byte_count": 14787,
       "division": "healthcare",
       "filename_stem": "healthcare-sovereign-health-systems-agent",
-      "name": "       Sovereign Health Systems Agent",
+      "name": "Sovereign Health Systems Agent",
       "name_slug": "sovereign-health-systems-agent",
       "path": "healthcare/healthcare-sovereign-health-systems-agent.md",
-      "sha256": "8e846a8643def597e351719853da63b4b6d9f0bf41978ac25e896750427989fa"
+      "sha256": "83274e99450b2e0b36b13ed03f712f9de2f6d6059c4e2d27ef65e13f8b291259"
     },
     {
       "body_word_count": 2135,
@@ -1191,14 +1191,14 @@
       "sha256": "1d23c94aced61beb0e7a3151ad4c14ccb8205a95e48d4bc6c0fda6739c2e356d"
     },
     {
-      "body_word_count": 1700,
-      "byte_count": 13087,
+      "body_word_count": 1699,
+      "byte_count": 13099,
       "division": "marketing",
       "filename_stem": "marketing-app-store-optimizer",
       "name": "App Store Optimizer",
       "name_slug": "app-store-optimizer",
       "path": "marketing/marketing-app-store-optimizer.md",
-      "sha256": "1987be72f8fd43ca694f9145cb0dbe37eabc5b1f04439425d7b59185db9263c9"
+      "sha256": "d6cb4a10628bd28eda78bc06b5eb3e1cebc7466085734592fb4a69f226887684"
     },
     {
       "body_word_count": 1683,
@@ -1262,13 +1262,13 @@
     },
     {
       "body_word_count": 335,
-      "byte_count": 3140,
+      "byte_count": 3141,
       "division": "marketing",
       "filename_stem": "marketing-content-creator",
       "name": "Content Creator",
       "name_slug": "content-creator",
       "path": "marketing/marketing-content-creator.md",
-      "sha256": "26ddce44f057068a3935c13d53becd3c57385fb47fcdcfdd891b80269070b3d5"
+      "sha256": "6d1a3cdd78698c5418d8ccd33c8814d79e03d908c444531581354dfcfdfce271"
     },
     {
       "body_word_count": 2397,
@@ -1312,23 +1312,23 @@
     },
     {
       "body_word_count": 340,
-      "byte_count": 3055,
+      "byte_count": 3056,
       "division": "marketing",
       "filename_stem": "marketing-growth-hacker",
       "name": "Growth Hacker",
       "name_slug": "growth-hacker",
       "path": "marketing/marketing-growth-hacker.md",
-      "sha256": "6938b4fccaf4447e8c4b8fd071ce383a484cd3fb72583d87ac9835fa9741a7c7"
+      "sha256": "09e2e53ace0064e132f84ccfbfd0a68ded451b7809d77a14c10bc5c74aae6d60"
     },
     {
       "body_word_count": 770,
-      "byte_count": 6563,
+      "byte_count": 6564,
       "division": "marketing",
       "filename_stem": "marketing-instagram-curator",
       "name": "Instagram Curator",
       "name_slug": "instagram-curator",
       "path": "marketing/marketing-instagram-curator.md",
-      "sha256": "bab95910975a95409eca10e28c44cf762cd46f9d8b7d551bcb347ef0f39e68fd"
+      "sha256": "410b0b581ceefcb43abf8e576417e60f73e49ff6915621c01f5d311e5f8353ea"
     },
     {
       "body_word_count": 1798,
@@ -1402,13 +1402,13 @@
     },
     {
       "body_word_count": 878,
-      "byte_count": 7498,
+      "byte_count": 7499,
       "division": "marketing",
       "filename_stem": "marketing-reddit-community-builder",
       "name": "Reddit Community Builder",
       "name_slug": "reddit-community-builder",
       "path": "marketing/marketing-reddit-community-builder.md",
-      "sha256": "03bb723420800754bcbf23994cba707c45123f7eefe3e1964188cf92ecc2b7d7"
+      "sha256": "04829033f5ef7ce6e0e2fe1f90eb6c7163f4f49af027888ab1b2f7864e0216ba"
     },
     {
       "body_word_count": 2944,
@@ -1442,23 +1442,23 @@
     },
     {
       "body_word_count": 888,
-      "byte_count": 7559,
+      "byte_count": 7560,
       "division": "marketing",
       "filename_stem": "marketing-tiktok-strategist",
       "name": "TikTok Strategist",
       "name_slug": "tiktok-strategist",
       "path": "marketing/marketing-tiktok-strategist.md",
-      "sha256": "980ca09138f63ec2d934e111af4fa59d76a483bb23220a5f862aa4e9f0c9124a"
+      "sha256": "33e648ec99e30757801171440886f52754844343dec6fad9f7fc67836e7c9748"
     },
     {
       "body_word_count": 906,
-      "byte_count": 7760,
+      "byte_count": 7761,
       "division": "marketing",
       "filename_stem": "marketing-twitter-engager",
       "name": "Twitter Engager",
       "name_slug": "twitter-engager",
       "path": "marketing/marketing-twitter-engager.md",
-      "sha256": "df58c7df04fb808d282d7a551c84e039bebdf4a17318a09b84fa285a118f54ab"
+      "sha256": "c7b664cb77289a2daa41e8b361a58a7fb442559065708c0afdac00460d1f774b"
     },
     {
       "body_word_count": 825,
@@ -1602,13 +1602,13 @@
     },
     {
       "body_word_count": 849,
-      "byte_count": 7271,
+      "byte_count": 7272,
       "division": "product",
       "filename_stem": "product-feedback-synthesizer",
       "name": "Feedback Synthesizer",
       "name_slug": "feedback-synthesizer",
       "path": "product/product-feedback-synthesizer.md",
-      "sha256": "9f7bc1474bf8bf95c0573c20df5e3d8ae70c3b9659ec5ea7958cc4692b958270"
+      "sha256": "6958ead36e821bd25bc1a400fb2e269ed5654803ac63943b5dde7a9dfe5d2f41"
     },
     {
       "body_word_count": 3591,
@@ -1622,33 +1622,33 @@
     },
     {
       "body_word_count": 1102,
-      "byte_count": 9464,
+      "byte_count": 9465,
       "division": "product",
       "filename_stem": "product-sprint-prioritizer",
       "name": "Sprint Prioritizer",
       "name_slug": "sprint-prioritizer",
       "path": "product/product-sprint-prioritizer.md",
-      "sha256": "da5233770ca85a3931b72d80b37dd09616a54fd24075c607667853acf65b000a"
+      "sha256": "77a1bd81980c2591745e74afa04146cbf217712bb5fa5a26e7a327ee89e14067"
     },
     {
       "body_word_count": 1189,
-      "byte_count": 10493,
+      "byte_count": 10494,
       "division": "product",
       "filename_stem": "product-trend-researcher",
       "name": "Trend Researcher",
       "name_slug": "trend-researcher",
       "path": "product/product-trend-researcher.md",
-      "sha256": "69c8e54a9413ba411195e8d5274ee3cd88fa8cda18486db70c0f19ce374550a2"
+      "sha256": "fe576cd9ed9fbbadb3ddcac881269ce068e25818c9ba12ca63949309dc04abd7"
     },
     {
       "body_word_count": 1121,
-      "byte_count": 9455,
+      "byte_count": 9456,
       "division": "project-management",
       "filename_stem": "project-management-experiment-tracker",
       "name": "Experiment Tracker",
       "name_slug": "experiment-tracker",
       "path": "project-management/project-management-experiment-tracker.md",
-      "sha256": "8f1410bfa054c8ac2eee3084b9bfdb3adb1e8a2f3e015c2876d0ecf07136c22f"
+      "sha256": "c77aecdb20943880f9e71a8d3aef0fba383934d0ad1e2e7f8061054deb69cc1c"
     },
     {
       "body_word_count": 1880,
@@ -1672,33 +1672,33 @@
     },
     {
       "body_word_count": 1170,
-      "byte_count": 9825,
+      "byte_count": 9826,
       "division": "project-management",
       "filename_stem": "project-management-project-shepherd",
       "name": "Project Shepherd",
       "name_slug": "project-shepherd",
       "path": "project-management/project-management-project-shepherd.md",
-      "sha256": "0feb647366d78b61c1633b12e370ffb1dea52facb9d750ef6c952de1e996031c"
+      "sha256": "18ecae27a6b5e7bc4957600c7106923679bbfa78016b3f317d6268fb10836fd4"
     },
     {
       "body_word_count": 1193,
-      "byte_count": 9926,
+      "byte_count": 9927,
       "division": "project-management",
       "filename_stem": "project-management-studio-operations",
       "name": "Studio Operations",
       "name_slug": "studio-operations",
       "path": "project-management/project-management-studio-operations.md",
-      "sha256": "8a2e5098d94688d191a128b6b2fdbbf3724bfcd2f4944766de6e25a0709f1517"
+      "sha256": "592cb06a761237c99f504811e51520219b63b6769a5d35de37360ee6f6d1ab74"
     },
     {
       "body_word_count": 1279,
-      "byte_count": 10905,
+      "byte_count": 10906,
       "division": "project-management",
       "filename_stem": "project-management-studio-producer",
       "name": "Studio Producer",
       "name_slug": "studio-producer",
       "path": "project-management/project-management-studio-producer.md",
-      "sha256": "d942feab0f50ea7b8e98cb73bdaf05226d2a6c53c6359c7380149f7545bb199d"
+      "sha256": "f3a9a682e70522854bc7ee263e029a6b03f46c80d34e5d4404189111364a1d61"
     },
     {
       "body_word_count": 685,
@@ -1812,13 +1812,13 @@
     },
     {
       "body_word_count": 3286,
-      "byte_count": 25789,
+      "byte_count": 25790,
       "division": "security",
       "filename_stem": "security-appsec-engineer",
       "name": "Application Security Engineer",
       "name_slug": "application-security-engineer",
       "path": "security/security-appsec-engineer.md",
-      "sha256": "f3ee22350c9e0e7289d2d4747e7c1a8fe196d70340feec7b176b13bacc3deb77"
+      "sha256": "e3f449c9d56a2f9e3d962441505b2056f7e43bafde39ca426ab454b7ed92df18"
     },
     {
       "body_word_count": 2254,
@@ -1842,13 +1842,13 @@
     },
     {
       "body_word_count": 2890,
-      "byte_count": 23042,
+      "byte_count": 23043,
       "division": "security",
       "filename_stem": "security-cloud-security-architect",
       "name": "Cloud Security Architect",
       "name_slug": "cloud-security-architect",
       "path": "security/security-cloud-security-architect.md",
-      "sha256": "d541b4041d47c512ef5223985aba682249ce2416244e147959641fc6d193aa71"
+      "sha256": "2502307e419653d5447fa00085110d548120261830afcd588b5fe8fe806a4336"
     },
     {
       "body_word_count": 1021,
@@ -1862,23 +1862,23 @@
     },
     {
       "body_word_count": 3126,
-      "byte_count": 24298,
+      "byte_count": 24299,
       "division": "security",
       "filename_stem": "security-incident-responder",
       "name": "Incident Responder",
       "name_slug": "incident-responder",
       "path": "security/security-incident-responder.md",
-      "sha256": "a648cf5a0b40d8726ccb61ea48f1dee2797691f1b52395c59af91c7a5f511278"
+      "sha256": "76e7448f55d8f82c213af39de1bd0121b85134c3865dd672413c68902fe6c2d5"
     },
     {
       "body_word_count": 2775,
-      "byte_count": 21436,
+      "byte_count": 21437,
       "division": "security",
       "filename_stem": "security-penetration-tester",
       "name": "Penetration Tester",
       "name_slug": "penetration-tester",
       "path": "security/security-penetration-tester.md",
-      "sha256": "f52c2524309fb048250b412daa6a2ad0a906b5daff01f64f195052d024b9e1a0"
+      "sha256": "7dca3d479a54397577513277b84c67d3d40b22f63418ba022c49f39bcf34de92"
     },
     {
       "body_word_count": 2055,
@@ -1892,13 +1892,13 @@
     },
     {
       "body_word_count": 4164,
-      "byte_count": 31340,
+      "byte_count": 31341,
       "division": "security",
       "filename_stem": "security-senior-secops",
       "name": "Senior SecOps Engineer",
       "name_slug": "senior-secops-engineer",
       "path": "security/security-senior-secops.md",
-      "sha256": "90b535077cff7253bf18355ec99d5205dbe09c9f3e93f5b85222183460f2b879"
+      "sha256": "87e19de7dda2068a68edd94658a8fcbe414ac8b298f3e95c6ed47936a9402c28"
     },
     {
       "body_word_count": 3219,
@@ -1912,43 +1912,43 @@
     },
     {
       "body_word_count": 3393,
-      "byte_count": 28365,
+      "byte_count": 28366,
       "division": "security",
       "filename_stem": "security-threat-intelligence-analyst",
       "name": "Threat Intelligence Analyst",
       "name_slug": "threat-intelligence-analyst",
       "path": "security/security-threat-intelligence-analyst.md",
-      "sha256": "777b26397ae7aeb246259736327f9f76e435eee378a1435bed9d18699ec8d666"
+      "sha256": "38046dbb0540b6792d5b6d99556e300ed80fef4927291ff19fc5bb19b1e06a81"
     },
     {
       "body_word_count": 1396,
-      "byte_count": 12141,
+      "byte_count": 12142,
       "division": "spatial-computing",
       "filename_stem": "macos-spatial-metal-engineer",
       "name": "macOS Spatial/Metal Engineer",
       "name_slug": "macos-spatial-metal-engineer",
       "path": "spatial-computing/macos-spatial-metal-engineer.md",
-      "sha256": "b0bdd78da0cdbd1ee0055401ddaba4d7cb750e3107d219b6f12794c1a023e69f"
+      "sha256": "0ee242765592f175882dd5c446be6e6b38be995a73447bf5ed866255be073b37"
     },
     {
       "body_word_count": 443,
-      "byte_count": 4121,
+      "byte_count": 4122,
       "division": "spatial-computing",
       "filename_stem": "terminal-integration-specialist",
       "name": "Terminal Integration Specialist",
       "name_slug": "terminal-integration-specialist",
       "path": "spatial-computing/terminal-integration-specialist.md",
-      "sha256": "3082737f766821cf1c5372b9067ff67c873916de8c30b173478fe8bbc9a10087"
+      "sha256": "457f82232026d96ab2b986b13e9a97fd26f958bd6606d0c46f8d5e1b1c9a70aa"
     },
     {
       "body_word_count": 343,
-      "byte_count": 3411,
+      "byte_count": 3412,
       "division": "spatial-computing",
       "filename_stem": "visionos-spatial-engineer",
       "name": "visionOS Spatial Engineer",
       "name_slug": "visionos-spatial-engineer",
       "path": "spatial-computing/visionos-spatial-engineer.md",
-      "sha256": "8d154bb42d6952056b0eb3fd0d030e6e22a638f11c16c04b59326973ee08b20d"
+      "sha256": "b3352b52382aa3d15021bc48ee93419de2ac354d9012488a74a0d46cec1179fd"
     },
     {
       "body_word_count": 201,
@@ -2002,13 +2002,13 @@
     },
     {
       "body_word_count": 1944,
-      "byte_count": 15725,
+      "byte_count": 15726,
       "division": "specialized",
       "filename_stem": "agents-orchestrator",
       "name": "Agents Orchestrator",
       "name_slug": "agents-orchestrator",
       "path": "specialized/agents-orchestrator.md",
-      "sha256": "3f900ee286eba5a809388ecc22ad860c4a3ef9ed7ff25488e80eac18f3a0f317"
+      "sha256": "28e3fc66730bd5af8b3687825af147ed5ef82da91e571dcffb1c3ee60f690daf"
     },
     {
       "body_word_count": 777,
@@ -2242,13 +2242,13 @@
     },
     {
       "body_word_count": 1323,
-      "byte_count": 11197,
+      "byte_count": 11198,
       "division": "specialized",
       "filename_stem": "lsp-index-engineer",
       "name": "LSP/Index Engineer",
       "name_slug": "lsp-index-engineer",
       "path": "specialized/lsp-index-engineer.md",
-      "sha256": "3f720a81cdcdaa63136b6fd7817f198d95a517ca1dfcfaa9ec81a5469a1cff95"
+      "sha256": "fafcfa2b0e6430f8a56d8c3da58725ec70513baad5c351ddbe2be36622637abf"
     },
     {
       "body_word_count": 3192,
@@ -2392,13 +2392,13 @@
     },
     {
       "body_word_count": 3998,
-      "byte_count": 26159,
+      "byte_count": 26160,
       "division": "specialized",
       "filename_stem": "specialized-codebase-archaeologist",
       "name": "Codebase Archaeologist",
       "name_slug": "codebase-archaeologist",
       "path": "specialized/specialized-codebase-archaeologist.md",
-      "sha256": "c1b2c22711cb6e74dd834f831d6a8b3f10c93cd462722073b01acae9d0a40700"
+      "sha256": "78bb20d77027dea94007883a60ca572c0c18c40ae0855d24990eef0ecbd6d3a7"
     },
     {
       "body_word_count": 853,
@@ -2462,13 +2462,13 @@
     },
     {
       "body_word_count": 1665,
-      "byte_count": 12062,
+      "byte_count": 12063,
       "division": "specialized",
       "filename_stem": "specialized-mcp-builder",
       "name": "MCP Builder",
       "name_slug": "mcp-builder",
       "path": "specialized/specialized-mcp-builder.md",
-      "sha256": "3880031674ae2458552ad3c4da99c122469e85351ed57969db7f6f767befd7cb"
+      "sha256": "3f8f1734b882d95b4fcd84b95e3334016fd80e147180bd80cad6587297a9fe37"
     },
     {
       "body_word_count": 2415,
@@ -2512,13 +2512,13 @@
     },
     {
       "body_word_count": 4084,
-      "byte_count": 26479,
+      "byte_count": 26395,
       "division": "specialized",
       "filename_stem": "specialized-workflow-architect",
       "name": "Workflow Architect",
       "name_slug": "workflow-architect",
       "path": "specialized/specialized-workflow-architect.md",
-      "sha256": "74d46f03dcdd769163ce73ea8ac025bae48ae2356792a7aff3619c92f802a8ef"
+      "sha256": "4fc123b65b90258e26c414dd4d96d4dc39759acd68476aed3f68206a81e648b8"
     },
     {
       "body_word_count": 2352,
@@ -2552,13 +2552,13 @@
     },
     {
       "body_word_count": 1761,
-      "byte_count": 15796,
+      "byte_count": 15797,
       "division": "support",
       "filename_stem": "support-analytics-reporter",
       "name": "Analytics Reporter",
       "name_slug": "analytics-reporter",
       "path": "support/support-analytics-reporter.md",
-      "sha256": "8d4a4d0835f9ecb577d81dacbafcb96841b9b0d1f2af1f9273359502a14fcb5c"
+      "sha256": "0057c9c0c5caceaf5605886b6ae83928849057599eca5020f73a0238ba6dd786"
     },
     {
       "body_word_count": 1185,
@@ -2572,43 +2572,43 @@
     },
     {
       "body_word_count": 2002,
-      "byte_count": 19249,
+      "byte_count": 19250,
       "division": "support",
       "filename_stem": "support-finance-tracker",
       "name": "Finance Tracker",
       "name_slug": "finance-tracker",
       "path": "support/support-finance-tracker.md",
-      "sha256": "73b83d0b0ec4ce53c0335f57473b0e1dcb3b46af22ecd58d9680465b9717b5d9"
+      "sha256": "8f438cd4670b76cba562f319e4fba3174010f1559fbcb2eb5871c8662ac6d506"
     },
     {
       "body_word_count": 2448,
-      "byte_count": 22365,
+      "byte_count": 22366,
       "division": "support",
       "filename_stem": "support-infrastructure-maintainer",
       "name": "Infrastructure Maintainer",
       "name_slug": "infrastructure-maintainer",
       "path": "support/support-infrastructure-maintainer.md",
-      "sha256": "64d705a9e58f73868136d781f83ceaf12dfc1721cdb5bfb31b2c03441d69bf5c"
+      "sha256": "146b1cbd1b45cec34a2970a96037eb7ea5fe2e086ceef4a52b7ea7441a9dc084"
     },
     {
       "body_word_count": 2592,
-      "byte_count": 26545,
+      "byte_count": 26546,
       "division": "support",
       "filename_stem": "support-legal-compliance-checker",
       "name": "Legal Compliance Checker",
       "name_slug": "legal-compliance-checker",
       "path": "support/support-legal-compliance-checker.md",
-      "sha256": "0544f2219d52742f9ba436c193b34eb48c47cee8fcba38aef2b478dcb5e19284"
+      "sha256": "ce47fe7092cc651a47459635f1587c5bf4947e24a42be26e72f6d5e47b60ef80"
     },
     {
       "body_word_count": 2306,
-      "byte_count": 24683,
+      "byte_count": 24684,
       "division": "support",
       "filename_stem": "support-support-responder",
       "name": "Support Responder",
       "name_slug": "support-responder",
       "path": "support/support-support-responder.md",
-      "sha256": "4dcd962743e940d1cdd119dcc748d4a434b6b32775aa11ea68fbd2209ee0852c"
+      "sha256": "41f5bfe4ac4dab463973db7567b2a6282dfc37931ff574db53291ee3806575c9"
     },
     {
       "body_word_count": 2098,
@@ -2622,13 +2622,13 @@
     },
     {
       "body_word_count": 1455,
-      "byte_count": 12539,
+      "byte_count": 12540,
       "division": "testing",
       "filename_stem": "testing-api-tester",
       "name": "API Tester",
       "name_slug": "api-tester",
       "path": "testing/testing-api-tester.md",
-      "sha256": "c89d7ae592523f4799426a8b09700ec4b9d99bf2fcae2d1b0dd2900d5f770127"
+      "sha256": "6d1621872b64eb30f303f71708edd7cf9f8c56780a6f00e285b85ba7d5a75e14"
     },
     {
       "body_word_count": 1064,
@@ -2642,13 +2642,13 @@
     },
     {
       "body_word_count": 1409,
-      "byte_count": 12224,
+      "byte_count": 12225,
       "division": "testing",
       "filename_stem": "testing-performance-benchmarker",
       "name": "Performance Benchmarker",
       "name_slug": "performance-benchmarker",
       "path": "testing/testing-performance-benchmarker.md",
-      "sha256": "24dbd3a55cf6ca36c5f8af4081e87859914131199d87b6f90d129643fcfba43e"
+      "sha256": "7d276ce12033814d2fa590ab324a4963922d10c4cc1095139244c264c6cdf770"
     },
     {
       "body_word_count": 1325,
@@ -2672,36 +2672,36 @@
     },
     {
       "body_word_count": 1483,
-      "byte_count": 14602,
+      "byte_count": 14603,
       "division": "testing",
       "filename_stem": "testing-test-results-analyzer",
       "name": "Test Results Analyzer",
       "name_slug": "test-results-analyzer",
       "path": "testing/testing-test-results-analyzer.md",
-      "sha256": "f080e1e8a5ddadc90dbcb845317afcf56e9889e0ed6568732605d37851cf21d8"
+      "sha256": "f1a0886b566078aa795db77da35a14c14122057ac73bc55139ec3458a45dfb79"
     },
     {
       "body_word_count": 1763,
-      "byte_count": 17542,
+      "byte_count": 17543,
       "division": "testing",
       "filename_stem": "testing-tool-evaluator",
       "name": "Tool Evaluator",
       "name_slug": "tool-evaluator",
       "path": "testing/testing-tool-evaluator.md",
-      "sha256": "98e9a2b4491ffa1979d45ca5e1ddb9233fe35b98cc44c66c9d8a0b258ee9a2f4"
+      "sha256": "eeac34b51aaa5590b0aa9085e49364a7073415ffc4cc4db41107635fd0cf8788"
     },
     {
       "body_word_count": 2020,
-      "byte_count": 22050,
+      "byte_count": 22051,
       "division": "testing",
       "filename_stem": "testing-workflow-optimizer",
       "name": "Workflow Optimizer",
       "name_slug": "workflow-optimizer",
       "path": "testing/testing-workflow-optimizer.md",
-      "sha256": "021ba71e2455071983ce1a6044783bec224b025b864757ce76b2bd4d40c00211"
+      "sha256": "137eb576ab8be16b5ccb1338078933d9e6012fb5cb66dd837c2a5212fecc5331"
     }
   ],
-  "ref": "upstream-baseline-2026-08-13",
+  "ref": "c7f51dd",
   "schema_version": "1.0.0",
   "summary": {
     "agents_per_division": {
@@ -2729,7 +2729,7 @@
     "slug_implementation_divergences": [],
     "stem_slug_mismatches": 198,
     "total_agents": 270,
-    "total_body_words": 502635,
-    "total_bytes": 3826041
+    "total_body_words": 502634,
+    "total_bytes": 3825747
   }
 }

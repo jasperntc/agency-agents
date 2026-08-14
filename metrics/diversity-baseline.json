@@ -1262,7 +1262,7 @@
     },
     {
       "closest": "specialized/specialized-workflow-architect.md",
-      "max_similarity_pct": 0.1458,
+      "max_similarity_pct": 0.1461,
       "path": "specialized/specialized-codebase-archaeologist.md"
     },
     {
@@ -1302,7 +1302,7 @@
     },
     {
       "closest": "specialized/specialized-workflow-architect.md",
-      "max_similarity_pct": 0.0332,
+      "max_similarity_pct": 0.0333,
       "path": "specialized/specialized-model-qa.md"
     },
     {
@@ -1322,7 +1322,7 @@
     },
     {
       "closest": "specialized/specialized-codebase-archaeologist.md",
-      "max_similarity_pct": 0.1458,
+      "max_similarity_pct": 0.1461,
       "path": "specialized/specialized-workflow-architect.md"
     },
     {
@@ -1416,11 +1416,11 @@
       "path": "testing/testing-workflow-optimizer.md"
     }
   ],
-  "ref": "upstream-baseline-2026-08-13",
+  "ref": "c7f51dd",
   "schema_version": "1.0.0",
   "size": {
     "agents": 270,
-    "mean_words": 1754.0,
+    "mean_words": 1753.9,
     "mean_words_per_division": {
       "academic": 1010.8,
       "design": 1442.0,
@@ -1436,65 +1436,65 @@
       "sales": 2077.4,
       "security": 2694.1,
       "spatial-computing": 444.0,
-      "specialized": 2310.2,
+      "specialized": 2310.0,
       "support": 2129.8,
       "testing": 1600.8
     },
     "median_words": 1779,
     "p10_words": 620,
     "p90_words": 3109,
-    "total_words": 473579
+    "total_words": 473566
   },
   "vocabulary": {
-    "distinct_headers": 4917,
+    "distinct_headers": 4909,
     "headers_in_25pct_files": 9,
     "headers_in_50pct_files": 9,
-    "headers_in_75pct_files": 1,
+    "headers_in_75pct_files": 2,
     "top_headers": [
       {
-        "files": 223,
+        "files": 224,
         "header": "your identity memory",
-        "pct_of_corpus": 82.6
+        "pct_of_corpus": 83.0
       },
       {
-        "files": 202,
+        "files": 203,
         "header": "critical rules you must follow",
-        "pct_of_corpus": 74.8
+        "pct_of_corpus": 75.2
       },
       {
-        "files": 199,
+        "files": 200,
         "header": "your core mission",
-        "pct_of_corpus": 73.7
+        "pct_of_corpus": 74.1
       },
       {
-        "files": 184,
+        "files": 185,
         "header": "advanced capabilities",
-        "pct_of_corpus": 68.1
+        "pct_of_corpus": 68.5
       },
       {
-        "files": 181,
+        "files": 182,
         "header": "your communication style",
-        "pct_of_corpus": 67.0
+        "pct_of_corpus": 67.4
       },
       {
-        "files": 171,
+        "files": 172,
         "header": "your success metrics",
-        "pct_of_corpus": 63.3
+        "pct_of_corpus": 63.7
       },
       {
-        "files": 171,
+        "files": 172,
         "header": "your workflow process",
-        "pct_of_corpus": 63.3
+        "pct_of_corpus": 63.7
       },
       {
-        "files": 165,
+        "files": 166,
         "header": "learning memory",
-        "pct_of_corpus": 61.1
+        "pct_of_corpus": 61.5
       },
       {
-        "files": 155,
+        "files": 156,
         "header": "your technical deliverables",
-        "pct_of_corpus": 57.4
+        "pct_of_corpus": 57.8
       },
       {
         "files": 62,
