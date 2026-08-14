@@ -28,6 +28,12 @@ jobs:
           # read from the git log, so a shallow clone would produce a different
           # registry and fail spuriously.
           fetch-depth: 0
+          # On a pull request, check out the CONTRIBUTOR'S HEAD rather than the
+          # default merge commit. Provenance is history-derived, so building
+          # from the merge would measure a commit the contributor cannot
+          # regenerate against -- they would be told their registry is stale
+          # with no local reproduction. Empty on push, where it is ignored.
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - uses: actions/setup-python@v5
         with:

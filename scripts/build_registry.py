@@ -58,10 +58,22 @@ CARRIED = ("description", "color", "emoji", "vibe", "tools", "author", "services
 def provenance() -> dict[str, dict]:
     """First commit, last commit and commit count for every tracked file.
 
-    ONE `git log` pass over all history rather than a call per file: 270
-    subprocess spawns costs ~30s on Windows, this costs under a second.
+    ONE `git log` pass rather than a call per file: 270 subprocess spawns costs
+    ~30s on Windows, this costs under a second.
+
+    Scoped to history reachable from HEAD -- deliberately NOT `--all`. `--all`
+    walks every ref the local clone happens to have, which is not a property of
+    the commit being built: this repository has an `upstream` remote with 20
+    branches plus archive/fable-upgrade (which modified 263 agents), while CI
+    fetches only origin. Measured, `--all` and HEAD disagreed on the provenance
+    of 268 files, so the registry was reproducible only on machines with
+    identical remotes -- CI caught it on the first run.
+
+    HEAD-reachable history is determined by the commit alone, so it is the same
+    everywhere. Merge commits contribute nothing here: `--name-only` without
+    `-m` reports no paths for them.
     """
-    out = git(["log", "--all", "--reverse", "--name-only",
+    out = git(["log", "--reverse", "--name-only",
                "--format=%x00%H%x1f%aI", "--diff-filter=AMR"]).decode("utf-8", "replace")
     info: dict[str, dict] = {}
     commit = date = None
