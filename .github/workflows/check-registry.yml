@@ -38,3 +38,12 @@ jobs:
 
       - name: Registry is up to date
         run: python3 scripts/build_registry.py --check registry.json
+
+      # The README roster is validated, not generated. Three of its five columns
+      # (emoji, Specialty, When to Use) are editorial and exist nowhere else --
+      # 0 of 270 Specialty cells match the frontmatter description, and 47 of
+      # 270 emoji deliberately differ. Generating would delete that writing;
+      # this enforces the properties that matter instead: every agent listed
+      # exactly once, every link resolving, and the advertised count correct.
+      - name: README roster matches the registry
+        run: python3 scripts/check_readme_roster.py
