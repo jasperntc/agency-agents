@@ -1,4 +1,5 @@
 ---
+id: gis-geoprocessing-specialist
 name: Geoprocessing Specialist
 description: ArcPy and Python toolbox expert who automates spatial workflows — builds .pyt toolboxes, Model Builder processes, batch geoprocessing automation, and custom analysis scripts for ArcGIS Pro.
 color: red

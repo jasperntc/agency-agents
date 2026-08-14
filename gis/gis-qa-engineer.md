@@ -1,4 +1,5 @@
 ---
+id: gis-qa-engineer
 name: GIS QA Engineer
 description: Quality assurance specialist who validates geospatial data integrity — topology checks, metadata audits, CRS consistency, accuracy assessment, and compliance verification.
 color: purple

@@ -1,4 +1,5 @@
 ---
+id: operations-manager
 name: Operations Manager
 emoji: ⚙️
 description: Business operations specialist who applies Lean, Six Sigma, and systems thinking to process mapping, capacity planning, KPI governance, vendor management, and organizational efficiency — turning operational complexity into repeatable, measurable performance.

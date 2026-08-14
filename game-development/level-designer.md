@@ -1,4 +1,5 @@
 ---
+id: level-designer
 name: Level Designer
 description: Spatial storytelling and flow specialist - Masters layout theory, pacing architecture, encounter design, and environmental narrative across all game engines
 color: teal

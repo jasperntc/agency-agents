@@ -1,4 +1,5 @@
 ---
+id: testing-test-automation-engineer
 name: Test Automation Engineer
 description: Expert end-to-end test automation engineer for Playwright and Cypress — resilient selectors, flake elimination, isolated test data, CI parallelization, and trace-driven failure debugging.
 color: "#2EAD33"

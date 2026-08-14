@@ -1,4 +1,5 @@
 ---
+id: legal-client-intake
 name: Legal Client Intake
 emoji: 📋
 description: Comprehensive legal client intake specialist for qualifying prospects, collecting case information, scheduling consultations, managing conflict checks, and delivering attorney-ready intake summaries across any practice area and firm size

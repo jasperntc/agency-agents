@@ -1,4 +1,5 @@
 ---
+id: esg-sustainability-officer
 name: ESG & Sustainability Officer
 emoji: 🌱
 description: Corporate sustainability strategist and ESG reporting specialist who builds environmental, social, and governance programs, manages disclosures, drives decarbonization initiatives, and aligns business strategy with stakeholder and regulatory expectations.

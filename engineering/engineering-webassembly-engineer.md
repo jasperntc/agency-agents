@@ -1,4 +1,5 @@
 ---
+id: engineering-webassembly-engineer
 name: WebAssembly Engineer
 description: Expert WebAssembly engineer — compiling Rust/C++/Go to Wasm, JS interop and the boundary marshalling cost, WASI and server-side runtimes (Wasmtime/Wasmer), the component model, and near-native performance tuning.
 color: "#6D28D9"

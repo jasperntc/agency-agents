@@ -1,4 +1,5 @@
 ---
+id: marketing-pr-communications-manager
 name: PR & Communications Manager
 emoji: 📣
 description: Strategic public relations and communications specialist for media relations, press releases, crisis communications, executive thought leadership, brand reputation management, and integrated communications planning — building and protecting reputations through earned media, storytelling, and proactive narrative control

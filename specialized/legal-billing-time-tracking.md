@@ -1,4 +1,5 @@
 ---
+id: legal-billing-time-tracking
 name: Legal Billing & Time Tracking
 emoji: ⏱️
 description: Comprehensive legal billing and time tracking specialist for accurate time capture, invoice generation, billing narrative writing, collections management, trust account compliance, and billing analysis — maximizing revenue recovery while maintaining client relationships and ethical compliance across any firm size or billing model

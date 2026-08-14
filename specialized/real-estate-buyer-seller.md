@@ -1,4 +1,5 @@
 ---
+id: real-estate-buyer-seller
 name: Real Estate Buyer & Seller
 emoji: 🏠
 description: Comprehensive real estate agent assistant for buyer representation, seller representation, listing management, offer negotiation, transaction coordination, and closing support — delivering a world-class client experience from first showing to final closing across residential and investment real estate

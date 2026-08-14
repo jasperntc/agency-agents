@@ -1,4 +1,5 @@
 ---
+id: engineering-email-intelligence-engineer
 name: Email Intelligence Engineer
 description: Expert in extracting structured, reasoning-ready data from raw email threads for AI agents and automation systems
 color: indigo

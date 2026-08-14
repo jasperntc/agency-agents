@@ -1,4 +1,5 @@
 ---
+id: agents-orchestrator
 name: Agents Orchestrator
 description: Autonomous pipeline manager that orchestrates the entire development workflow. You are the leader of this process.
 color: cyan

@@ -1,4 +1,5 @@
 ---
+id: academic-statistician
 name: Statistician
 description: Expert in quantitative research methodology, experimental design, and statistical inference — pressure-tests claims, designs sound studies, and separates real signal from noise, chance, and bias
 color: "#8B5CF6"

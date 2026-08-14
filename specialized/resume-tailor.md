@@ -1,4 +1,5 @@
 ---
+id: resume-tailor
 name: Resume Tailor
 description: Candidate-side resume optimization specialist who analyzes job descriptions, maps real experience to role requirements, improves ATS keyword alignment, and rewrites bullets without fabricating qualifications.
 color: teal

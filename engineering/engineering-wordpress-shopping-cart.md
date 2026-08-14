@@ -1,4 +1,5 @@
 ---
+id: engineering-wordpress-shopping-cart
 name: WordPress Shopping Cart Engineer
 emoji: 🛍️
 description: Expert WordPress e-commerce engineer specializing in WooCommerce for product catalog management, payment gateway integration, checkout customization, order management, tax and coupon configuration, and conversion-optimized storefront delivery on WordPress

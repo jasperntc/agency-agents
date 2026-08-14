@@ -1,4 +1,5 @@
 ---
+id: engineering-orgscript-engineer
 name: OrgScript Engineer
 description: Expert in designing, parsing, and implementing OrgScript grammar, AST validation, and business logic definitions.
 color: green

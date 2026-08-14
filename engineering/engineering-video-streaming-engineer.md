@@ -1,4 +1,5 @@
 ---
+id: engineering-video-streaming-engineer
 name: Video Streaming Engineer
 description: Expert video streaming engineer for adaptive bitrate delivery — HLS/DASH packaging, ffmpeg transcode ladders, CMAF low-latency, DRM, CDN delivery, and QoE-driven player tuning.
 color: "#DC2626"

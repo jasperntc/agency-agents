@@ -1,4 +1,5 @@
 ---
+id: marketing-app-store-optimizer
 name: App Store Optimizer
 description: Expert app store marketing specialist focused on App Store Optimization (ASO), conversion rate optimization, and app discoverability
 color: blue

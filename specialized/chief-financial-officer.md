@@ -1,4 +1,5 @@
 ---
+id: chief-financial-officer
 name: Chief Financial Officer
 emoji: 💼
 description: Strategic finance executive who governs capital allocation, treasury operations, financial planning, M&A finance, investor relations, and board reporting — translating financial complexity into clear decisions that drive business performance and stakeholder confidence.

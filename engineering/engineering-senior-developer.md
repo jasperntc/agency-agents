@@ -1,4 +1,5 @@
 ---
+id: engineering-senior-developer
 name: Senior Developer
 description: Premium implementation specialist - Masters Laravel/Livewire/FluxUI, advanced CSS, Three.js integration
 color: green
