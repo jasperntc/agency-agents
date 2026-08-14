@@ -23,9 +23,15 @@
 #   ORIGINALITY_FAIL   default 40  — at/above this %, treated as a duplicate (exit 1)
 #   ORIGINALITY_WARN   default 20  — at/above this %, surfaced as a warning (no fail)
 #
-# Calibration: across the existing agent library the worst same-pair
-# similarity is ~1.5% (median 0%). Anything in the double digits is a strong
-# anomaly; the defaults leave a wide safety margin against false positives.
+# Calibration: across the existing agent library the worst same-pair similarity
+# is ~4.7% (engineering-gaussdb-expert vs engineering-database-optimizer), with a
+# median of 0%. Anything in the double digits is a strong anomaly; the defaults
+# leave a wide safety margin against false positives.
+#
+# NOTE: this measures the MAXIMUM pairwise similarity, which cannot detect
+# corpus-wide homogenization -- a library can converge on a shared template while
+# no single pair ever becomes a near-duplicate. scripts/corpus_diversity.py
+# measures the distribution for that. See docs/homogenization.md.
 
 set -euo pipefail
 
@@ -51,7 +57,7 @@ WARN = float(os.environ["ORIGINALITY_WARN"])
 # scripts/check-divisions.sh (CI) enforces it against the directories on disk.
 # Read it directly rather than hardcoding the list here so this check can never
 # drift out of sync with the catalog the way a copied literal silently would.
-with open(os.path.join(REPO_ROOT, "divisions.json")) as _fh:
+with open(os.path.join(REPO_ROOT, "divisions.json"), encoding="utf-8") as _fh:
     AGENT_DIRS = sorted(json.load(_fh)["divisions"].keys())
 
 # Proper nouns we neutralize so a find-replace re-skin (swap the country/platform
@@ -83,9 +89,9 @@ def jaccard(a, b):
 
 def is_agent(path):
     try:
-        with open(path) as fh:
+        with open(path, encoding="utf-8") as fh:
             return fh.readline().strip() == '---'
-    except OSError:
+    except (OSError, UnicodeDecodeError):
         return False
 
 def rel(p):
@@ -99,7 +105,7 @@ corpus = {}
 for d in AGENT_DIRS:
     for f in glob.glob(os.path.join(REPO_ROOT, d, '**', '*.md'), recursive=True):
         if is_agent(f):
-            corpus[os.path.abspath(f)] = shingles(tokens(open(f).read()))
+            corpus[os.path.abspath(f)] = shingles(tokens(open(f, encoding="utf-8").read()))
 
 # --- Determine candidates ---------------------------------------------------
 args = sys.argv[1:]
@@ -122,7 +128,8 @@ if not candidates:
     print("No agent files to check.")
     sys.exit(0)
 
-cand_sh = {p: corpus.get(p) or shingles(tokens(open(p).read())) for p in candidates}
+cand_sh = {p: corpus.get(p) or shingles(tokens(open(p, encoding="utf-8").read()))
+           for p in candidates}
 cand_set = set(candidates)
 
 worst = 0.0
@@ -159,7 +166,7 @@ for p in candidates:
 
 print()
 print(f"Thresholds: WARN >= {WARN:.0f}%, FAIL >= {FAIL:.0f}%  "
-      f"(existing-library baseline max ~1.5%)")
+      f"(existing-library baseline max ~4.7%)")
 
 if fails:
     print()
