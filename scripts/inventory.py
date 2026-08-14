@@ -134,6 +134,7 @@ def build(ref: str | None) -> dict:
             )
         records.append({
             "path": path,
+            "id": get_field(text, "id"),
             "division": path.split("/")[0],
             "filename_stem": path.rsplit("/", 1)[-1][:-3],
             "name": name,
@@ -149,6 +150,7 @@ def build(ref: str | None) -> dict:
 
     stems = [r["filename_stem"] for r in records]
     slugs = [r["name_slug"] for r in records]
+    agent_ids = [r["id"] for r in records if r["id"]]
 
     return {
         "schema_version": SCHEMA_VERSION,
@@ -159,8 +161,14 @@ def build(ref: str | None) -> dict:
             "total_bytes": sum(r["byte_count"] for r in records),
             "divisions": len(per_division),
             "agents_per_division": dict(sorted(per_division.items())),
-            # Identity health. Both namespaces are load-bearing for different
-            # consumers; nothing in upstream CI enforces either one's uniqueness.
+            # Identity health. `id` is the canonical primary key; the other two
+            # namespaces are legacy but still load-bearing for different
+            # consumers. scripts/check-identity.py enforces all of this -- these
+            # counters exist so the state is visible in the artifact, not only
+            # in a passing check.
+            "agents_with_id": len(agent_ids),
+            "duplicate_ids": sorted({i for i in agent_ids if agent_ids.count(i) > 1}),
+            "ids_equal_to_stem": sum(1 for r in records if r["id"] == r["filename_stem"]),
             "duplicate_filename_stems": sorted(
                 {s for s in stems if stems.count(s) > 1}
             ),
