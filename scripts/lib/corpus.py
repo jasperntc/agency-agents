@@ -23,12 +23,37 @@ def git(args: list[str]) -> bytes:
     ).stdout
 
 
+def resolve_ref(ref: str) -> str:
+    """Resolve a ref name, falling back to its origin/ remote-tracking form.
+
+    actions/checkout materializes branches as refs/remotes/origin/<name>, not
+    refs/heads/<name>. Git's resolution order never rewrites "archive/x" to
+    "origin/archive/x", so a branch name that works on a developer machine fails
+    in CI with a bare "unknown revision". Tags resolve identically in both
+    places and are unaffected.
+
+    Resolving in code rather than pre-creating local branches in each workflow
+    keeps every tool working in both environments with no per-workflow setup.
+    """
+    for candidate in (ref, f"origin/{ref}"):
+        probe = subprocess.run(
+            ["git", "rev-parse", "--verify", "--quiet", f"{candidate}^{{commit}}"],
+            cwd=REPO_ROOT, capture_output=True,
+        )
+        if probe.returncode == 0:
+            return candidate
+    raise SystemExit(
+        f"ref not found: {ref} (also tried origin/{ref}). "
+        f"In CI, check out with fetch-depth: 0 so all branches and tags are present."
+    )
+
+
 def divisions(ref: str | None = None) -> list[str]:
     """Division names from divisions.json at `ref` (or the working tree)."""
     if ref is None:
         raw = (REPO_ROOT / "divisions.json").read_bytes()
     else:
-        raw = git(["show", f"{ref}:divisions.json"])
+        raw = git(["show", f"{resolve_ref(ref)}:divisions.json"])
     return sorted(json.loads(raw.decode("utf-8"))["divisions"].keys())
 
 
@@ -57,9 +82,10 @@ def read_corpus(ref: str | None = None) -> dict[str, bytes]:
         )
         blobs = {p: (REPO_ROOT / p).read_bytes() for p in paths}
     else:
-        listing = git(["ls-tree", "-r", "--name-only", ref]).decode("utf-8")
+        resolved = resolve_ref(ref)
+        listing = git(["ls-tree", "-r", "--name-only", resolved]).decode("utf-8")
         paths = sorted(p for p in listing.split("\n") if in_division(p))
-        blobs = cat_file_batch(ref, paths)
+        blobs = cat_file_batch(resolved, paths)
 
     return {p: b for p, b in blobs.items() if is_agent(b.decode("utf-8", "replace"))}
 
