@@ -30,20 +30,19 @@ PARSING NOTE -- read this before "fixing" anything below.
     file "correct" early would silently erase that finding.
 
 Determinism: stdlib only, sorted output, no timestamps, no host/user/env data,
-LF newlines written explicitly (Python text mode would emit CRLF on Windows).
+LF newlines written as bytes.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
-import os
 import re
-import subprocess
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib.corpus import WORKING_TREE, comparable, dump_json, read_corpus  # noqa: E402
 
 SCHEMA_VERSION = "1.0.0"
 
@@ -72,7 +71,7 @@ def get_body(text: str) -> str:
     """Mirror of lib.sh get_body(): everything after the second '---' line.
 
     Lines equal to '---' are consumed by the fence counter and never printed,
-    which means a horizontal rule in the body is dropped. Reproduced on purpose.
+    so a horizontal rule in the body is dropped. Reproduced on purpose.
     """
     fm = 0
     out = []
@@ -114,85 +113,6 @@ def slugify_hermes(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value).strip("-")
 
 
-def is_agent(text: str) -> bool:
-    """Mirror of lib.sh is_agent_file(): first line is exactly '---'."""
-    return text.split("\n", 1)[0] == "---"
-
-
-# ---------------------------------------------------------------------------
-# Corpus sources: working tree or a git ref
-# ---------------------------------------------------------------------------
-
-def _git(args: list[str]) -> bytes:
-    return subprocess.run(
-        ["git"] + args, cwd=REPO_ROOT, check=True, capture_output=True
-    ).stdout
-
-
-def divisions(ref: str | None) -> list[str]:
-    """Division set from divisions.json -- never hardcoded (see its _note)."""
-    if ref is None:
-        raw = (REPO_ROOT / "divisions.json").read_bytes()
-    else:
-        raw = _git(["show", f"{ref}:divisions.json"])
-    return sorted(json.loads(raw.decode("utf-8"))["divisions"].keys())
-
-
-def read_corpus(ref: str | None) -> dict[str, bytes]:
-    """Map of repo-relative POSIX path -> raw bytes for every agent .md file.
-
-    With --ref, blobs are streamed via `git cat-file --batch`: no checkout, no
-    writes, and any ref (including one on another branch) can be measured.
-    """
-    divs = set(divisions(ref))
-
-    def in_division(path: str) -> bool:
-        return path.endswith(".md") and path.split("/")[0] in divs
-
-    if ref is None:
-        paths = sorted(
-            p.relative_to(REPO_ROOT).as_posix()
-            for p in REPO_ROOT.rglob("*.md")
-            if in_division(p.relative_to(REPO_ROOT).as_posix())
-        )
-        blobs = {p: (REPO_ROOT / p).read_bytes() for p in paths}
-    else:
-        listing = _git(["ls-tree", "-r", "--name-only", ref]).decode("utf-8")
-        paths = sorted(p for p in listing.split("\n") if in_division(p))
-        blobs = _cat_file_batch(ref, paths)
-
-    return {p: b for p, b in blobs.items() if is_agent(b.decode("utf-8", "replace"))}
-
-
-def _cat_file_batch(ref: str, paths: list[str]) -> dict[str, bytes]:
-    """Stream many blobs through one `git cat-file --batch` process."""
-    if not paths:
-        return {}
-    proc = subprocess.Popen(
-        ["git", "cat-file", "--batch"],
-        cwd=REPO_ROOT,
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-    )
-    query = "".join(f"{ref}:{p}\n" for p in paths).encode("utf-8")
-    stdout, _ = proc.communicate(query)
-    if proc.returncode != 0:
-        raise SystemExit(f"git cat-file failed for ref {ref}")
-
-    out: dict[str, bytes] = {}
-    pos = 0
-    for path in paths:
-        nl = stdout.index(b"\n", pos)
-        header = stdout[pos:nl].decode("utf-8")
-        if header.endswith("missing"):
-            raise SystemExit(f"blob missing in {ref}: {path}")
-        size = int(header.split()[-1])
-        start = nl + 1
-        out[path] = stdout[start:start + size]
-        pos = start + size + 1  # trailing newline after each blob
-    return out
-
-
 # ---------------------------------------------------------------------------
 # Inventory
 # ---------------------------------------------------------------------------
@@ -232,7 +152,7 @@ def build(ref: str | None) -> dict:
 
     return {
         "schema_version": SCHEMA_VERSION,
-        "ref": ref or "WORKING_TREE",
+        "ref": ref or WORKING_TREE,
         "summary": {
             "total_agents": len(records),
             "total_body_words": sum(r["body_word_count"] for r in records),
@@ -254,16 +174,6 @@ def build(ref: str | None) -> dict:
     }
 
 
-def dump(data: dict) -> bytes:
-    """Serialize deterministically with LF newlines.
-
-    Python text mode translates \\n to \\r\\n on Windows, which would make the
-    same input produce different bytes per platform -- exactly the class of bug
-    this project exists to catch. Write bytes.
-    """
-    return (json.dumps(data, indent=2, sort_keys=True, ensure_ascii=False) + "\n").encode("utf-8")
-
-
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ref", help="git ref to inventory (default: working tree)")
@@ -275,16 +185,12 @@ def main() -> int:
         ap.error("--check and --out are mutually exclusive")
 
     data = build(args.ref)
-    payload = dump(data)
+    payload = dump_json(data)
     s = data["summary"]
 
     if args.check:
         prev = json.loads(args.check.read_bytes().decode("utf-8"))
-        # Compare CORPUS STATE, not the `ref` label. `ref` records how a
-        # snapshot was taken (a tag name vs WORKING_TREE); it is provenance, not
-        # content. Including it made `--check` fail against a clean working tree
-        # that is byte-identical to the tagged baseline, with nothing to report.
-        if _comparable(prev) == _comparable(data):
+        if comparable(prev) == comparable(data):
             note = ""
             if prev.get("ref") != data["ref"]:
                 note = f"  [ref differs: {prev.get('ref')} vs {data['ref']} -- content identical]"
@@ -300,7 +206,11 @@ def main() -> int:
         args.out.write_bytes(payload)
         print(f"Wrote {args.out}")
     else:
-        sys.stdout.write(payload.decode("utf-8"))
+        # Write BYTES, not str. Python's text-mode stdout translates \n to \r\n
+        # on Windows, which made `--out` (LF) and stdout (CRLF) disagree for the
+        # same input -- the same platform-dependent-bytes defect this tool
+        # exists to detect.
+        sys.stdout.buffer.write(payload)
 
     print(
         f"  ref={data['ref']}  agents={s['total_agents']}  "
@@ -308,11 +218,6 @@ def main() -> int:
         file=sys.stderr,
     )
     return 0
-
-
-def _comparable(data: dict) -> dict:
-    """The parts of an inventory that represent corpus state, minus provenance."""
-    return {k: v for k, v in data.items() if k != "ref"}
 
 
 def _report_drift(prev: dict, cur: dict) -> None:
