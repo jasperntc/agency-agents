@@ -1416,7 +1416,7 @@
       "path": "testing/testing-workflow-optimizer.md"
     }
   ],
-  "ref": "upstream-baseline-2026-08-13",
+  "ref": "e4a0fbc",
   "schema_version": "1.0.0",
   "size": {
     "agents": 270,
