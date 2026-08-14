@@ -117,6 +117,35 @@ it has already chosen a different tied subset. See `rank()`.
 **stdout carries JSON only; all human output goes to stderr.** Otherwise a
 redirected run captures the summary table and the artifact is not valid JSON.
 
+## CI status and the promotion policy
+
+`.github/workflows/corpus-metrics.yml` runs on every PR and on push to main.
+
+| step | blocking? | why |
+| --- | --- | --- |
+| `tests/test_corpus_diversity.py` | **yes** | Tests the detector against fixed refs. Independent of the working tree, so it cannot false-positive on a legitimate change. |
+| `--gate metrics/thresholds.json` | **no — advisory until 2026-09-15** | Thresholds are calibrated from a single case study. |
+| drift vs frozen baselines | never | Informational only. |
+
+**Why the gate starts advisory.** These thresholds come from exactly one
+observed regression. A brand-new gate that blocks on day one will eventually
+produce a false positive on a legitimate change, and the first false positive is
+what teaches everyone to route around a check. Advisory-first buys the evidence
+needed to justify blocking.
+
+**Promotion criteria.** Remove `continue-on-error: true` from the gate step once
+it has run on **20 merged changes with zero false positives**. Started
+2026-08-14. If a false positive occurs, fix the threshold *with new measured
+evidence* (which requires updating `metrics/thresholds.json` and its recorded
+observations, which `test_e`/`test_f` will check) and restart the count.
+
+**Why the drift checks never block.** `metrics/inventory-baseline.json` and
+`metrics/diversity-baseline.json` are snapshots of the fork point. Once source
+defects are intentionally repaired (Step 0.4), the corpus legitimately diverges
+from them. They answer "what has changed since the fork", which is a question,
+not a verdict. The `--gate` uses absolute thresholds precisely so it stays
+meaningful on any corpus state without a reference artifact.
+
 ## Determinism
 
 Verified: five fresh processes and two forced-different `PYTHONHASHSEED` values

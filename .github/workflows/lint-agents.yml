@@ -1,6 +1,17 @@
 name: Lint Agent Files
 
+# On pull_request the path filter keeps the fast path fast: only changed agent
+# files are linted. On push to main there is deliberately NO path filter and the
+# FULL corpus is linted -- a direct push, an admin merge, or a PR whose agent
+# changes land outside the filtered paths would otherwise reach main having
+# never been validated. check-divisions.yml, check-tools.yml and
+# check-runbooks.yml already trigger on push for exactly this reason.
+#
+# The "<division>/" strings below are parsed by scripts/check-divisions.sh,
+# which fails the build if any division lacks a filter here. Keep them literal.
 on:
+  push:
+    branches: [main]
   pull_request:
     paths:
       - "academic/**"
@@ -32,6 +43,7 @@ jobs:
 
       - name: Get changed agent files
         id: changed
+        if: github.event_name == 'pull_request'
         run: |
           FILES=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD -- \
             'academic/**/*.md' 'design/**/*.md' 'engineering/**/*.md' 'finance/**/*.md' 'game-development/**/*.md' 'gis/**/*.md' 'healthcare/**/*.md' 'marketing/**/*.md' 'paid-media/**/*.md' 'sales/**/*.md' 'security/**/*.md' 'product/**/*.md' \
@@ -50,7 +62,7 @@ jobs:
           fi
 
       - name: Run agent linter
-        if: steps.changed.outputs.files != ''
+        if: github.event_name == 'pull_request' && steps.changed.outputs.files != ''
         env:
           CHANGED_FILES: ${{ steps.changed.outputs.files }}
         run: |
@@ -58,9 +70,17 @@ jobs:
           ./scripts/lint-agents.sh $CHANGED_FILES
 
       - name: Check agent originality
-        if: steps.changed.outputs.files != ''
+        if: github.event_name == 'pull_request' && steps.changed.outputs.files != ''
         env:
           CHANGED_FILES: ${{ steps.changed.outputs.files }}
         run: |
           chmod +x scripts/check-agent-originality.sh
           ./scripts/check-agent-originality.sh $CHANGED_FILES
+
+      # Push to main: no base ref to diff against, so lint everything. This is
+      # the gap that let unvalidated agent files reach main.
+      - name: Run agent linter (full corpus)
+        if: github.event_name != 'pull_request'
+        run: |
+          chmod +x scripts/lint-agents.sh
+          ./scripts/lint-agents.sh
