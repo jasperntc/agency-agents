@@ -64,6 +64,11 @@ progress_bar() {
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 OUT_DIR="$REPO_ROOT/integrations"
+# Determinism hazard: this is a live clock read. It is currently used ONLY in
+# the console banner and never reaches generated output (the converters
+# deliberately emit no date stamp -- see convert_antigravity). Do not introduce
+# it into any rendered file: a timestamp would make every artifact differ on
+# every run and defeat metrics/conversion-manifest.json.
 TODAY="$(date +%Y-%m-%d)"
 
 # Shared helpers (get_field, get_body, slugify, ...)
@@ -655,7 +660,13 @@ run_conversions() {
       esac
 
       (( count++ )) || true
-    done < <(find "$dirpath" -name "*.md" -type f -print0 | sort -z)
+    # LC_ALL=C pins byte order. Without it `sort` follows the caller's locale,
+    # so the same source produces a different agent order on a machine with a
+    # different collation. Per-agent tools are unaffected (each agent writes its
+    # own file), but aider and windsurf accumulate into a single roster file
+    # whose ORDER is its content -- making those two artifacts, and any hash of
+    # them, locale-dependent.
+    done < <(find "$dirpath" -name "*.md" -type f -print0 | LC_ALL=C sort -z)
   done
 
   echo "$count"
