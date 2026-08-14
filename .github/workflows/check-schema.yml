@@ -1,0 +1,64 @@
+name: Check Agent Schema
+
+# Validates every agent's frontmatter against schema/agent.schema.json using a
+# REAL YAML parser.
+#
+# This is a different question from lint-agents.sh, which greps for the presence
+# of required keys. Presence is not validity: a value can be present and still
+# be a multi-line scalar the distribution layer truncates, or a services block
+# no renderer can read. The schema is the machine-readable contract; the linter
+# is the fast structural check. Both run.
+#
+# Unlike the distribution path, this layer may use dependencies -- see
+# requirements-dev.txt. Nothing here is needed to install agents.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - "academic/**"
+      - "design/**"
+      - "engineering/**"
+      - "finance/**"
+      - "game-development/**"
+      - "gis/**"
+      - "healthcare/**"
+      - "marketing/**"
+      - "paid-media/**"
+      - "product/**"
+      - "project-management/**"
+      - "sales/**"
+      - "security/**"
+      - "spatial-computing/**"
+      - "specialized/**"
+      - "support/**"
+      - "testing/**"
+      - "schema/**"
+      - "scripts/lib/**"
+      - "tests/test_frontmatter.py"
+      - "requirements-dev.txt"
+      - ".github/workflows/check-schema.yml"
+  workflow_dispatch:
+
+jobs:
+  schema:
+    name: Frontmatter validates against the schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Also asserts compat_get_field still reproduces scripts/lib.sh exactly,
+      # by sourcing the real shell function and comparing. The divergence report
+      # is only trustworthy if that reimplementation is faithful.
+      - name: Parser and schema tests
+        run: python3 tests/test_frontmatter.py
+
+      - name: Report divergence and advisories
+        run: python3 scripts/check_frontmatter.py

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jasperntc/agency-agents/schema/agent.schema.json",
+  "title": "Agency agent frontmatter",
+  "version": "1.0.0",
+  "_note": "The YAML frontmatter contract for an agent .md file. Version 1.0.0 describes the CONTRACT AS IT EXISTS -- it is deliberately descriptive, not aspirational, so it can be enforced today without changing a single agent. It was derived by parsing all 270 agents with a real YAML parser, not from documentation. The canonical `id` field arrives in 1.1.0 (Phase 3); do not add it here. Validate with scripts/lib/frontmatter.py. See CONTRIBUTING.md for the prose version of this contract and docs/frontmatter.md for where the legacy toolchain disagrees with it.",
+
+  "type": "object",
+  "required": ["name", "description", "color"],
+  "additionalProperties": false,
+
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^\\S(.*\\S)?$",
+      "description": "Human-readable display name, Title Case (e.g. 'Frontend Developer'). NOT an identifier: 13 of 16 tools derive their output filename by slugifying this, so changing it silently re-homes generated files. The pattern forbids leading and trailing whitespace, which get_field would otherwise pass through into rendered output."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One-line summary of the agent's specialty. Weighted heavily by the Hermes router when selecting a specialist, so vagueness here costs routing accuracy. Must be a single line: every parser in the distribution layer reads one line per key, so a multi-line value is silently truncated."
+    },
+    "color": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A named colour or a #RRGGBB hex value. Named colours outside the set scripts/convert.sh resolve_opencode_color knows are rendered as grey #6B7280 by OpenCode; the schema permits them because they are valid per the contract, and the linter reports them separately.",
+      "anyOf": [
+        { "pattern": "^#[0-9a-fA-F]{6}$" },
+        { "pattern": "^[a-z][a-z-]*$" }
+      ]
+    },
+    "emoji": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Single emoji used in listings and in the OpenClaw IDENTITY.md heading."
+    },
+    "vibe": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One-line personality hook. Optional: 269 of 270 agents have one."
+    },
+    "tools": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Comma-separated tool names (e.g. 'WebFetch, WebSearch, Read, Write, Edit'). Carried through to Qwen and ZCode output verbatim when present. A string rather than a list because that is what the corpus and the renderers use."
+    },
+    "author": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Attribution for contributed agents. Present on 7 of 270."
+    },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "description": "External services the agent depends on. DECLARED BUT UNUSED: no converter carries this field into any of the 14 output formats, because get_field cannot read a block value. Documented in CONTRIBUTING.md, so it is a real part of the contract and is validated here -- but a consumer must not expect it downstream until a renderer reads it.",
+      "items": {
+        "type": "object",
+        "required": ["name", "url", "tier"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "url": { "type": "string", "format": "uri", "pattern": "^https?://" },
+          "tier": { "type": "string", "enum": ["free", "freemium", "paid"] }
+        }
+      }
+    }
+  }
+}

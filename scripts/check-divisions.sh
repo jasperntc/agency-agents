@@ -34,7 +34,7 @@ JSON="divisions.json"
 # baselines). Neither contains agent frontmatter. Any future engineering-layer
 # directory added at the repo root must be registered here too, or this check
 # will correctly report it as an unregistered division.
-NON_DIVISION_DIRS=(examples scripts integrations strategy docs metrics tests)
+NON_DIVISION_DIRS=(examples scripts integrations strategy docs metrics tests schema)
 
 errors=0
 fail() { echo "ERROR $*"; errors=$((errors + 1)); }
