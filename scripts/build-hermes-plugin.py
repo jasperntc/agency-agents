@@ -502,13 +502,21 @@ def build(repo_root: Path, out_dir: Path) -> int:
     if plugin_dir.exists():
         shutil.rmtree(plugin_dir)
     (plugin_dir / "data").mkdir(parents=True, exist_ok=True)
-    (plugin_dir / "plugin.yaml").write_text(plugin_yaml(), encoding="utf-8")
-    (plugin_dir / "__init__.py").write_text(init_py(), encoding="utf-8")
+    # newline="\n" on every write. Python's text mode translates "\n" to the
+    # platform separator, so without it this builder emitted CRLF on Windows and
+    # LF on Linux -- the same source producing different bytes per build machine.
+    # The generated plugin is executable Python installed into
+    # ~/.hermes/plugins/, so its identity should not depend on who built it.
+    # Measured before this fix, building on Windows: agents.json 2972 CR,
+    # __init__.py 300, README.md 79, plugin.yaml 8.
+    (plugin_dir / "plugin.yaml").write_text(plugin_yaml(), encoding="utf-8", newline="\n")
+    (plugin_dir / "__init__.py").write_text(init_py(), encoding="utf-8", newline="\n")
     (plugin_dir / "data" / "agents.json").write_text(
         json.dumps(agents, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
-    (out_dir / "README.md").write_text(readme(len(agents)), encoding="utf-8")
+    (out_dir / "README.md").write_text(readme(len(agents)), encoding="utf-8", newline="\n")
     return len(agents)
 
 
