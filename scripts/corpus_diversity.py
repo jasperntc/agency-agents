@@ -357,6 +357,54 @@ def print_summary(d: dict) -> None:
     say("")
 
 
+def evaluate_gate(data: dict, config: dict) -> list[dict]:
+    """Evaluate every threshold independently. Returns the list of breaches.
+
+    Deliberately returns per-dimension results and never an aggregate score. A
+    blended number is exactly how the known-bad corpus passed every check: it
+    improved on nothing and regressed on nine axes, and any weighted sum would
+    have buried that. A regression in one dimension must stay individually
+    visible (project principle: no aggregate may hide a critical regression).
+    """
+    results = []
+    for key, spec in sorted(config["thresholds"].items()):
+        observed = dig(data, key)
+        limit = spec["max"]
+        results.append({
+            "metric": key,
+            "observed": observed,
+            "max": limit,
+            "baseline": spec.get("observed_baseline_tag"),
+            "known_bad": spec.get("observed_known_bad"),
+            "negative_control": bool(spec.get("negative_control")),
+            "breached": observed > limit,
+        })
+    return results
+
+
+def print_gate(ref: str, results: list[dict]) -> None:
+    breaches = [r for r in results if r["breached"]]
+    say(f"\nCorpus diversity gate: {ref}\n")
+    say(f"  {'':6} {'metric':<38} {'observed':>10} {'limit':>10} {'baseline':>10} {'known-bad':>10}")
+    say(f"  {'-' * 6} {'-' * 38} {'-' * 10} {'-' * 10} {'-' * 10} {'-' * 10}")
+    for r in results:
+        tag = "BREACH" if r["breached"] else ("ctrl" if r["negative_control"] else "ok")
+        say(f"  {tag:6} {r['metric']:<38} {r['observed']:>10} {r['max']:>10} "
+            f"{str(r['baseline']):>10} {str(r['known_bad']):>10}")
+    say("")
+    if breaches:
+        say(f"FAILED: {len(breaches)} dimension(s) breached.")
+        for r in breaches:
+            say(f"  - {r['metric']}: {r['observed']} exceeds {r['max']} "
+                f"(baseline {r['baseline']}, known-bad {r['known_bad']})")
+        say("\nThese are signals, not verdicts. Investigate the change; do not raise a")
+        say("threshold to make this pass -- tests/test_corpus_diversity.py requires every")
+        say("threshold to sit strictly between the baseline and the known-bad corpus.")
+    else:
+        say(f"PASSED: all {len(results)} dimensions within thresholds.")
+    say("")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--ref", help="git ref to measure (default: working tree)")
@@ -364,6 +412,7 @@ def main() -> int:
                     help="measure two refs and print the delta")
     ap.add_argument("--out", type=Path, help="write JSON here")
     ap.add_argument("--check", type=Path, help="recompute and diff; exit 1 on drift")
+    ap.add_argument("--gate", type=Path, help="evaluate against thresholds; exit 1 on breach")
     args = ap.parse_args()
 
     if args.compare:
@@ -376,6 +425,11 @@ def main() -> int:
         return 0
 
     data = measure(args.ref)
+
+    if args.gate:
+        results = evaluate_gate(data, json.loads(args.gate.read_bytes().decode("utf-8")))
+        print_gate(data["ref"], results)
+        return 1 if any(r["breached"] for r in results) else 0
 
     if args.check:
         prev = json.loads(args.check.read_bytes().decode("utf-8"))
