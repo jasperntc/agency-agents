@@ -482,13 +482,13 @@
     },
     {
       "body_word_count": 1755,
-      "byte_count": 17040,
+      "byte_count": 17051,
       "division": "engineering",
       "filename_stem": "engineering-mobile-app-builder",
       "name": "Mobile App Builder",
       "name_slug": "mobile-app-builder",
       "path": "engineering/engineering-mobile-app-builder.md",
-      "sha256": "0b9b35d374fda58f0902c453107a25afa89717dbafeba9533c094d1f9f688aa1"
+      "sha256": "10ba0d4f4ee86b5cad4a7d99b1589a9b1c2f705043c59c078f662f56b6c2500f"
     },
     {
       "body_word_count": 1888,
@@ -1191,14 +1191,14 @@
       "sha256": "1d23c94aced61beb0e7a3151ad4c14ccb8205a95e48d4bc6c0fda6739c2e356d"
     },
     {
-      "body_word_count": 1700,
-      "byte_count": 13092,
+      "body_word_count": 1699,
+      "byte_count": 13099,
       "division": "marketing",
       "filename_stem": "marketing-app-store-optimizer",
       "name": "App Store Optimizer",
       "name_slug": "app-store-optimizer",
       "path": "marketing/marketing-app-store-optimizer.md",
-      "sha256": "80612829f53509bc0deb5141ee43989e4f74cb6ea25e62a35f679ecd28fe2056"
+      "sha256": "d6cb4a10628bd28eda78bc06b5eb3e1cebc7466085734592fb4a69f226887684"
     },
     {
       "body_word_count": 1683,
@@ -2512,13 +2512,13 @@
     },
     {
       "body_word_count": 4084,
-      "byte_count": 26479,
+      "byte_count": 26395,
       "division": "specialized",
       "filename_stem": "specialized-workflow-architect",
       "name": "Workflow Architect",
       "name_slug": "workflow-architect",
       "path": "specialized/specialized-workflow-architect.md",
-      "sha256": "74d46f03dcdd769163ce73ea8ac025bae48ae2356792a7aff3619c92f802a8ef"
+      "sha256": "4fc123b65b90258e26c414dd4d96d4dc39759acd68476aed3f68206a81e648b8"
     },
     {
       "body_word_count": 2352,
@@ -2701,7 +2701,7 @@
       "sha256": "137eb576ab8be16b5ccb1338078933d9e6012fb5cb66dd837c2a5212fecc5331"
     }
   ],
-  "ref": "e4a0fbc",
+  "ref": "c7f51dd",
   "schema_version": "1.0.0",
   "summary": {
     "agents_per_division": {
@@ -2729,7 +2729,7 @@
     "slug_implementation_divergences": [],
     "stem_slug_mismatches": 198,
     "total_agents": 270,
-    "total_body_words": 502635,
-    "total_bytes": 3825813
+    "total_body_words": 502634,
+    "total_bytes": 3825747
   }
 }

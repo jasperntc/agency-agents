@@ -24,34 +24,62 @@ meaningful on any corpus state) and the detector's regression test (fixed refs).
 
 ---
 
-## Move 1 — 2026-08-14 — `upstream-baseline-2026-08-13` → `e4a0fbc`
+## Move 1 — 2026-08-14 — `upstream-baseline-2026-08-13` → `c7f51dd`
 
-Step 0.4, source-correctness repairs. **52 of 270 agent files changed** across
-four separately revertible commits.
+Step 0.4, source-correctness repairs. **53 of 270 agent files changed** across
+six separately revertible commits.
 
 | commit | files | what |
 | --- | ---: | --- |
 | `71f5589` | 3 | healthcare: folded multi-line frontmatter, removed alignment padding |
 | `121969d` | 1 | engineering-developer-tooling-engineer: quoted a description containing `": "` |
-| `719747c` | 2 | repaired `0x04` mojibake in section headers |
+| `719747c` | 2 | repaired `0x04` mojibake in section headers — **incomplete, see `c7f51dd`** |
 | `e4a0fbc` | 48 | added a missing trailing newline |
+| `8cf05ea` | 1 | specialized-workflow-architect: rendered 9 emoji shortcodes |
+| `c7f51dd` | 2 | completed the mojibake repair: 21 headers, 1 structural |
 
-(54 repairs across 52 files — `engineering-mobile-app-builder` and
-`marketing-app-store-optimizer` appear in both the mojibake and newline commits.)
+`engineering-mobile-app-builder` and `marketing-app-store-optimizer` appear in
+three commits each, which is why the file count is 53 rather than the sum.
+
+### A note on `719747c`
+
+That commit fixed 2 of 21 corrupted headers in those two files and reported
+success. Its detection regex looked for C0 control characters, which matched
+only the pairs whose second byte happened to be `0x04`; the rest use bytes like
+`0xE0`, `0xAF`, `0xCB`. The accompanying claim that "the corpus now contains
+zero control characters" was true and irrelevant — it measured the detector, not
+the defect.
+
+`c7f51dd` completes it. The lesson is recorded here because the failure mode is
+general: **a scan that defines the defect by the symptom it happens to catch
+will report clean while the defect persists.** The corruption was eventually
+found by an unrelated survey of header emoji, not by the check written for it.
 
 ### What changed in the measurements
 
 | measure | fork point | now | note |
 | --- | ---: | ---: | --- |
 | total agents | 270 | 270 | unchanged |
-| total body words | 502,635 | 502,635 | **unchanged** — every repair was frontmatter or whitespace |
-| total bytes | 3,826,041 | 3,825,813 | −228 |
+| total body words | 502,635 | 502,634 | −1: the orphaned `=` token (see below) |
+| total bytes | 3,826,041 | 3,825,747 | −294 |
 | stem ≠ name-slug | 198 | 198 | unchanged |
 | duplicate stems / name-slugs | 0 / 0 | 0 / 0 | unchanged |
 
 The byte count **fell** despite adding 48 newlines: removing the healthcare
 files' alignment whitespace and their folded line breaks reclaimed more than the
 newlines, quote characters and wider emoji added.
+
+Body words fell by exactly one. In `marketing-app-store-optimizer` the
+corruption's lost byte was `0x0A`, so it had inserted a real line break:
+
+```
+## =
+ Market Analysis
+```
+
+— a title-less header with its text orphaned as body prose. Rejoining it into
+`## Market Analysis` removes the stray `=` token. That is the only word-count
+change in the entire step, and it is a structural repair rather than an edit.
 
 All ten corpus-diversity dimensions are **numerically identical** to the fork
 point (`duplicated_word_pct` 0.061, `shared_blocks` 11, `max_pct` 4.7377,
