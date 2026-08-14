@@ -1114,7 +1114,7 @@
     },
     "hermes": {
       "agency-agents-router/__init__.py": "086e19aca4cb38418983d78b4c54cd9568875d00b1198c8ebd9865548b64121f",
-      "agency-agents-router/data/agents.json": "e0b63946b5c3dac31ec8c1e5be50cfbeb5f7dcb6c6cb43162ecfad9dcd81fe51",
+      "agency-agents-router/data/agents.json": "b0d93fc4f44badb6f61d2e947619380dd40deafee7855f5e1911dc7fd48f69f0",
       "agency-agents-router/plugin.yaml": "79c441a8398be768e550e67adce25f32dc25552a586fbe5a3f726b3729ba0a37"
     },
     "kimi": {

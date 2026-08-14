@@ -62,7 +62,14 @@ def parse_agent(path: Path, repo_root: Path) -> dict[str, str] | None:
         "color": fields.get("color", "").strip(),
         "emoji": fields.get("emoji", "").strip(),
         "vibe": fields.get("vibe", "").strip(),
-        "source_path": str(rel),
+        # as_posix(), not str(): str(PurePath) uses the OS separator, so a
+        # Windows build emitted "academic\academic-anthropologist.md" while a
+        # Linux build emitted "academic/academic-anthropologist.md" -- the same
+        # source producing different plugin data per build machine. Not merely
+        # cosmetic: source_path is surfaced to the model in _summary() and in
+        # _specialist_prompt() ("Source: ..."), so the prompt text itself
+        # differed. Repository paths are POSIX everywhere else in this repo.
+        "source_path": rel.as_posix(),
         "body": body,
     }
 
