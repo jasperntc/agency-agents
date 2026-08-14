@@ -1,4 +1,19 @@
-# Ensure consistent line endings across platforms
+# Ensure consistent line endings across platforms.
+#
+# LF is the default for every text file, not an allowlist of extensions. The
+# allowlist approach failed twice: .py and .json were uncovered until 59347a9,
+# and .txt was uncovered until this commit -- each time, Git for Windows'
+# core.autocrlf=true silently rewrote those files on checkout while the stored
+# blobs stayed LF, making the same source produce different bytes per platform.
+# Every new file extension would have repeated it.
+#
+# `text=auto` lets git detect binary content and leave it alone. The repository
+# is currently 100% text (md, yml, sh, py, json, txt, ps1, .example, LICENSE),
+# so nothing is at risk; a future binary asset needs an explicit `-text` rule.
+* text=auto eol=lf
+
+# Explicit rules kept for documentation value -- they say which formats this
+# repository actually ships. They are redundant with the default above.
 *.md text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
