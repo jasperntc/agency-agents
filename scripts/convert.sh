@@ -218,6 +218,21 @@ resolve_opencode_color() {
 
   c="$(printf '%s' "$c" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | tr '[:upper:]' '[:lower:]')"
 
+  # Strip surrounding YAML quotes. get_field does not remove them, so a quoted
+  # value arrives here as the 9 characters "#d97706" -- which matches neither
+  # hex pattern below and fell through to the grey default. 93 of 270 agents
+  # quote their colour, and every one of them rendered as #6B7280 in OpenCode
+  # instead of the colour it declares.
+  #
+  # Fixed here rather than in get_field on purpose. Those quotes are
+  # load-bearing elsewhere: three agents have a description containing ": ",
+  # which is only valid YAML because it is quoted, and the converters re-emit
+  # description verbatim into generated frontmatter. Stripping quotes centrally
+  # would reintroduce the invalid-YAML defect repaired in 121969d. This is the
+  # one place a value is interpreted rather than passed through.
+  c="${c#\"}"; c="${c%\"}"
+  c="${c#\'}"; c="${c%\'}"
+
   case "$c" in
     cyan)           mapped="#00FFFF" ;;
     blue)           mapped="#3498DB" ;;
