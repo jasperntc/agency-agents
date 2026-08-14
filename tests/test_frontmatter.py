@@ -31,6 +31,12 @@ from lib.frontmatter import (  # noqa: E402
 # the distribution layer is exactly what this module exists to surface.
 EXPLAINED_KINDS = {"quotes-not-stripped", "block-value"}
 
+# The smallest frontmatter the schema accepts. Fixture-based tests build on this
+# so that adding a required field (as 1.1.0 did with `id`) fails in ONE place
+# rather than scattering the same omission across every test.
+MINIMAL = {"id": "example-agent", "name": "Example Agent",
+           "description": "An example.", "color": "blue"}
+
 _paths: list[str] = []
 _parsed: dict[str, tuple[dict, str, bytes]] = {}
 _schema: dict = {}
@@ -89,30 +95,46 @@ class TestSchema(unittest.TestCase):
                 violations[p] = errs
         self.assertEqual(violations, {}, f"{len(violations)} agent(s) violate the schema")
 
+    def test_minimal_frontmatter_is_valid(self):
+        self.assertEqual(validate(dict(MINIMAL), _schema), [])
+
     def test_required_fields_are_enforced(self):
-        for field in ("name", "description", "color"):
+        for field in ("id", "name", "description", "color"):
             with self.subTest(field=field):
-                fm = {"name": "X", "description": "Y", "color": "blue"}
+                fm = dict(MINIMAL)
                 del fm[field]
                 self.assertTrue(validate(fm, _schema), f"missing {field} should fail")
 
     def test_unknown_field_is_rejected(self):
-        fm = {"name": "X", "description": "Y", "color": "blue", "surprise": "z"}
+        fm = dict(MINIMAL, surprise="z")
         self.assertTrue(validate(fm, _schema),
                         "additionalProperties should reject unknown fields")
 
     def test_name_may_not_have_surrounding_whitespace(self):
         """Guards the defect Step 0.4a repaired: aligned frontmatter made
         get_field return '       Clinical Evidence Agent'."""
-        fm = {"name": "   Padded Name", "description": "Y", "color": "blue"}
-        self.assertTrue(validate(fm, _schema))
+        self.assertTrue(validate(dict(MINIMAL, name="   Padded Name"), _schema))
+
+    def test_id_pattern_is_enforced(self):
+        """An id must be lowercase kebab. It is the primary key for every
+        downstream artifact, so a value that varies by case or separator would
+        make two references to the same skill fail to match."""
+        for bad in ("Engineering-Frontend", "engineering_frontend", "-leading",
+                    "trailing-", "double--hyphen", "has space", ""):
+            with self.subTest(id=bad):
+                self.assertTrue(validate(dict(MINIMAL, id=bad), _schema),
+                                f"id {bad!r} should be rejected")
+        for good in ("frontend-developer", "engineering-frontend-developer",
+                     "zk-steward", "gis3d", "a"):
+            with self.subTest(id=good):
+                self.assertEqual(validate(dict(MINIMAL, id=good), _schema), [])
 
     def test_services_shape_is_enforced(self):
-        ok = {"name": "X", "description": "Y", "color": "blue",
-              "services": [{"name": "S", "url": "https://e.com", "tier": "free"}]}
+        ok = dict(MINIMAL,
+                  services=[{"name": "S", "url": "https://e.com", "tier": "free"}])
         self.assertEqual(validate(ok, _schema), [])
-        bad = {"name": "X", "description": "Y", "color": "blue",
-               "services": [{"name": "S", "url": "https://e.com", "tier": "cheap"}]}
+        bad = dict(MINIMAL,
+                   services=[{"name": "S", "url": "https://e.com", "tier": "cheap"}])
         self.assertTrue(validate(bad, _schema), "tier must be free|freemium|paid")
 
 
