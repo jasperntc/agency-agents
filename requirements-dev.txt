@@ -1,0 +1,11 @@
+# Development dependencies for the skill engineering layer ONLY.
+#
+# The distribution path -- scripts/convert.sh, scripts/install.sh, scripts/lib.sh
+# -- must keep ZERO runtime dependencies beyond bash 3.2 and coreutils (no jq,
+# no pip). A user installing agents must never need any of this. Nothing here
+# may be imported by those scripts.
+#
+#   python3 -m pip install -r requirements-dev.txt
+#
+PyYAML==6.0.3        # authoritative frontmatter parsing
+jsonschema==4.26.0   # validates agent frontmatter against schema/agent.schema.json
