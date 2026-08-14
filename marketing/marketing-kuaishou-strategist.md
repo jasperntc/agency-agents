@@ -1,4 +1,5 @@
 ---
+id: marketing-kuaishou-strategist
 name: Kuaishou Strategist
 description: Expert Kuaishou marketing strategist specializing in short-video content for China's lower-tier city markets, live commerce operations, community trust building, and grassroots audience growth on 快手.
 color: orange

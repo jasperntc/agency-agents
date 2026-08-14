@@ -1,4 +1,5 @@
 ---
+id: engineering-cms-developer
 name: CMS Developer
 emoji: 🧱
 description: Drupal and WordPress specialist for theme development, custom plugins/modules, content architecture, and code-first CMS implementation

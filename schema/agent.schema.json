@@ -2,14 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/jasperntc/agency-agents/schema/agent.schema.json",
   "title": "Agency agent frontmatter",
-  "version": "1.0.0",
-  "_note": "The YAML frontmatter contract for an agent .md file. Version 1.0.0 describes the CONTRACT AS IT EXISTS -- it is deliberately descriptive, not aspirational, so it can be enforced today without changing a single agent. It was derived by parsing all 270 agents with a real YAML parser, not from documentation. The canonical `id` field arrives in 1.1.0 (Phase 3); do not add it here. Validate with scripts/lib/frontmatter.py. See CONTRIBUTING.md for the prose version of this contract and docs/frontmatter.md for where the legacy toolchain disagrees with it.",
+  "version": "1.1.0",
+  "_note": "The YAML frontmatter contract for an agent .md file. Deliberately descriptive rather than aspirational: derived by parsing all 270 agents with a real YAML parser, so it can be enforced without changing any agent. 1.0.0 described the contract as inherited; 1.1.0 adds the required canonical `id` (Phase 3). Validate with scripts/lib/frontmatter.py. See docs/identity.md for the identity model and docs/frontmatter.md for where the legacy toolchain disagrees with this contract.",
 
   "type": "object",
-  "required": ["name", "description", "color"],
+  "required": ["id", "name", "description", "color"],
   "additionalProperties": false,
 
   "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Immutable canonical identity. NEVER changes -- not when the file moves, not when it is renamed, not when the display name changes. Everything downstream keys to this: versions, evaluation results, deprecation, aliases, rollback. Seeded from the filename stem because strategy/runbooks.json already keys on it, but decoupled from path going forward: a future move must not change the id. Enforced by scripts/check-identity.py, which fails if an existing agent's id changes relative to the merge base."
+    },
     "name": {
       "type": "string",
       "minLength": 1,

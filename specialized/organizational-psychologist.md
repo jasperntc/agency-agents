@@ -1,4 +1,5 @@
 ---
+id: organizational-psychologist
 name: Organizational Psychologist
 emoji: 🧠
 description: Applied organizational psychologist who diagnoses team dynamics, psychological safety, burnout risk, and culture health — using evidence-based frameworks to help leaders build high-performing, resilient, and psychologically safe organizations.

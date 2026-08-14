@@ -1,4 +1,5 @@
 ---
+id: specialized-strategy-duel-agent
 name: Strategy Duel Agent
 emoji: ⚔️
 description: Conducts live strategy duels using game theory and the 36 Chinese stratagems

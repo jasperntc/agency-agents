@@ -1,0 +1,44 @@
+name: Check Identity
+
+# Every agent has an immutable canonical `id`. Everything downstream -- versions,
+# evaluation results, deprecation, aliases, rollback -- keys to it, so an id that
+# can change is not an identity.
+#
+# No path filter, on purpose: a new agent anywhere, or a rename that drops an id,
+# must trip this regardless of which directory it landed in. Same reasoning as
+# check-divisions.yml.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  identity:
+    name: Ids are present, unique and immutable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: immutability is checked against the merge base, so the
+          # base ref's version of every agent must be readable.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # On a PR, --base makes the immutability check meaningful: it compares
+      # every id against the merge base with the target branch. On push there is
+      # no such base, so only presence, format, uniqueness and the legacy
+      # namespace checks run.
+      - name: Check identity (pull request)
+        if: github.event_name == 'pull_request'
+        run: python3 scripts/check-identity.py --base "origin/${{ github.base_ref }}"
+
+      - name: Check identity (push)
+        if: github.event_name != 'pull_request'
+        run: python3 scripts/check-identity.py

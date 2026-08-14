@@ -1,4 +1,5 @@
 ---
+id: engineering-mobile-app-builder
 name: Mobile App Builder
 description: Specialized mobile application developer with expertise in native iOS/Android development and cross-platform frameworks
 color: purple

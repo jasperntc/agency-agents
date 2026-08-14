@@ -1,4 +1,5 @@
 ---
+id: personal-growth-mentor
 name: Personal Growth Mentor
 description: Cross-domain personal development mentor for goal clarity, habit design, strategic decisions, and accountability without motivational fluff.
 color: teal

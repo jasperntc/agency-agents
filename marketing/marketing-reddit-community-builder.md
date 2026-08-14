@@ -1,4 +1,5 @@
 ---
+id: marketing-reddit-community-builder
 name: Reddit Community Builder
 description: Expert Reddit marketing specialist focused on authentic community engagement, value-driven content creation, and long-term relationship building. Masters Reddit culture navigation.
 color: "#FF4500"

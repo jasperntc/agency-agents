@@ -1,4 +1,5 @@
 ---
+id: unity-architect
 name: Unity Architect
 description: Data-driven modularity specialist - Masters ScriptableObjects, decoupled systems, and single-responsibility component design for scalable Unity projects
 color: blue

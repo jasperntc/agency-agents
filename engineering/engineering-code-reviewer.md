@@ -1,4 +1,5 @@
 ---
+id: engineering-code-reviewer
 name: Code Reviewer
 description: Expert code reviewer who provides constructive, actionable feedback focused on correctness, maintainability, security, and performance — not style preferences.
 color: purple

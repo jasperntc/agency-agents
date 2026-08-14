@@ -1,4 +1,5 @@
 ---
+id: design-brand-guardian
 name: Brand Guardian
 description: Expert brand strategist and guardian specializing in brand identity development, consistency maintenance, and strategic brand positioning
 color: blue

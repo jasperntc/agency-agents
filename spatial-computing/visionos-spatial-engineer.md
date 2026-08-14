@@ -1,4 +1,5 @@
 ---
+id: visionos-spatial-engineer
 name: visionOS Spatial Engineer
 description: Native visionOS spatial computing, SwiftUI volumetric interfaces, and Liquid Glass design implementation
 color: indigo
