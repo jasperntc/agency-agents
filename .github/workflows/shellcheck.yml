@@ -1,0 +1,51 @@
+name: ShellCheck
+
+# The distribution layer is ~2,600 lines of bash that must run identically on
+# macOS bash 3.2, Linux, and Git Bash on Windows, with no jq and no runtime
+# dependencies. That is a lot of portability surface with no static analysis.
+#
+# shellcheck ships preinstalled on ubuntu-latest, so this needs no third-party
+# action and nothing to pin.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - "**/*.sh"
+      - ".github/workflows/shellcheck.yml"
+  workflow_dispatch:
+
+jobs:
+  shellcheck:
+    name: Static analysis of shell scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version
+        run: shellcheck --version
+
+      # severity=error only. Measured on shellcheck 0.11.0 at the time this was
+      # added: 0 errors, 42 total findings (21 warnings, 21 notes) across the 8
+      # tracked .sh files.
+      #
+      # Do NOT tighten to `warning` without triaging first. 20 of the 21 warnings
+      # are SC2034 "variable appears unused" in scripts/lib.sh -- which is a
+      # SOURCED library, so its C_RED / BX_TL / GLYPH_* really are consumed, by
+      # the sourcing script. Gating at `warning` today would fail the build on
+      # what is almost entirely a false positive for library files, and a check
+      # that is red for bad reasons is a check people learn to ignore.
+      #
+      # Remaining backlog by file: lib.sh 20, install.sh 11, check-tools.sh 7,
+      # convert.sh 2, lint-agents.sh 1, check-divisions.sh 1.
+      #
+      # lib.sh is sourced rather than executed, so -x lets shellcheck follow the
+      # `. lib.sh` in convert.sh and install.sh instead of guessing.
+      - name: shellcheck (severity=error)
+        run: shellcheck --severity=error --external-sources $(git ls-files '*.sh')
+
+      # Full-severity output for visibility only. Never blocking: this is the
+      # backlog, recorded so it can be worked down deliberately.
+      - name: Full findings (informational)
+        continue-on-error: true
+        run: shellcheck --external-sources $(git ls-files '*.sh')

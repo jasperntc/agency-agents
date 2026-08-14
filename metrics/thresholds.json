@@ -1,0 +1,84 @@
+{
+  "_note": "Ratchet thresholds for scripts/corpus_diversity.py --gate. Every threshold records the values actually MEASURED on the clean baseline and on the known-bad corpus (archive/fable-upgrade), and must sit strictly between them: the baseline passes, the known-bad corpus fails. tests/test_corpus_diversity.py enforces that betweenness mechanically, so a threshold cannot be quietly loosened to make a failing change pass -- loosening one breaks the test. Metrics are evaluated and reported INDIVIDUALLY; there is deliberately no aggregate score, because a blended number is exactly how the Fable regression stayed invisible. Absolute (not relative) thresholds are used so the gate works on any ref without needing a reference artifact; mean_words is used instead of total_words so the gate is independent of agent count.",
+  "reference": {
+    "baseline_ref": "upstream-baseline-2026-08-13",
+    "baseline_agents": 270,
+    "known_bad_ref": "archive/fable-upgrade",
+    "known_bad_merge_base": "459dce8",
+    "known_bad_agents": 263,
+    "known_bad_description": "Autonomous mass upgrade that rewrote 263 of 264 agents. All existing validation passed."
+  },
+  "thresholds": {
+    "pairwise.median_pct": {
+      "max": 0.05,
+      "observed_baseline_tag": 0.0,
+      "observed_baseline_merge_base": 0.0,
+      "observed_known_bad": 0.1381,
+      "rationale": "A healthy library has a median of exactly zero -- most agent pairs share no 8-word run at all. Any nonzero median means shared phrasing has spread corpus-wide."
+    },
+    "pairwise.p95_pct": {
+      "max": 0.15,
+      "observed_baseline_tag": 0.0,
+      "observed_baseline_merge_base": 0.0,
+      "observed_known_bad": 0.3954,
+      "rationale": "Still exactly zero at the baseline: even the 95th-percentile pair shares nothing. Moves off zero as soon as a template spreads."
+    },
+    "pairwise.p99_pct": {
+      "max": 0.25,
+      "observed_baseline_tag": 0.0635,
+      "observed_baseline_merge_base": 0.0661,
+      "observed_known_bad": 0.6208,
+      "rationale": "The upper tail of the distribution. Rose 839% under the known-bad upgrade while the maximum did not move."
+    },
+    "pairwise.mean_of_max_per_file_pct": {
+      "max": 0.4,
+      "observed_baseline_tag": 0.2074,
+      "observed_baseline_merge_base": 0.2132,
+      "observed_known_bad": 0.6735,
+      "rationale": "Averaged over ALL agents including the 106 whose max similarity is exactly zero. Averaging over nonzero agents only inflates the figure and moves for the wrong reason."
+    },
+    "vocabulary.headers_in_50pct_files": {
+      "max": 10,
+      "observed_baseline_tag": 9,
+      "observed_baseline_merge_base": 9,
+      "observed_known_bad": 11,
+      "rationale": "Section headers shared by most of the library. Converging on one template shows up here before the prose looks alike."
+    },
+    "vocabulary.headers_in_75pct_files": {
+      "max": 2,
+      "observed_baseline_tag": 1,
+      "observed_baseline_merge_base": 1,
+      "observed_known_bad": 4,
+      "rationale": "Near-universal headers. The known-bad upgrade added 'analytical discipline' (89% of files) and 'negative constraints never violate' (78%)."
+    },
+    "size.mean_words": {
+      "max": 1850,
+      "observed_baseline_tag": 1754.0,
+      "observed_baseline_merge_base": 1747.4,
+      "observed_known_bad": 1978.0,
+      "rationale": "Instruction bloat is a tracked regression, not a neutral fact. Per-agent rather than corpus total so the gate is independent of how many agents exist."
+    },
+    "boilerplate.shared_blocks": {
+      "max": 30,
+      "observed_baseline_tag": 11,
+      "observed_baseline_merge_base": 11,
+      "observed_known_bad": 92,
+      "rationale": "Distinct 12-word runs appearing verbatim in 3 or more files."
+    },
+    "boilerplate.duplicated_word_pct": {
+      "max": 0.3,
+      "observed_baseline_tag": 0.061,
+      "observed_baseline_merge_base": 0.0629,
+      "observed_known_bad": 0.9702,
+      "rationale": "Share of corpus words sitting inside a run repeated across files. The sharpest detector in the set -- moved ~15x more than any similarity percentile, because a template fragment spread across many files barely shifts pairwise similarity but shows up immediately as duplicated words."
+    },
+    "pairwise.max_pct": {
+      "max": 20.0,
+      "negative_control": true,
+      "observed_baseline_tag": 4.7377,
+      "observed_baseline_merge_base": 4.7377,
+      "observed_known_bad": 4.749,
+      "rationale": "NEGATIVE CONTROL -- not a homogenization detector. This is the statistic scripts/check-agent-originality.sh gates on (WARN 20%, FAIL 40%), and it moved by 0.0113 percentage points across the known-bad upgrade. It is retained at the existing WARN threshold so the gate output shows it PASSING on a corpus that fails nine other dimensions, making visible why maximum pairwise similarity cannot detect this failure mode. Exempt from the strictly-between test because it sits above both observations by design."
+    }
+  }
+}

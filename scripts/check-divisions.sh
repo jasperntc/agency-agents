@@ -29,7 +29,12 @@ JSON="divisions.json"
 # into the repo), not a source-agent category. strategy/ holds playbooks and
 # runbooks (no agent frontmatter), not agents. Neither is a division — they must
 # never be scanned as source-agent categories.
-NON_DIVISION_DIRS=(examples scripts integrations strategy)
+# docs/ and metrics/ belong to the skill engineering layer: docs/ is prose,
+# metrics/ holds generated measurement records (corpus inventory, diversity
+# baselines). Neither contains agent frontmatter. Any future engineering-layer
+# directory added at the repo root must be registered here too, or this check
+# will correctly report it as an unregistered division.
+NON_DIVISION_DIRS=(examples scripts integrations strategy docs metrics tests)
 
 errors=0
 fail() { echo "ERROR $*"; errors=$((errors + 1)); }

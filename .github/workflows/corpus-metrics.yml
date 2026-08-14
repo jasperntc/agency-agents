@@ -1,0 +1,65 @@
+name: Corpus Metrics
+
+# Corpus-level homogenization gate. Complements check-agent-originality.sh,
+# which asks whether any single agent is too close to another; this asks whether
+# the library as a whole is converging on a template.
+#
+# Motivating case: archive/fable-upgrade rewrote 263 of 264 agents while every
+# existing check passed. Maximum pairwise similarity -- the statistic the
+# originality check gates on -- moved 4.7377% -> 4.7490%. Nine other dimensions
+# moved by up to +1442%. See docs/homogenization.md.
+#
+# No path filter on purpose: homogenization is a property of the whole corpus,
+# so any change can move it.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  metrics:
+    name: Corpus diversity gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: the regression test measures upstream-baseline-2026-08-13
+          # and archive/fable-upgrade directly out of the object database.
+          fetch-depth: 0
+
+      # The detector's own regression test. Blocking, and independent of the
+      # working tree: it asserts the clean baseline passes, the known-bad corpus
+      # fails on >=3 dimensions, that maximum pairwise similarity CANNOT detect
+      # the regression (negative control), and that no threshold has been
+      # loosened past the known-bad value.
+      - name: Regression test — detector fires on the known-bad corpus
+        run: python3 tests/test_corpus_diversity.py
+
+      # The gate itself, against this ref. Absolute thresholds, so it is
+      # meaningful on any corpus state.
+      - name: Corpus diversity gate
+        id: gate
+        continue-on-error: true
+        run: python3 scripts/corpus_diversity.py --gate metrics/thresholds.json
+
+      # ADVISORY UNTIL 2026-09-15. These thresholds are calibrated from a single
+      # case study. Blocking on day one would produce a false positive and
+      # permanently cost the gate its credibility. Promotion criteria and the
+      # exact flip are documented in docs/corpus-metrics.md: remove
+      # continue-on-error above once the gate has run on 20 merged changes with
+      # zero false positives.
+      - name: Gate outcome (advisory)
+        if: steps.gate.outcome == 'failure'
+        run: |
+          echo "::warning title=Corpus diversity gate breached::One or more corpus diversity dimensions exceeded their threshold. ADVISORY - does not fail the build yet. See the gate step output and docs/homogenization.md."
+
+      # Drift from the frozen fork-point snapshots. INFORMATIONAL, never
+      # blocking: once source defects are intentionally repaired (Step 0.4) the
+      # corpus legitimately diverges from the baseline captured at the tag.
+      # These record what changed since the fork, they do not judge it.
+      - name: Drift from frozen baseline (informational)
+        continue-on-error: true
+        run: |
+          python3 scripts/inventory.py --check metrics/inventory-baseline.json
+          python3 scripts/corpus_diversity.py --check metrics/diversity-baseline.json

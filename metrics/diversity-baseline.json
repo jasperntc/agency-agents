@@ -1,0 +1,1556 @@
+{
+  "boilerplate": {
+    "duplicated_word_pct": 0.061,
+    "duplicated_words": 289,
+    "shared_blocks": 11,
+    "top_blocks": [
+      {
+        "files": 10,
+        "text": "methodology is in this agent definition refer to these patterns for consistent"
+      },
+      {
+        "files": 7,
+        "text": "ads mcp tools or api integrations are available in your environment use"
+      },
+      {
+        "files": 7,
+        "text": "automation when google ads mcp tools or api integrations are available in"
+      },
+      {
+        "files": 7,
+        "text": "google ads mcp tools or api integrations are available in your environment"
+      },
+      {
+        "files": 7,
+        "text": "mcp tools or api integrations are available in your environment use them"
+      },
+      {
+        "files": 7,
+        "text": "tooling automation when google ads mcp tools or api integrations are available"
+      },
+      {
+        "files": 7,
+        "text": "tools or api integrations are available in your environment use them to"
+      },
+      {
+        "files": 7,
+        "text": "when google ads mcp tools or api integrations are available in your"
+      },
+      {
+        "files": 4,
+        "text": "or api integrations are available in your environment use them to pull"
+      },
+      {
+        "files": 3,
+        "text": "import pandas as pd import numpy as np from datetime import datetime"
+      }
+    ]
+  },
+  "pairwise": {
+    "max_pct": 4.7377,
+    "mean_of_max_per_file_pct": 0.2074,
+    "median_pct": 0.0,
+    "p95_pct": 0.0,
+    "p99_pct": 0.0635,
+    "pairs": 36315,
+    "pairs_ge_10pct": 0,
+    "pairs_ge_20pct": 0,
+    "pairs_ge_5pct": 0
+  },
+  "parameters": {
+    "block_k": 12,
+    "block_min_files": 3,
+    "percentile_method": "nearest-rank",
+    "shingle_k": 8,
+    "tokenizer": "check-agent-originality.sh (entity-neutralized, alphanumeric)"
+  },
+  "per_agent": [
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "academic/academic-anthropologist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "academic/academic-geographer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "academic/academic-historian.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "academic/academic-narratologist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "academic/academic-psychologist.md"
+    },
+    {
+      "closest": "game-development/game-designer.md",
+      "max_similarity_pct": 0.0376,
+      "path": "academic/academic-statistician.md"
+    },
+    {
+      "closest": "engineering/engineering-devops-automator.md",
+      "max_similarity_pct": 0.1115,
+      "path": "design/design-brand-guardian.md"
+    },
+    {
+      "closest": "engineering/engineering-ai-engineer.md",
+      "max_similarity_pct": 0.2874,
+      "path": "design/design-image-prompt-engineer.md"
+    },
+    {
+      "closest": "product/product-behavioral-nudge-engine.md",
+      "max_similarity_pct": 0.1935,
+      "path": "design/design-inclusive-visuals-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "design/design-persona-walkthrough.md"
+    },
+    {
+      "closest": "design/design-ux-architect.md",
+      "max_similarity_pct": 0.5692,
+      "path": "design/design-ui-designer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "design/design-ui-finish-gate-reviewer.md"
+    },
+    {
+      "closest": "design/design-ui-designer.md",
+      "max_similarity_pct": 0.5692,
+      "path": "design/design-ux-architect.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.1214,
+      "path": "design/design-ux-researcher.md"
+    },
+    {
+      "closest": "engineering/engineering-ai-engineer.md",
+      "max_similarity_pct": 0.3088,
+      "path": "design/design-visual-storyteller.md"
+    },
+    {
+      "closest": "design/design-brand-guardian.md",
+      "max_similarity_pct": 0.0969,
+      "path": "design/design-whimsy-injector.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-ai-data-remediation-engineer.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.3088,
+      "path": "engineering/engineering-ai-engineer.md"
+    },
+    {
+      "closest": "engineering/engineering-technical-writer.md",
+      "max_similarity_pct": 0.1379,
+      "path": "engineering/engineering-api-platform-engineer.md"
+    },
+    {
+      "closest": "product/product-behavioral-nudge-engine.md",
+      "max_similarity_pct": 0.1179,
+      "path": "engineering/engineering-autonomous-optimization-architect.md"
+    },
+    {
+      "closest": "engineering/engineering-database-optimizer.md",
+      "max_similarity_pct": 0.1512,
+      "path": "engineering/engineering-backend-architect.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-cms-developer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-code-reviewer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-codebase-onboarding-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-data-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-data-visualization-engineer.md"
+    },
+    {
+      "closest": "engineering/engineering-gaussdb-expert.md",
+      "max_similarity_pct": 4.7377,
+      "path": "engineering/engineering-database-optimizer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-database-reliability-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-desktop-app-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-developer-tooling-engineer.md"
+    },
+    {
+      "closest": "support/support-infrastructure-maintainer.md",
+      "max_similarity_pct": 0.7994,
+      "path": "engineering/engineering-devops-automator.md"
+    },
+    {
+      "closest": "engineering/engineering-wordpress-performance.md",
+      "max_similarity_pct": 4.708,
+      "path": "engineering/engineering-drupal-performance.md"
+    },
+    {
+      "closest": "engineering/engineering-wordpress-shopping-cart.md",
+      "max_similarity_pct": 1.8686,
+      "path": "engineering/engineering-drupal-shopping-cart.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.183,
+      "path": "engineering/engineering-email-intelligence-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-embedded-firmware-engineer.md"
+    },
+    {
+      "closest": "testing/testing-api-tester.md",
+      "max_similarity_pct": 0.0814,
+      "path": "engineering/engineering-feishu-integration-developer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-filament-optimization-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-finops-engineer.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.0977,
+      "path": "engineering/engineering-frontend-developer.md"
+    },
+    {
+      "closest": "engineering/engineering-database-optimizer.md",
+      "max_similarity_pct": 4.7377,
+      "path": "engineering/engineering-gaussdb-expert.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-git-workflow-master.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-i18n-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-identity-access-engineer.md"
+    },
+    {
+      "closest": "security/security-incident-responder.md",
+      "max_similarity_pct": 0.0868,
+      "path": "engineering/engineering-incident-response-commander.md"
+    },
+    {
+      "closest": "specialized/specialized-korean-business-navigator.md",
+      "max_similarity_pct": 0.0278,
+      "path": "engineering/engineering-iot-fleet-engineer.md"
+    },
+    {
+      "closest": "engineering/engineering-incident-response-commander.md",
+      "max_similarity_pct": 0.0336,
+      "path": "engineering/engineering-it-service-manager.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-llm-post-training-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-minimal-change-engineer.md"
+    },
+    {
+      "closest": "marketing/marketing-app-store-optimizer.md",
+      "max_similarity_pct": 0.1292,
+      "path": "engineering/engineering-mobile-app-builder.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-mobile-release-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-multi-agent-systems-architect.md"
+    },
+    {
+      "closest": "engineering/engineering-search-relevance-engineer.md",
+      "max_similarity_pct": 0.026,
+      "path": "engineering/engineering-network-engineer.md"
+    },
+    {
+      "closest": "engineering/engineering-uswds-developer.md",
+      "max_similarity_pct": 0.0263,
+      "path": "engineering/engineering-orgscript-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-payments-billing-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-privacy-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-prompt-engineer.md"
+    },
+    {
+      "closest": "engineering/engineering-backend-architect.md",
+      "max_similarity_pct": 0.0284,
+      "path": "engineering/engineering-rag-pipeline-engineer.md"
+    },
+    {
+      "closest": "testing/testing-api-tester.md",
+      "max_similarity_pct": 0.1277,
+      "path": "engineering/engineering-rapid-prototyper.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-realtime-collaboration-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-rust-refactoring-specialist.md"
+    },
+    {
+      "closest": "engineering/engineering-network-engineer.md",
+      "max_similarity_pct": 0.026,
+      "path": "engineering/engineering-search-relevance-engineer.md"
+    },
+    {
+      "closest": "specialized/legal-billing-time-tracking.md",
+      "max_similarity_pct": 0.0146,
+      "path": "engineering/engineering-section-508-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-senior-developer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-software-architect.md"
+    },
+    {
+      "closest": "security/security-blockchain-security-auditor.md",
+      "max_similarity_pct": 0.3594,
+      "path": "engineering/engineering-solidity-smart-contract-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-sre.md"
+    },
+    {
+      "closest": "engineering/engineering-api-platform-engineer.md",
+      "max_similarity_pct": 0.1379,
+      "path": "engineering/engineering-technical-writer.md"
+    },
+    {
+      "closest": "engineering/engineering-orgscript-engineer.md",
+      "max_similarity_pct": 0.0263,
+      "path": "engineering/engineering-uswds-developer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-video-streaming-engineer.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.1217,
+      "path": "engineering/engineering-voice-ai-integration-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "engineering/engineering-webassembly-engineer.md"
+    },
+    {
+      "closest": "engineering/engineering-frontend-developer.md",
+      "max_similarity_pct": 0.074,
+      "path": "engineering/engineering-wechat-mini-program-developer.md"
+    },
+    {
+      "closest": "engineering/engineering-drupal-performance.md",
+      "max_similarity_pct": 4.708,
+      "path": "engineering/engineering-wordpress-performance.md"
+    },
+    {
+      "closest": "engineering/engineering-drupal-shopping-cart.md",
+      "max_similarity_pct": 1.8686,
+      "path": "engineering/engineering-wordpress-shopping-cart.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.1917,
+      "path": "finance/finance-bookkeeper-controller.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.2078,
+      "path": "finance/finance-financial-analyst.md"
+    },
+    {
+      "closest": "finance/finance-financial-analyst.md",
+      "max_similarity_pct": 0.1864,
+      "path": "finance/finance-fpa-analyst.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.1889,
+      "path": "finance/finance-investment-researcher.md"
+    },
+    {
+      "closest": "design/design-visual-storyteller.md",
+      "max_similarity_pct": 0.204,
+      "path": "finance/finance-tax-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "game-development/blender/blender-addon-engineer.md"
+    },
+    {
+      "closest": "security/security-appsec-engineer.md",
+      "max_similarity_pct": 0.0232,
+      "path": "game-development/economy-designer.md"
+    },
+    {
+      "closest": "security/security-secrets-credential-engineer.md",
+      "max_similarity_pct": 0.0569,
+      "path": "game-development/game-audio-engineer.md"
+    },
+    {
+      "closest": "academic/academic-statistician.md",
+      "max_similarity_pct": 0.0376,
+      "path": "game-development/game-designer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "game-development/godot/godot-gameplay-scripter.md"
+    },
+    {
+      "closest": "game-development/unity/unity-multiplayer-engineer.md",
+      "max_similarity_pct": 0.059,
+      "path": "game-development/godot/godot-multiplayer-engineer.md"
+    },
+    {
+      "closest": "game-development/unity/unity-shader-graph-artist.md",
+      "max_similarity_pct": 0.06,
+      "path": "game-development/godot/godot-shader-developer.md"
+    },
+    {
+      "closest": "project-management/project-management-jira-workflow-steward.md",
+      "max_similarity_pct": 0.064,
+      "path": "game-development/level-designer.md"
+    },
+    {
+      "closest": "testing/testing-tool-evaluator.md",
+      "max_similarity_pct": 0.0557,
+      "path": "game-development/narrative-designer.md"
+    },
+    {
+      "closest": "game-development/technical-artist.md",
+      "max_similarity_pct": 0.0307,
+      "path": "game-development/roblox-studio/roblox-avatar-creator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "game-development/roblox-studio/roblox-experience-designer.md"
+    },
+    {
+      "closest": "game-development/technical-artist.md",
+      "max_similarity_pct": 0.0306,
+      "path": "game-development/roblox-studio/roblox-systems-scripter.md"
+    },
+    {
+      "closest": "game-development/game-audio-engineer.md",
+      "max_similarity_pct": 0.0336,
+      "path": "game-development/technical-artist.md"
+    },
+    {
+      "closest": "game-development/unity/unity-editor-tool-developer.md",
+      "max_similarity_pct": 0.2624,
+      "path": "game-development/unity/unity-architect.md"
+    },
+    {
+      "closest": "game-development/unity/unity-architect.md",
+      "max_similarity_pct": 0.2624,
+      "path": "game-development/unity/unity-editor-tool-developer.md"
+    },
+    {
+      "closest": "game-development/godot/godot-multiplayer-engineer.md",
+      "max_similarity_pct": 0.059,
+      "path": "game-development/unity/unity-multiplayer-engineer.md"
+    },
+    {
+      "closest": "game-development/godot/godot-shader-developer.md",
+      "max_similarity_pct": 0.06,
+      "path": "game-development/unity/unity-shader-graph-artist.md"
+    },
+    {
+      "closest": "game-development/technical-artist.md",
+      "max_similarity_pct": 0.0334,
+      "path": "game-development/unreal-engine/unreal-multiplayer-architect.md"
+    },
+    {
+      "closest": "game-development/unreal-engine/unreal-multiplayer-architect.md",
+      "max_similarity_pct": 0.0302,
+      "path": "game-development/unreal-engine/unreal-systems-engineer.md"
+    },
+    {
+      "closest": "game-development/unity/unity-shader-graph-artist.md",
+      "max_similarity_pct": 0.0324,
+      "path": "game-development/unreal-engine/unreal-technical-artist.md"
+    },
+    {
+      "closest": "game-development/unity/unity-multiplayer-engineer.md",
+      "max_similarity_pct": 0.0578,
+      "path": "game-development/unreal-engine/unreal-world-builder.md"
+    },
+    {
+      "closest": "gis/gis-bim-specialist.md",
+      "max_similarity_pct": 0.2813,
+      "path": "gis/gis-3d-scene-developer.md"
+    },
+    {
+      "closest": "gis/gis-spatial-data-engineer.md",
+      "max_similarity_pct": 0.1775,
+      "path": "gis/gis-analyst.md"
+    },
+    {
+      "closest": "gis/gis-3d-scene-developer.md",
+      "max_similarity_pct": 0.2813,
+      "path": "gis/gis-bim-specialist.md"
+    },
+    {
+      "closest": "gis/gis-spatial-data-engineer.md",
+      "max_similarity_pct": 0.1405,
+      "path": "gis/gis-cartography-designer.md"
+    },
+    {
+      "closest": "gis/gis-qa-engineer.md",
+      "max_similarity_pct": 0.1484,
+      "path": "gis/gis-drone-reality-mapping.md"
+    },
+    {
+      "closest": "gis/gis-geoprocessing-specialist.md",
+      "max_similarity_pct": 0.1756,
+      "path": "gis/gis-geoai-ml-engineer.md"
+    },
+    {
+      "closest": "gis/gis-spatial-data-engineer.md",
+      "max_similarity_pct": 0.354,
+      "path": "gis/gis-geoprocessing-specialist.md"
+    },
+    {
+      "closest": "gis/gis-drone-reality-mapping.md",
+      "max_similarity_pct": 0.1484,
+      "path": "gis/gis-qa-engineer.md"
+    },
+    {
+      "closest": "gis/gis-analyst.md",
+      "max_similarity_pct": 0.1759,
+      "path": "gis/gis-solution-engineer.md"
+    },
+    {
+      "closest": "gis/gis-geoprocessing-specialist.md",
+      "max_similarity_pct": 0.354,
+      "path": "gis/gis-spatial-data-engineer.md"
+    },
+    {
+      "closest": "gis/gis-analyst.md",
+      "max_similarity_pct": 0.0839,
+      "path": "gis/gis-spatial-data-scientist.md"
+    },
+    {
+      "closest": "gis/gis-analyst.md",
+      "max_similarity_pct": 0.0917,
+      "path": "gis/gis-technical-consultant.md"
+    },
+    {
+      "closest": "gis/gis-analyst.md",
+      "max_similarity_pct": 0.0822,
+      "path": "gis/gis-web-gis-developer.md"
+    },
+    {
+      "closest": "healthcare/healthcare-innovation-strategist.md",
+      "max_similarity_pct": 0.2438,
+      "path": "healthcare/healthcare-clinical-evidence-agent.md"
+    },
+    {
+      "closest": "healthcare/healthcare-clinical-evidence-agent.md",
+      "max_similarity_pct": 0.2438,
+      "path": "healthcare/healthcare-innovation-strategist.md"
+    },
+    {
+      "closest": "healthcare/healthcare-clinical-evidence-agent.md",
+      "max_similarity_pct": 0.2164,
+      "path": "healthcare/healthcare-sovereign-health-systems-agent.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-aeo-foundations.md"
+    },
+    {
+      "closest": "testing/testing-api-tester.md",
+      "max_similarity_pct": 0.0928,
+      "path": "marketing/marketing-agentic-search-optimizer.md"
+    },
+    {
+      "closest": "marketing/marketing-agentic-search-optimizer.md",
+      "max_similarity_pct": 0.0328,
+      "path": "marketing/marketing-ai-citation-strategist.md"
+    },
+    {
+      "closest": "engineering/engineering-mobile-app-builder.md",
+      "max_similarity_pct": 0.1292,
+      "path": "marketing/marketing-app-store-optimizer.md"
+    },
+    {
+      "closest": "marketing/marketing-bilibili-content-strategist.md",
+      "max_similarity_pct": 0.0378,
+      "path": "marketing/marketing-baidu-seo-specialist.md"
+    },
+    {
+      "closest": "marketing/marketing-kuaishou-strategist.md",
+      "max_similarity_pct": 0.0707,
+      "path": "marketing/marketing-bilibili-content-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-book-co-author.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-carousel-growth-engine.md"
+    },
+    {
+      "closest": "engineering/engineering-mobile-app-builder.md",
+      "max_similarity_pct": 0.0289,
+      "path": "marketing/marketing-china-ecommerce-operator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-china-market-localization-strategist.md"
+    },
+    {
+      "closest": "marketing/marketing-growth-hacker.md",
+      "max_similarity_pct": 0.1634,
+      "path": "marketing/marketing-content-creator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-cross-border-ecommerce.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-douyin-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-email-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-global-podcast-strategist.md"
+    },
+    {
+      "closest": "marketing/marketing-content-creator.md",
+      "max_similarity_pct": 0.1634,
+      "path": "marketing/marketing-growth-hacker.md"
+    },
+    {
+      "closest": "marketing/marketing-tiktok-strategist.md",
+      "max_similarity_pct": 0.1318,
+      "path": "marketing/marketing-instagram-curator.md"
+    },
+    {
+      "closest": "marketing/marketing-bilibili-content-strategist.md",
+      "max_similarity_pct": 0.0707,
+      "path": "marketing/marketing-kuaishou-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-linkedin-content-creator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-livestream-commerce-coach.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-multi-platform-publisher.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-podcast-strategist.md"
+    },
+    {
+      "closest": "specialized/customer-success-manager.md",
+      "max_similarity_pct": 0.0163,
+      "path": "marketing/marketing-pr-communications-manager.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-private-domain-operator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-reddit-community-builder.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-seo-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-short-video-editing-coach.md"
+    },
+    {
+      "closest": "marketing/marketing-growth-hacker.md",
+      "max_similarity_pct": 0.0938,
+      "path": "marketing/marketing-social-media-strategist.md"
+    },
+    {
+      "closest": "marketing/marketing-instagram-curator.md",
+      "max_similarity_pct": 0.1318,
+      "path": "marketing/marketing-tiktok-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-twitter-engager.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-video-optimization-specialist.md"
+    },
+    {
+      "closest": "marketing/marketing-xiaohongshu-specialist.md",
+      "max_similarity_pct": 0.0901,
+      "path": "marketing/marketing-wechat-official-account.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-weibo-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-x-twitter-intelligence-analyst.md"
+    },
+    {
+      "closest": "marketing/marketing-tiktok-strategist.md",
+      "max_similarity_pct": 0.1056,
+      "path": "marketing/marketing-xiaohongshu-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "marketing/marketing-zhihu-strategist.md"
+    },
+    {
+      "closest": "paid-media/paid-media-ppc-strategist.md",
+      "max_similarity_pct": 1.0283,
+      "path": "paid-media/paid-media-auditor.md"
+    },
+    {
+      "closest": "paid-media/paid-media-ppc-strategist.md",
+      "max_similarity_pct": 1.2059,
+      "path": "paid-media/paid-media-creative-strategist.md"
+    },
+    {
+      "closest": "paid-media/paid-media-ppc-strategist.md",
+      "max_similarity_pct": 1.0309,
+      "path": "paid-media/paid-media-paid-social-strategist.md"
+    },
+    {
+      "closest": "paid-media/paid-media-search-query-analyst.md",
+      "max_similarity_pct": 1.2153,
+      "path": "paid-media/paid-media-ppc-strategist.md"
+    },
+    {
+      "closest": "paid-media/paid-media-ppc-strategist.md",
+      "max_similarity_pct": 1.1265,
+      "path": "paid-media/paid-media-programmatic-buyer.md"
+    },
+    {
+      "closest": "paid-media/paid-media-ppc-strategist.md",
+      "max_similarity_pct": 1.2153,
+      "path": "paid-media/paid-media-search-query-analyst.md"
+    },
+    {
+      "closest": "paid-media/paid-media-ppc-strategist.md",
+      "max_similarity_pct": 1.1334,
+      "path": "paid-media/paid-media-tracking-specialist.md"
+    },
+    {
+      "closest": "specialized/specialized-cultural-intelligence-strategist.md",
+      "max_similarity_pct": 0.2003,
+      "path": "product/product-behavioral-nudge-engine.md"
+    },
+    {
+      "closest": "marketing/marketing-growth-hacker.md",
+      "max_similarity_pct": 0.0933,
+      "path": "product/product-feedback-synthesizer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "product/product-manager.md"
+    },
+    {
+      "closest": "marketing/marketing-growth-hacker.md",
+      "max_similarity_pct": 0.0756,
+      "path": "product/product-sprint-prioritizer.md"
+    },
+    {
+      "closest": "marketing/marketing-growth-hacker.md",
+      "max_similarity_pct": 0.1438,
+      "path": "product/product-trend-researcher.md"
+    },
+    {
+      "closest": "project-management/project-management-project-shepherd.md",
+      "max_similarity_pct": 0.1917,
+      "path": "project-management/project-management-experiment-tracker.md"
+    },
+    {
+      "closest": "game-development/level-designer.md",
+      "max_similarity_pct": 0.064,
+      "path": "project-management/project-management-jira-workflow-steward.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "project-management/project-management-meeting-notes-specialist.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.1917,
+      "path": "project-management/project-management-project-shepherd.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.1431,
+      "path": "project-management/project-management-studio-operations.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.0912,
+      "path": "project-management/project-management-studio-producer.md"
+    },
+    {
+      "closest": "testing/testing-reality-checker.md",
+      "max_similarity_pct": 0.2096,
+      "path": "project-management/project-manager-senior.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.0687,
+      "path": "sales/sales-account-strategist.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.0499,
+      "path": "sales/sales-coach.md"
+    },
+    {
+      "closest": "sales/sales-coach.md",
+      "max_similarity_pct": 0.0206,
+      "path": "sales/sales-deal-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "sales/sales-discovery-coach.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "sales/sales-engineer.md"
+    },
+    {
+      "closest": "sales/sales-outbound-strategist.md",
+      "max_similarity_pct": 0.0269,
+      "path": "sales/sales-offer-lead-gen-strategist.md"
+    },
+    {
+      "closest": "sales/sales-offer-lead-gen-strategist.md",
+      "max_similarity_pct": 0.0269,
+      "path": "sales/sales-outbound-strategist.md"
+    },
+    {
+      "closest": "testing/testing-test-results-analyzer.md",
+      "max_similarity_pct": 0.051,
+      "path": "sales/sales-pipeline-analyst.md"
+    },
+    {
+      "closest": "sales/sales-pipeline-analyst.md",
+      "max_similarity_pct": 0.0485,
+      "path": "sales/sales-proposal-strategist.md"
+    },
+    {
+      "closest": "game-development/technical-artist.md",
+      "max_similarity_pct": 0.0246,
+      "path": "security/security-ai-generated-code-auditor.md"
+    },
+    {
+      "closest": "game-development/economy-designer.md",
+      "max_similarity_pct": 0.0232,
+      "path": "security/security-appsec-engineer.md"
+    },
+    {
+      "closest": "security/security-secrets-credential-engineer.md",
+      "max_similarity_pct": 0.1444,
+      "path": "security/security-architect.md"
+    },
+    {
+      "closest": "engineering/engineering-solidity-smart-contract-engineer.md",
+      "max_similarity_pct": 0.3594,
+      "path": "security/security-blockchain-security-auditor.md"
+    },
+    {
+      "closest": "security/security-architect.md",
+      "max_similarity_pct": 0.1234,
+      "path": "security/security-cloud-security-architect.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "security/security-compliance-auditor.md"
+    },
+    {
+      "closest": "engineering/engineering-incident-response-commander.md",
+      "max_similarity_pct": 0.0868,
+      "path": "security/security-incident-responder.md"
+    },
+    {
+      "closest": "game-development/level-designer.md",
+      "max_similarity_pct": 0.0505,
+      "path": "security/security-penetration-tester.md"
+    },
+    {
+      "closest": "security/security-architect.md",
+      "max_similarity_pct": 0.1444,
+      "path": "security/security-secrets-credential-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "security/security-senior-secops.md"
+    },
+    {
+      "closest": "security/security-threat-intelligence-analyst.md",
+      "max_similarity_pct": 0.171,
+      "path": "security/security-threat-detection-engineer.md"
+    },
+    {
+      "closest": "security/security-threat-detection-engineer.md",
+      "max_similarity_pct": 0.171,
+      "path": "security/security-threat-intelligence-analyst.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "spatial-computing/macos-spatial-metal-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "spatial-computing/terminal-integration-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "spatial-computing/visionos-spatial-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "spatial-computing/xr-cockpit-interaction-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "spatial-computing/xr-immersive-developer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "spatial-computing/xr-interface-architect.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/accounts-payable-agent.md"
+    },
+    {
+      "closest": "specialized/identity-graph-operator.md",
+      "max_similarity_pct": 0.0718,
+      "path": "specialized/agentic-identity-trust.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/agents-orchestrator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/automation-governance-architect.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/business-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/change-management-consultant.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/chief-financial-officer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/corporate-training-designer.md"
+    },
+    {
+      "closest": "specialized/healthcare-customer-service.md",
+      "max_similarity_pct": 1.3326,
+      "path": "specialized/customer-service.md"
+    },
+    {
+      "closest": "support/support-support-responder.md",
+      "max_similarity_pct": 0.0181,
+      "path": "specialized/customer-success-manager.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/data-consolidation-agent.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/data-privacy-officer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/esg-sustainability-officer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/government-digital-presales-consultant.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/grant-writer.md"
+    },
+    {
+      "closest": "specialized/healthcare-customer-service.md",
+      "max_similarity_pct": 0.0618,
+      "path": "specialized/healthcare-aging-parent-care-companion.md"
+    },
+    {
+      "closest": "specialized/customer-service.md",
+      "max_similarity_pct": 1.3326,
+      "path": "specialized/healthcare-customer-service.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/healthcare-marketing-compliance.md"
+    },
+    {
+      "closest": "specialized/customer-service.md",
+      "max_similarity_pct": 0.1181,
+      "path": "specialized/hospitality-guest-services.md"
+    },
+    {
+      "closest": "finance/finance-tax-strategist.md",
+      "max_similarity_pct": 0.0632,
+      "path": "specialized/hr-onboarding.md"
+    },
+    {
+      "closest": "specialized/agentic-identity-trust.md",
+      "max_similarity_pct": 0.0718,
+      "path": "specialized/identity-graph-operator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/language-translator.md"
+    },
+    {
+      "closest": "specialized/legal-document-review.md",
+      "max_similarity_pct": 0.0338,
+      "path": "specialized/legal-billing-time-tracking.md"
+    },
+    {
+      "closest": "specialized/healthcare-customer-service.md",
+      "max_similarity_pct": 0.3337,
+      "path": "specialized/legal-client-intake.md"
+    },
+    {
+      "closest": "specialized/legal-client-intake.md",
+      "max_similarity_pct": 0.0861,
+      "path": "specialized/legal-document-review.md"
+    },
+    {
+      "closest": "specialized/legal-client-intake.md",
+      "max_similarity_pct": 0.1255,
+      "path": "specialized/loan-officer-assistant.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/lsp-index-engineer.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/ma-integration-manager.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/medical-billing-coding-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/operations-manager.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/organizational-psychologist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/personal-growth-mentor.md"
+    },
+    {
+      "closest": "specialized/loan-officer-assistant.md",
+      "max_similarity_pct": 0.1132,
+      "path": "specialized/real-estate-buyer-seller.md"
+    },
+    {
+      "closest": "specialized/supply-chain-strategist.md",
+      "max_similarity_pct": 0.0287,
+      "path": "specialized/recruitment-specialist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/report-distribution-agent.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/resume-tailor.md"
+    },
+    {
+      "closest": "specialized/healthcare-customer-service.md",
+      "max_similarity_pct": 0.0993,
+      "path": "specialized/retail-customer-returns.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/sales-data-extraction-agent.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/sales-outreach.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-chief-of-staff.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-civil-engineer.md"
+    },
+    {
+      "closest": "specialized/specialized-workflow-architect.md",
+      "max_similarity_pct": 0.1458,
+      "path": "specialized/specialized-codebase-archaeologist.md"
+    },
+    {
+      "closest": "product/product-behavioral-nudge-engine.md",
+      "max_similarity_pct": 0.2003,
+      "path": "specialized/specialized-cultural-intelligence-strategist.md"
+    },
+    {
+      "closest": "engineering/engineering-technical-writer.md",
+      "max_similarity_pct": 0.0536,
+      "path": "specialized/specialized-developer-advocate.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-document-generator.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-fedramp-rmf-compliance.md"
+    },
+    {
+      "closest": "specialized/specialized-korean-business-navigator.md",
+      "max_similarity_pct": 0.0332,
+      "path": "specialized/specialized-french-consulting-market.md"
+    },
+    {
+      "closest": "specialized/specialized-french-consulting-market.md",
+      "max_similarity_pct": 0.0332,
+      "path": "specialized/specialized-korean-business-navigator.md"
+    },
+    {
+      "closest": "engineering/engineering-mobile-app-builder.md",
+      "max_similarity_pct": 0.0627,
+      "path": "specialized/specialized-mcp-builder.md"
+    },
+    {
+      "closest": "specialized/specialized-workflow-architect.md",
+      "max_similarity_pct": 0.0332,
+      "path": "specialized/specialized-model-qa.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-pricing-analyst.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-salesforce-architect.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/specialized-strategy-duel-agent.md"
+    },
+    {
+      "closest": "specialized/specialized-codebase-archaeologist.md",
+      "max_similarity_pct": 0.1458,
+      "path": "specialized/specialized-workflow-architect.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/study-abroad-advisor.md"
+    },
+    {
+      "closest": "testing/testing-tool-evaluator.md",
+      "max_similarity_pct": 0.0737,
+      "path": "specialized/supply-chain-strategist.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "specialized/zk-steward.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.1776,
+      "path": "support/support-analytics-reporter.md"
+    },
+    {
+      "closest": "testing/testing-test-results-analyzer.md",
+      "max_similarity_pct": 0.0757,
+      "path": "support/support-executive-summary-generator.md"
+    },
+    {
+      "closest": "support/support-support-responder.md",
+      "max_similarity_pct": 0.3283,
+      "path": "support/support-finance-tracker.md"
+    },
+    {
+      "closest": "engineering/engineering-devops-automator.md",
+      "max_similarity_pct": 0.7994,
+      "path": "support/support-infrastructure-maintainer.md"
+    },
+    {
+      "closest": "support/support-finance-tracker.md",
+      "max_similarity_pct": 0.1048,
+      "path": "support/support-legal-compliance-checker.md"
+    },
+    {
+      "closest": "support/support-finance-tracker.md",
+      "max_similarity_pct": 0.3283,
+      "path": "support/support-support-responder.md"
+    },
+    {
+      "closest": "testing/testing-evidence-collector.md",
+      "max_similarity_pct": 0.0344,
+      "path": "testing/testing-accessibility-auditor.md"
+    },
+    {
+      "closest": "engineering/engineering-rapid-prototyper.md",
+      "max_similarity_pct": 0.1277,
+      "path": "testing/testing-api-tester.md"
+    },
+    {
+      "closest": "testing/testing-reality-checker.md",
+      "max_similarity_pct": 1.4518,
+      "path": "testing/testing-evidence-collector.md"
+    },
+    {
+      "closest": "project-management/project-management-experiment-tracker.md",
+      "max_similarity_pct": 0.1262,
+      "path": "testing/testing-performance-benchmarker.md"
+    },
+    {
+      "closest": "testing/testing-evidence-collector.md",
+      "max_similarity_pct": 1.4518,
+      "path": "testing/testing-reality-checker.md"
+    },
+    {
+      "closest": "",
+      "max_similarity_pct": 0.0,
+      "path": "testing/testing-test-automation-engineer.md"
+    },
+    {
+      "closest": "testing/testing-workflow-optimizer.md",
+      "max_similarity_pct": 0.1586,
+      "path": "testing/testing-test-results-analyzer.md"
+    },
+    {
+      "closest": "testing/testing-workflow-optimizer.md",
+      "max_similarity_pct": 0.1956,
+      "path": "testing/testing-tool-evaluator.md"
+    },
+    {
+      "closest": "testing/testing-tool-evaluator.md",
+      "max_similarity_pct": 0.1956,
+      "path": "testing/testing-workflow-optimizer.md"
+    }
+  ],
+  "ref": "upstream-baseline-2026-08-13",
+  "schema_version": "1.0.0",
+  "size": {
+    "agents": 270,
+    "mean_words": 1754.0,
+    "mean_words_per_division": {
+      "academic": 1010.8,
+      "design": 1442.0,
+      "engineering": 1850.4,
+      "finance": 1833.8,
+      "game-development": 1608.6,
+      "gis": 649.5,
+      "healthcare": 2009.3,
+      "marketing": 1591.3,
+      "paid-media": 606.0,
+      "product": 1323.4,
+      "project-management": 1091.4,
+      "sales": 2077.4,
+      "security": 2694.1,
+      "spatial-computing": 444.0,
+      "specialized": 2310.2,
+      "support": 2129.8,
+      "testing": 1600.8
+    },
+    "median_words": 1779,
+    "p10_words": 620,
+    "p90_words": 3109,
+    "total_words": 473579
+  },
+  "vocabulary": {
+    "distinct_headers": 4917,
+    "headers_in_25pct_files": 9,
+    "headers_in_50pct_files": 9,
+    "headers_in_75pct_files": 1,
+    "top_headers": [
+      {
+        "files": 223,
+        "header": "your identity memory",
+        "pct_of_corpus": 82.6
+      },
+      {
+        "files": 202,
+        "header": "critical rules you must follow",
+        "pct_of_corpus": 74.8
+      },
+      {
+        "files": 199,
+        "header": "your core mission",
+        "pct_of_corpus": 73.7
+      },
+      {
+        "files": 184,
+        "header": "advanced capabilities",
+        "pct_of_corpus": 68.1
+      },
+      {
+        "files": 181,
+        "header": "your communication style",
+        "pct_of_corpus": 67.0
+      },
+      {
+        "files": 171,
+        "header": "your success metrics",
+        "pct_of_corpus": 63.3
+      },
+      {
+        "files": 171,
+        "header": "your workflow process",
+        "pct_of_corpus": 63.3
+      },
+      {
+        "files": 165,
+        "header": "learning memory",
+        "pct_of_corpus": 61.1
+      },
+      {
+        "files": 155,
+        "header": "your technical deliverables",
+        "pct_of_corpus": 57.4
+      },
+      {
+        "files": 62,
+        "header": "success metrics",
+        "pct_of_corpus": 23.0
+      },
+      {
+        "files": 52,
+        "header": "pattern recognition",
+        "pct_of_corpus": 19.3
+      },
+      {
+        "files": 49,
+        "header": "communication style",
+        "pct_of_corpus": 18.1
+      },
+      {
+        "files": 42,
+        "header": "critical rules",
+        "pct_of_corpus": 15.6
+      },
+      {
+        "files": 40,
+        "header": "core mission",
+        "pct_of_corpus": 14.8
+      },
+      {
+        "files": 30,
+        "header": "technical deliverables",
+        "pct_of_corpus": 11.1
+      },
+      {
+        "files": 27,
+        "header": "workflow process",
+        "pct_of_corpus": 10.0
+      },
+      {
+        "files": 25,
+        "header": "domain expertise",
+        "pct_of_corpus": 9.3
+      },
+      {
+        "files": 20,
+        "header": "identity memory",
+        "pct_of_corpus": 7.4
+      },
+      {
+        "files": 17,
+        "header": "executive summary",
+        "pct_of_corpus": 6.3
+      },
+      {
+        "files": 16,
+        "header": "your deliverable template",
+        "pct_of_corpus": 5.9
+      }
+    ]
+  }
+}
