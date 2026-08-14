@@ -1,0 +1,40 @@
+name: Check Registry
+
+# registry.json is DERIVED. It is committed so consumers can fetch it directly,
+# but it must never be hand-edited -- this job regenerates it from source and
+# fails if the committed copy is stale.
+#
+# That combination is the point: a committed catalogue is useful, a
+# hand-maintained one drifts. This repository has already seen the failure once,
+# in a README that advertised "230+ agents" while 270 shipped.
+#
+# No path filter: the registry derives from agent frontmatter, divisions.json
+# AND git history, so a commit that touches none of those can still change it
+# (provenance counts, last_modified).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  registry:
+    name: registry.json is current
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: provenance (created, last_modified, commit count) is
+          # read from the git log, so a shallow clone would produce a different
+          # registry and fail spuriously.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      - name: Registry is up to date
+        run: python3 scripts/build_registry.py --check registry.json
