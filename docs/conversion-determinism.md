@@ -31,7 +31,7 @@ platform-dependent output as well as run-to-run instability — and it catches
 unintended renderer changes, which are often correct but should be deliberate
 and visible rather than discovered later by a consumer.
 
-## Two defects this found
+## Three defects this found
 
 ### Locale-dependent agent ordering
 
@@ -77,6 +77,34 @@ Fixed with `newline="\n"`. The change was verified newline-only two ways: conten
 is byte-identical once newlines are normalised, and the size delta equals the CR
 count exactly. It is a no-op on Linux.
 
+### OS separators in the Hermes plugin data
+
+**Found by CI on the manifest's first run** — and worth dwelling on, because
+local testing could not have found it.
+
+`parse_agent` recorded each agent's path with `str(rel)`. `str(PurePath)` uses
+the OS separator, so the same source produced:
+
+```
+Windows:  "source_path": "academic\\academic-anthropologist.md"
+Linux:    "source_path": "academic/academic-anthropologist.md"
+```
+
+for all 270 agents — the single file out of 4,055 that disagreed across
+platforms.
+
+Not cosmetic. `source_path` is surfaced to the model: `_summary()` includes it in
+every search result and `_specialist_prompt()` writes `Source: {path}` into the
+composed prompt. **The text the model receives depended on which machine built
+the plugin.**
+
+Fixed with `rel.as_posix()`.
+
+A Windows box and a Linux box are each internally self-consistent, and two runs
+on either agree — so no amount of local repetition surfaces this. Only comparing
+*across* platforms does, which is precisely what the manifest exists for. It
+earned its keep on the first CI run.
+
 ## Renderer equivalence
 
 `tools.json` states: *"the same `format` name guarantees byte-identical output,
@@ -102,10 +130,13 @@ test reports on that claim without failing the build.
 - **Write bytes, or pass `newline="\n"`.** Python text mode is CRLF on Windows.
 - **Never rank with `Counter.most_common()`** — it breaks ties by insertion
   order, which `PYTHONHASHSEED` randomises per process. Sort fully, then slice.
+- **Use `Path.as_posix()`, never `str(Path)`**, for any path that reaches output.
 - **Regenerate the manifest** when output legitimately changes, and say so in the
   commit message.
 
 ## Current state
 
 4,055 files, 14 tools, **0 CR bytes anywhere in generated output**. Independent
-runs produce identical hashes for every order-sensitive artifact.
+runs produce identical hashes for every order-sensitive artifact, and a manifest
+generated on Windows verifies byte-for-byte on Ubuntu in CI — so conversion is
+now reproducible across machines, not merely repeatable on one.
