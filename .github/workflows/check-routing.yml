@@ -1,0 +1,54 @@
+name: Check Routing
+
+# Phase 6. Measures whether the right specialist can be FOUND, which is the one
+# half of routing that is deterministic. Whether a model then chooses well among
+# what it found needs a model in the loop and is deliberately not here while the
+# CI budget is unsettled -- see docs/routing-evaluation.md.
+#
+# No path filter. The index is generated from every agent's frontmatter, so any
+# agent edit can move these numbers, and the whole run takes a few seconds.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  routing:
+    name: Check Routing
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 so archive/fable-upgrade and its merge base are present.
+      # The test suite compares against both to keep the recorded null result --
+      # that homogenized bodies do not move routing metrics -- from silently
+      # going stale.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Hard gate. Deterministic output, so a mismatch always means the corpus
+      # changed and the committed measurement was not refreshed -- never a flake.
+      - name: Routing baseline is current
+        run: python3 scripts/eval_routing.py --check
+
+      # Hard gate. Includes the positive control (a fully homogenized index must
+      # fail) and the tautology guard (no case may be written in its expected
+      # agent's own vocabulary).
+      - name: Regression tests
+        run: python3 tests/test_eval_routing.py
+
+      # Advisory until 2026-10-15, then promote to a hard gate if it has not
+      # produced a false positive. Same policy the corpus-diversity gate was
+      # given, and for the same reason: these thresholds sit around a single
+      # clean observation with no known-bad corpus to bracket them, because the
+      # one this repository owns does not move routing at all.
+      - name: Routing thresholds (advisory)
+        continue-on-error: true
+        run: python3 scripts/eval_routing.py --gate

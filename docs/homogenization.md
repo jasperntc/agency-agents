@@ -75,6 +75,14 @@ be justified rather than an achievement.
 **Structural validation cannot answer quality questions.** Everything the
 repository could check was green. That is the gap this project exists to close.
 
+**And the blindness runs both ways.** Phase 6 later measured routing quality —
+whether the right specialist can be found from a task description — against this
+same branch. It moved *every* routing metric by exactly zero, because routing
+reads frontmatter descriptions and this upgrade rewrote bodies. A diversity gate
+proves nothing about routing, and a routing gate proves nothing about
+homogenization. Two instruments, two blind spots, no average that could
+meaningfully combine them. See [routing-evaluation.md](routing-evaluation.md).
+
 ## How it is used now
 
 `archive/fable-upgrade` is a **labeled known-bad corpus** — a real regression

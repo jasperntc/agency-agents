@@ -15,37 +15,58 @@ right one, then load only that one.
 
 ## How to use this
 
-1. **Search the index.** `index.md` in this skill directory has one line per
-   specialist: `id | division | name | description`. Do not read the whole file;
-   it is 77KB and reading it defeats the purpose.
+`index.md` in this skill directory has one line per specialist:
+`id | division | name | description`. Grep it. Do not read the whole file; it is
+77KB and reading it defeats the purpose.
 
-   **Search distinctive phrases, not every word OR'd together.** Measured on
-   this index, `app store|listing|conversion` returns 13 mostly irrelevant
-   matches, while `app store` returns 2 and both are right. Generic words --
-   conversion, optimization, strategy, performance, analysis -- appear in
-   dozens of descriptions and drown the signal.
+1. **Translate the task into the field's own words before searching.** Each line
+   describes a specialist the way that specialist's field talks, which is
+   usually not how the user talks. Measured on a 58-task benchmark, only **67%
+   of tasks share even one word** with the right specialist's line, and phrases
+   lifted straight out of the user's sentence match anything only 7% of the
+   time. Searching the user's words is the single most common way to miss.
 
    ```
-   Grep pattern="app store" path="index.md"          # good: distinctive
-   Grep pattern="post-mortem|on-call" path="index.md" # good: domain jargon
-   Grep pattern="strategy|analysis" path="index.md"   # bad: matches everything
+   "second pair of eyes on this pull request"   -> grep "code review"
+   "tolerance for downtime, proper alerting"    -> grep "error budget"
+   "four hundred applicants for every role"     -> grep "talent acquisition"
    ```
 
-   Start narrow. If nothing matches, widen one term at a time, or grep the
-   division name when the domain is obvious (`| gis |`, `| security |`).
+   Each of those returns one or two lines, and the right specialist is among
+   them. Ask what a practitioner would call the problem, then grep that.
 
-2. **Read the specialist.** Matching lines give you an `id`. Read
-   `agents/<id>.md` in this skill directory. That file is the specialist's full
-   instructions.
+2. **One distinctive phrase, not every word OR'd together.** On the same
+   benchmark, OR-ing a task's words returns a median of **30 agents** and as
+   many as 127 -- nearly half the corpus -- while a single well-chosen query
+   returns a median of **3**, with no loss of recall. Generic words --
+   strategy, optimization, performance, analysis, conversion -- appear in dozens
+   of descriptions and bury the answer.
 
-   **Check the description before committing to it.** The index describes what
-   each specialist *claims*, in its own vocabulary, which may not be the
-   vocabulary of the task. A task about React bundle size does not match
-   "bundle" anywhere -- the frontend specialist's description says "performance
-   optimization". If a grep returns something that looks wrong, it probably is;
-   search a different term rather than using a poor match.
+   ```
+   Grep pattern="error budget" path="index.md"         # good: domain jargon
+   Grep pattern="app store" path="index.md"            # good: 2 matches
+   Grep pattern="strategy|analysis" path="index.md"    # bad: matches everything
+   ```
 
-3. **Adopt its standards for the task**, while continuing to follow the user's
+   Grep matches substrings, so prefer the shorter root: `hire` finds "hires" and
+   "hiring", while `hires` finds neither. Do not turn that into a habit of
+   OR-ing every stem -- measured, that finds the WRONG specialist more often
+   than it finds extra right ones.
+
+   Start narrow. If nothing matches, try a different translation before widening,
+   or grep the division when the domain is obvious (`| gis |`, `| security |`).
+
+3. **Read the specialist, and check it before committing.** Matching lines give
+   you an `id`. Read `agents/<id>.md` in this skill directory -- that file is the
+   specialist's full instructions.
+
+   A grep hit is not agreement. The index says what each specialist *claims*, so
+   read the description and satisfy yourself it addresses this problem. A task
+   about React bundle size matches "bundle" nowhere; the frontend specialist's
+   line says "performance optimization". If a result looks wrong, it probably
+   is -- search a different term rather than settle.
+
+4. **Adopt its standards for the task**, while continuing to follow the user's
    actual request and any higher-priority instructions. A specialist is a lens,
    not a new set of orders.
 
