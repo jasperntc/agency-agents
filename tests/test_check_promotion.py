@@ -57,12 +57,29 @@ RULES = THRESHOLDS["thresholds"]
 
 
 def git(args: list[str]) -> str:
-    return subprocess.run(["git"] + args, cwd=REPO_ROOT,
-                          capture_output=True).stdout.decode("utf-8", "replace")
+    """Raises on failure, deliberately.
+
+    Swallowing a git error here once made this whole file worthless: an
+    unresolvable ref produced empty output, which read as "no files changed",
+    which meant the Fable detection test asserted against an empty set and the
+    suite reported success. A detector test that cannot tell "found nothing"
+    from "looked at nothing" is not a test.
+    """
+    proc = subprocess.run(["git"] + args, cwd=REPO_ROOT, capture_output=True)
+    if proc.returncode != 0:
+        raise AssertionError(f"git {' '.join(args)} failed: "
+                             f"{proc.stderr.decode('utf-8', 'replace').strip()}")
+    return proc.stdout.decode("utf-8", "replace")
 
 
 def changed_between(base: str, head: str) -> dict[str, list[str]]:
-    """The same shape changed_agents() produces, for two arbitrary refs."""
+    """The same shape changed_agents() produces, for two arbitrary refs.
+
+    Both ends go through resolve_ref because actions/checkout materializes
+    branches as refs/remotes/origin/*, so a bare `archive/fable-upgrade` exists
+    on a developer machine and does not exist in CI.
+    """
+    base, head = cp.resolve_ref(base), cp.resolve_ref(head)
     in_head = set(cp.read_corpus(head))
     in_base = set(cp.read_corpus(base))
     out: dict[str, list[str]] = {"added": [], "modified": [], "removed": []}
@@ -90,6 +107,21 @@ class DetectsTheKnownRegression(unittest.TestCase):
             cls.changed, KNOWN_BAD_BASE, RULES, head_ref=KNOWN_BAD)
         cls.base_metrics = cp.agent_metrics(KNOWN_BAD_BASE)
         cls.bad_metrics = cp.agent_metrics(KNOWN_BAD)
+
+    def test_the_comparison_actually_ran(self):
+        """Guards against the whole class passing vacuously.
+
+        Every assertion below is about a set of failures. An empty set of
+        CHANGED AGENTS would satisfy several of them for the wrong reason, so
+        the input is checked before the output.
+        """
+        self.assertGreaterEqual(
+            len(self.changed["modified"]), 200,
+            "expected ~263 modified agents between the merge base and the "
+            "known-bad ref; got none, so the refs did not resolve",
+        )
+        self.assertEqual(len(self.rows), len(self.changed["added"])
+                         + len(self.changed["modified"]))
 
     def test_would_have_caught_the_fable_upgrade(self):
         self.assertGreaterEqual(
