@@ -1,0 +1,181 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "description": "270 specialist AI agents across 17 divisions. One plugin per division; enable only what a project needs.",
+  "name": "agency",
+  "owner": {
+    "name": "Jasper Ng",
+    "url": "https://github.com/jasperntc/agency-agents"
+  },
+  "plugins": [
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "academic",
+      "description": "6 academic specialists from The Agency: Anthropologist, Geographer, Historian, Narratologist, Psychologist, Statistician.",
+      "name": "academic",
+      "source": "./plugins/academic"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "design",
+      "description": "10 design specialists from The Agency: Brand Guardian, Image Prompt Engineer, Inclusive Visuals Specialist, Persona Walkthrough Specialist, UI Designer, UI Finish-Gate Reviewer, and more.",
+      "name": "design",
+      "source": "./plugins/design"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "engineering",
+      "description": "58 engineering specialists from The Agency: AI Data Remediation Engineer, AI Engineer, API Platform Engineer, Autonomous Optimization Architect, Backend Architect, CMS Developer, and more.",
+      "name": "engineering",
+      "source": "./plugins/engineering"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "finance",
+      "description": "5 finance specialists from The Agency: Bookkeeper & Controller, Financial Analyst, FP&A Analyst, Investment Researcher, Tax Strategist.",
+      "name": "finance",
+      "source": "./plugins/finance"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "game-development",
+      "description": "21 game development specialists from The Agency: Blender Add-on Engineer, Economy Designer, Game Audio Engineer, Game Designer, Godot Gameplay Scripter, Godot Multiplayer Engineer, and more.",
+      "name": "game-development",
+      "source": "./plugins/game-development"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "gis",
+      "description": "13 gis specialists from The Agency: 3D & Scene Developer, GIS Analyst, BIM/GIS Specialist, Cartography Designer, Drone/Reality Mapping Specialist, GeoAI/ML Engineer, and more.",
+      "name": "gis",
+      "source": "./plugins/gis"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "healthcare",
+      "description": "3 healthcare specialists from The Agency: Clinical Evidence Agent, Healthcare Innovation Strategist, Sovereign Health Systems Agent.",
+      "name": "healthcare",
+      "source": "./plugins/healthcare"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "marketing",
+      "description": "36 marketing specialists from The Agency: AEO Foundations Architect, Agentic Search Optimizer, AI Citation Strategist, App Store Optimizer, Baidu SEO Specialist, Bilibili Content Strategist, and more.",
+      "name": "marketing",
+      "source": "./plugins/marketing"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "paid-media",
+      "description": "7 paid media specialists from The Agency: Paid Media Auditor, Ad Creative Strategist, Paid Social Strategist, PPC Campaign Strategist, Programmatic & Display Buyer, Search Query Analyst, and more.",
+      "name": "paid-media",
+      "source": "./plugins/paid-media"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "product",
+      "description": "5 product specialists from The Agency: Behavioral Nudge Engine, Feedback Synthesizer, Product Manager, Sprint Prioritizer, Trend Researcher.",
+      "name": "product",
+      "source": "./plugins/product"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "project-management",
+      "description": "7 project management specialists from The Agency: Experiment Tracker, Jira Workflow Steward, Meeting Notes Specialist, Project Shepherd, Studio Operations, Studio Producer, and more.",
+      "name": "project-management",
+      "source": "./plugins/project-management"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "sales",
+      "description": "9 sales specialists from The Agency: Account Strategist, Sales Coach, Deal Strategist, Discovery Coach, Sales Engineer, Offer & Lead Gen Strategist, and more.",
+      "name": "sales",
+      "source": "./plugins/sales"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "security",
+      "description": "12 security specialists from The Agency: AI-Generated Code Security Auditor, Application Security Engineer, Security Architect, Blockchain Security Auditor, Cloud Security Architect, Compliance Auditor, and more.",
+      "name": "security",
+      "source": "./plugins/security"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "spatial-computing",
+      "description": "6 spatial computing specialists from The Agency: macOS Spatial/Metal Engineer, Terminal Integration Specialist, visionOS Spatial Engineer, XR Cockpit Interaction Specialist, XR Immersive Developer, XR Interface Architect.",
+      "name": "spatial-computing",
+      "source": "./plugins/spatial-computing"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "specialized",
+      "description": "57 specialized specialists from The Agency: Accounts Payable Agent, Agentic Identity & Trust Architect, Agents Orchestrator, Automation Governance Architect, Business Strategist, Change Management Consultant, and more.",
+      "name": "specialized",
+      "source": "./plugins/specialized"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "support",
+      "description": "6 support specialists from The Agency: Analytics Reporter, Executive Summary Generator, Finance Tracker, Infrastructure Maintainer, Legal Compliance Checker, Support Responder.",
+      "name": "support",
+      "source": "./plugins/support"
+    },
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "testing",
+      "description": "9 testing specialists from The Agency: Accessibility Auditor, API Tester, Evidence Collector, Performance Benchmarker, Reality Checker, Test Automation Engineer, and more.",
+      "name": "testing",
+      "source": "./plugins/testing"
+    }
+  ]
+}

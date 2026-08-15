@@ -54,3 +54,12 @@ jobs:
       # exactly once, every link resolving, and the advertised count correct.
       - name: README roster matches the registry
         run: python3 scripts/check_readme_roster.py
+
+      # The plugin marketplace is generated from the registry and COMMITTED,
+      # because Claude Code fetches plugin directories from the repository --
+      # uncommitted files do not exist as far as a consumer is concerned. That
+      # is the opposite of integrations/, which is gitignored precisely because
+      # it exists to be regenerated locally. Publishing is the function here, so
+      # CI verifies the committed copy is current instead.
+      - name: Plugin marketplace is current
+        run: python3 scripts/build_plugins.py --check
