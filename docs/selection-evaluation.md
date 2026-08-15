@@ -103,6 +103,48 @@ distinct divisions, 7 of them cases Phase 6 marks unreachable. It does not
 include the two `adversarial` cases — those land in the full run, and the pilot
 should not be read as covering them.
 
+## The full run (2026-08-15): 94.83%, and every failure in the wrong column
+
+58 cases, blind subagents, `claude-opus-5`. **55 correct, 3 wrong, 0 declined.**
+
+The number that matters is not the accuracy. It is where the failures landed:
+
+| | picked right | picked wrong |
+| --- | ---: | ---: |
+| literally reachable | 36 | **3** |
+| not reachable | **19** | **0** |
+
+**All 19 cases Phase 6 marked unreachable were answered correctly. All 3 failures
+were cases where the right agent was sitting in the search results already.**
+
+That inverts the assumption this phase was built on. Phase 6 measured a 67.24%
+literal-reachability floor and treated the missing third as the risk; Phase 8
+exists because of it. In practice that third recovered completely, and every
+error came from **choosing between candidates that were all present**. The
+failure mode is discrimination, not retrieval.
+
+### The three failures
+
+| case | expected | picked | why it went wrong |
+| --- | --- | --- | --- |
+| `c046` | `specialized-workflow-architect` | `testing-workflow-optimizer` | Two agents share the distinctive word **workflow** across different divisions. 7 query patterns, 10 tool calls, wrong division. |
+| `c058` | `testing-tool-evaluator` | `testing-test-automation-engineer` | Same division, adjacent scope. The model searched `tool evaluation` and still took the broader agent. |
+| `c010` | `godot-shader-developer` / `unity-shader-graph-artist` | `technical-artist` | **Disputed.** The task names no engine, so a general technical artist is arguably the better answer and the expectation may be too narrow. Recorded as failed and left unedited — changing a benchmark to make a run pass is the trap this project exists to avoid. Flagged for review as a case, not as a result. |
+
+Two of three are **collisions between similarly-named or adjacent agents**. That
+points at the corpus, not the skill: the fix is descriptions that disambiguate
+neighbours, not better prompting. It is the first finding here that argues for
+changing an agent rather than a gate.
+
+### Cost is where the variation actually lives
+
+Median 6 tool calls per pick, range 4&ndash;17 — a 4x spread among picks that all
+score identically. The expensive ones are informative: `c050` spent 17 calls and
+13 query patterns, `c038` spent 12 calls cycling through `stormwater`,
+`drainage`, `hydrolog`, `runoff|watershed|flood` before anything matched, and
+`c018` — the adversarial React case — took 10 calls, searching `bundle` first
+exactly as the skill predicts will fail. Correctness hides all of this.
+
 ## What the first pilot found (2026-08-15)
 
 Fifteen blind subagents, one per case, `claude-opus-5`. Recorded in
