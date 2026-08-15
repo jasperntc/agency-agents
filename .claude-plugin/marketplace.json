@@ -1,12 +1,22 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "description": "270 specialist AI agents across 17 divisions. One plugin per division; enable only what a project needs.",
+  "description": "270 specialist AI agents across 18 divisions. One plugin per division; enable only what a project needs.",
   "name": "agency",
   "owner": {
     "name": "Jasper Ng",
     "url": "https://github.com/jasperntc/agency-agents"
   },
   "plugins": [
+    {
+      "author": {
+        "name": "Jasper Ng",
+        "url": "https://github.com/jasperntc/agency-agents"
+      },
+      "category": "meta",
+      "description": "Search 270 Agency specialists and load only the one a task needs. Start here.",
+      "name": "router",
+      "source": "./plugins/router"
+    },
     {
       "author": {
         "name": "Jasper Ng",
