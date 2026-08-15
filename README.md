@@ -721,6 +721,7 @@ stays bash-only with no runtime dependencies.
 | [homogenization.md](docs/homogenization.md) | the case study this project is built around |
 | [conversion-determinism.md](docs/conversion-determinism.md) | why the same source must produce the same bytes |
 | [routing-evaluation.md](docs/routing-evaluation.md) | whether the right specialist can actually be found, and what that measurement is blind to |
+| [promotion.md](docs/promotion.md) | the per-change gate, and the ratchet that stops thresholds being loosened |
 | [consuming.md](docs/consuming.md) | using these agents from another project |
 | [metrics.md](docs/metrics.md) | the frozen baselines and how to reproduce them |
 

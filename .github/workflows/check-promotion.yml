@@ -1,0 +1,44 @@
+name: Check Promotion
+
+# Phase 7. Every other gate here measures the corpus, which is the right shape
+# for a mass rewrite and the wrong shape for the ordinary case: a pull request
+# editing three agents cannot move a median over 270, so it passes everything.
+# This one compares each CHANGED agent against its own previous self, and guards
+# the thresholds themselves against being loosened in the same commit.
+on:
+  pull_request:
+  workflow_dispatch:
+
+# Deliberately not run on push to main. There is no meaningful "what did this
+# change" question once a squash merge has landed -- the comparison happens
+# while the change is still a proposal, which is the only point at which the
+# answer can alter the outcome.
+
+jobs:
+  promotion:
+    name: Check Promotion
+    runs-on: ubuntu-latest
+    steps:
+      # fetch-depth: 0 for the merge base, for archive/fable-upgrade, and for
+      # the five historical commits the false-positive calibration replays.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Hard gate from the start, unlike the diversity and routing gates.
+      # Those pin thresholds around a single clean observation; this one is
+      # calibrated from both directions -- it fires on 20+ agents of a real
+      # 263-file regression and stays silent across 76 real agent changes from
+      # this repository's own history.
+      - name: Changed agents and threshold ratchet
+        run: python3 scripts/check_promotion.py --base "${{ github.base_ref }}"
+
+      - name: Regression tests
+        run: python3 tests/test_check_promotion.py

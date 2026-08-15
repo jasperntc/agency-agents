@@ -25,6 +25,8 @@ an intention, not a control.
 | Generated output is not tampered with | `conversion_manifest.py --check` | every PR touching an input |
 | The catalogue is not hand-edited | `build_registry.py --check` | every PR, push to main |
 | Agent identity cannot silently change | `check-identity.py` | every PR, push to main |
+| A change cannot degrade the agents it touches | `check_promotion.py` | every PR |
+| A threshold cannot be loosened silently | `check_promotion.py` ratchet | every PR |
 
 ### Calibration is the point
 
