@@ -1,0 +1,65 @@
+{
+  "_note": "Per-agent limits for scripts/check_promotion.py. Unlike every other gate here these are DIFF thresholds: they compare each changed agent against its own previous self, because a pull request touching three files cannot move a corpus median over 270 and so passes every corpus-level check regardless of what it does. Calibrated against archive/fable-upgrade, which is a genuine 263-file regression, so the numbers below are measured rather than chosen.",
+
+  "calibration": {
+    "_note": "Per-agent deltas measured across the real regression: 459dce8 -> archive/fable-upgrade, 263 agents in common. Corpus-level maximum pairwise similarity moved +0.0113 points across this same change and saw nothing.",
+    "delta_max_similarity": {"median": 0.3008, "p90": 0.8449, "p99": 3.8935, "max": 3.9267},
+    "delta_duplicated_word": {"median": 0.7658, "p90": 2.2767, "p99": 8.4362, "max": 9.4037},
+    "delta_words_pct": {"median": 11.1715, "p90": 56.7388, "max": 219.2308},
+    "agents_caught_at_current_thresholds": {
+      "max_similarity_delta_over_1.0": 21,
+      "duplicated_word_delta_over_2.0": 32,
+      "of_total": 263
+    },
+    "false_positives": {
+      "_note": "The other half of calibration. Five real changes from this repository's history -- 11 agents added, 65 modified -- replayed through these thresholds. Zero failures. The header-normalization commit is the hardest of them: rewriting section headings toward a common form is exactly the shape of edit that makes agents look alike, and it still passes. Pinned by tests/test_check_promotion.py so loosening cannot be justified by a false positive that was never there.",
+      "commits": ["9f3e401", "86a6695", "e4a0fbc", "c89557f", "8ef4923"],
+      "agents_added": 11,
+      "agents_modified": 65,
+      "failures": 0
+    },
+    "clean_corpus_absolute": {
+      "max_similarity_pct": {"median": 0.0341, "p90": 0.3283, "max": 4.7377},
+      "duplicated_word_pct": {"median": 0.0, "p90": 0.0, "max": 3.3159}
+    },
+    "known_bad_absolute": {
+      "max_similarity_pct": {"median": 0.4051, "p90": 1.4525, "max": 4.749},
+      "duplicated_word_pct": {"median": 0.8633, "p90": 2.3486, "max": 9.4037}
+    }
+  },
+
+  "thresholds": {
+    "agent.max_similarity_delta": {
+      "max": 1.0,
+      "observed_known_bad_median": 0.3008,
+      "catches_known_bad_agents": 21,
+      "rationale": "An agent may not become a full point more similar to some other agent than it was. Two specialists converging is a loss of specialization by definition -- there is no edit that improves an agent by making it more like a different one. Set above the known-bad MEDIAN (0.30) rather than at it: the aim is to fire on the agents a bad change hits hardest, not on every file it brushes. A typo fix or a reworded sentence cannot move this by a whole point; that needs a shared passage arriving."
+    },
+    "agent.duplicated_word_delta": {
+      "max": 2.0,
+      "observed_known_bad_median": 0.7658,
+      "catches_known_bad_agents": 32,
+      "rationale": "Share of an agent's words sitting inside a run that also appears verbatim in other agents. This is the sharpest per-agent signal, mirroring boilerplate.duplicated_word_pct at corpus level, which moved ~15x more than any similarity percentile under the known-bad change. Catches more agents than the similarity delta does, for the same reason."
+    },
+    "agent.duplicated_word_pct": {
+      "max": 8.0,
+      "observed_clean_max": 3.3159,
+      "observed_known_bad_max": 9.4037,
+      "rationale": "Absolute ceiling, and the only threshold here that sits STRICTLY BETWEEN clean and known-bad in the manner of metrics/thresholds.json. Its real job is new files: an agent added already made of text that exists elsewhere has no previous self to be compared against, so only an absolute bound can catch it."
+    },
+    "agent.max_similarity_pct": {
+      "max": 20.0,
+      "negative_control": true,
+      "observed_clean_max": 4.7377,
+      "observed_known_bad_max": 4.749,
+      "rationale": "NEGATIVE CONTROL, retained deliberately at the legacy WARN level from scripts/check-agent-originality.sh. It does NOT separate clean from known-bad -- 4.7377 against 4.7490, a gap of 0.0113 -- because it is the same maximum-of-a-distribution statistic that was blind to the Fable regression in the first place. It stays as an absolute backstop against a genuine near-duplicate being added, and it stays visible so that anyone reading this file sees a threshold that cannot do the job the deltas above do."
+    },
+    "agent.word_growth_pct": {
+      "max": 50.0,
+      "advisory": true,
+      "observed_known_bad_median": 11.1715,
+      "observed_known_bad_p90": 56.7388,
+      "rationale": "ADVISORY, never fails a build. A rewritten agent legitimately gets longer, and there is no honest way to tell growth that adds substance from growth that adds padding by counting words. Sustained bloat across the corpus is already caught by size.mean_words in metrics/thresholds.json. Reported so the cost is visible in the pull request rather than invisible."
+    }
+  }
+}
