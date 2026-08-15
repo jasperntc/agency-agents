@@ -1,0 +1,41 @@
+name: Check Security
+
+# Makes SECURITY.md's claims mechanical. Before this, it asserted four rules --
+# no credentials, no executable code in agent markdown, reviewed shell scripts,
+# report prompt injection -- and CI enforced none of them.
+#
+# No path filter: a credential or injection phrase can be added anywhere, and
+# scanning is cheap (270 files, 9 rules, under a second).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  security:
+    name: Check Security
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Fails on any match not explicitly allowlisted in
+      # policy/security-allowlist.json with a per-file, per-pattern
+      # justification. Currently 4 entries, all in the security division, which
+      # legitimately teaches what leaked keys and injection attempts look like.
+      - name: Secrets, injection and destructive commands
+        run: python3 scripts/check_security.py
+
+      # Informational: the set of external hosts agent content points at.
+      # Not gated -- an agent citing a vendor's docs is normal -- but a sudden
+      # new host is worth a human glance in the diff.
+      - name: External host inventory (informational)
+        continue-on-error: true
+        run: python3 scripts/check_security.py --hosts

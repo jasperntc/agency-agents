@@ -1,0 +1,30 @@
+{
+  "_note": "Allowlist for scripts/check_security.py. Every entry names the RULE, the exact FILE, a NARROW regex for the matched text, and WHY it is legitimate. Entries are deliberately not path-wide: exempting a whole file turns the scanner off for it permanently, including for a real secret added later. This corpus contains a security division whose job is to teach about secrets and injection, so a handful of true negatives is expected -- but if this list ever grows past a handful, tighten the rule instead of widening the allowlist. A scanner people learn to wave through is worse than no scanner.",
+
+  "allow": [
+    {
+      "rule": "injection.ignore_instructions",
+      "path": "engineering/engineering-prompt-engineer.md",
+      "match": "Ignore all previous instructions",
+      "why": "The agent's job is adversarial prompt testing. This string appears in a list of attacks it tells the reader to TEST AGAINST -- 'Tests adversarial inputs: \"Ignore all previous instructions\", roleplay bypass attempts, indirect injection'. Naming an attack is how you defend against it."
+    },
+    {
+      "rule": "secret.assignment",
+      "path": "engineering/engineering-technical-writer.md",
+      "match": "apiKey: 'YOUR_SEARCH_API_KEY'",
+      "why": "Placeholder in an Algolia DocSearch config example. The literal value is the word YOUR_SEARCH_API_KEY, which is instruction to the reader, not a credential."
+    },
+    {
+      "rule": "secret.assignment",
+      "path": "security/security-ai-generated-code-auditor.md",
+      "match": "apiKey: \"sk-proj-REALKEYVALUE\"",
+      "why": "A deliberate NEGATIVE example. The adjacent comment reads 'burned the moment it committed' -- the agent is teaching readers to recognise a key that has been leaked into client-side code. REALKEYVALUE is a placeholder, not a key."
+    },
+    {
+      "rule": "secret.private_key",
+      "path": "security/security-senior-secops.md",
+      "match": "-----BEGIN (RSA|EC|PGP) PRIVATE KEY-----",
+      "why": "Three PEM headers in a reference list of patterns the agent tells a secops engineer to SCAN FOR. They are detection signatures with no key material after them. An agent about finding leaked keys must be able to say what a leaked key looks like."
+    }
+  ]
+}
