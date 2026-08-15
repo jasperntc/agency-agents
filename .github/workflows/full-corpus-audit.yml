@@ -14,7 +14,8 @@ on:
 
 jobs:
   audit:
-    name: Whole-corpus validation
+    # Whole-corpus validation
+    name: Full Corpus Audit
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

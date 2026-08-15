@@ -19,7 +19,8 @@ on:
 
 jobs:
   registry:
-    name: registry.json is current
+    # registry.json is current
+    name: Check Registry
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -9,7 +9,8 @@ on:
 
 jobs:
   check-tools:
-    name: tools.json is the single source of truth
+    # tools.json is the single source of truth
+    name: Check Tools Consistency
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

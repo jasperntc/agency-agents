@@ -50,7 +50,8 @@ on:
 
 jobs:
   conversion:
-    name: Generated output matches the manifest
+    # Generated output matches the manifest
+    name: Check Conversion
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
