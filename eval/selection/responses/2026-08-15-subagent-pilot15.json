@@ -1,0 +1,25 @@
+{
+  "runner": "subagent",
+  "model": "claude-opus-5",
+  "scope": "pilot-15",
+  "recorded_at": "2026-08-15",
+  "cases_sha256": "676c2e068b84544fd3cfb0d82c75728690a0651018ee5c53cfb4b50a2d1881ea",
+  "notes": "Instrument check, not a result. One blind general-purpose subagent per case, spawned in parallel from a Claude Code session. Each received only the task text and a pointer to the shipped SKILL.md -- never expect, why, or kind. Case set is the deterministic `--sample 15` stratification, which puts exactly one case in each of 15 divisions and therefore does NOT test within-division discrimination; read the accuracy figure with that in mind. Two agents (c004, c042) prepended prose despite the two-line output contract, so picks were extracted by pattern rather than line position. tool_calls records how many tool uses each subagent spent, as an effort proxy.",
+  "picks": {
+    "c001": { "agent": "gis-cartography-designer", "tool_calls": 6, "queries": ["cartograph", "map design|label placement|choropleth", "color ramp|colour|color scale|data visualization"] },
+    "c002": { "agent": "marketing-app-store-optimizer", "tool_calls": 6, "queries": ["app store", "ASO|app.?store optimi", "screenshot|listing"] },
+    "c003": { "agent": "engineering-database-optimizer", "tool_calls": 6, "queries": ["query optimization", "index", "[Pp]ostgre"] },
+    "c004": { "agent": "security-penetration-tester", "tool_calls": 4, "queries": ["penetration|pentest|red team", "exploit|ethical hack|offensive security|vulnerabilit"] },
+    "c007": { "agent": "finance-tax-strategist", "tool_calls": 4, "queries": ["tax", "entity structur|accrual|deferr"] },
+    "c008": { "agent": "legal-document-review", "tool_calls": 8, "queries": ["contract review", "renewal", "contract", "| legal |", "procurement|vendor manage"] },
+    "c009": { "agent": "narrative-designer", "tool_calls": 7, "queries": ["branching narrative", "narrative design", "player agency|player choice", "| game-development |"] },
+    "c013": { "agent": "product-feedback-synthesizer", "tool_calls": 6, "queries": ["feedback", "sentiment", "survey|voice of the customer|qualitative"] },
+    "c016": { "agent": "paid-media-ppc-strategist", "tool_calls": 8, "queries": ["paid search", "Google Ads", "| paid-media |", "campaign structure|account structure|wasted spend"] },
+    "c022": { "agent": "sales-discovery-coach", "tool_calls": 5, "queries": ["discovery call", "discovery"] },
+    "c027": { "agent": "design-ux-researcher", "tool_calls": 10, "queries": ["user research", "adoption", "usability", "customer (interview|discovery|insight|feedback)", "product analytics|retention|engagement metric|funnel", "product manager|feature prioriti"] },
+    "c040": { "agent": "healthcare-clinical-evidence-agent", "tool_calls": 9, "queries": ["clinical trial", "efficacy", "evidence", "patient|drug|pharma|clinician", "| healthcare |", "subgroup|biostat|regulatory submission"] },
+    "c042": { "agent": "project-management-meeting-notes-specialist", "tool_calls": 6, "queries": ["meeting", "decision log|action item|decision record", "facilitat"] },
+    "c050": { "agent": "support-analytics-reporter", "tool_calls": 17, "queries": ["report automation", "product analytics", "release note", "recurring", "digest", "dashboard", "workflow automation", "weekly", "reporting", "| product |", "| project |", "business intelligence", "executive summar"] },
+    "c051": { "agent": "xr-immersive-developer", "tool_calls": 9, "queries": ["hand tracking", "immersive", "| spatial-computing |", "grab|gesture|Quest|Unity|Unreal|headset", "physics|manipulat|haptic|3D interaction"] }
+  }
+}

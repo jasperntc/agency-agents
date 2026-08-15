@@ -103,6 +103,56 @@ distinct divisions, 7 of them cases Phase 6 marks unreachable. It does not
 include the two `adversarial` cases — those land in the full run, and the pilot
 should not be read as covering them.
 
+## What the first pilot found (2026-08-15)
+
+Fifteen blind subagents, one per case, `claude-opus-5`. Recorded in
+`eval/selection/responses/2026-08-15-subagent-pilot15.json`.
+
+**The instrument works.** Blindness held, every pick was attributable to a case,
+and the cross-tab populated as designed. Two defects surfaced, both in the
+harness rather than the router:
+
+- **The output contract is not reliably held.** Two of fifteen subagents (c004,
+  c042) prepended a paragraph of justification despite "Reply with exactly two
+  lines and nothing else." A recorder that assumed line 1 was the answer would
+  have silently mis-read both. Picks are extracted by pattern, not position. The
+  prompt was deliberately **not** changed — editing it mid-run would break
+  comparability with the remaining cases.
+- **`--sample N` makes a small sample structurally easy.** Round-robin assigns
+  at most one case per division before revisiting any, so a 15-case sample lands
+  one case in each of 15 divisions and never makes two cases compete inside the
+  same one. Measured: **52 of the 58 full-set cases sit in a division with at
+  least one competing case; 0 of the pilot's 15 do.** Engineering carries 17
+  cases in the full set and 1 in the pilot.
+
+That second finding is the one that matters, because it means **the pilot's
+accuracy figure is not an estimate of the full set's.** Within-division
+discrimination — choosing one of 58 engineering specialists — is the harder half
+of routing, and the pilot barely exercises it. It also contains neither
+`adversarial` case. `sample()` now documents this bias in its own docstring.
+
+**The one result worth keeping** is the translation cell. All 7 pilot cases that
+Phase 6 marks literally unreachable were answered correctly, and the recorded
+queries show why — every one searched a term that does not appear in the task:
+
+| case | task never says | model searched |
+| --- | --- | --- |
+| c007 | tax | `tax` |
+| c022 | discovery | `discovery call` |
+| c042 | meeting, decision | `meeting`, `decision log\|action item` |
+| c002 | app store | `app store` |
+| c013 | feedback, sentiment | `feedback`, `sentiment` |
+
+That is direct evidence for the instruction added to the router skill in Phase
+6, on exactly the cases Phase 6 could not measure. It is a small sample and an
+easy one, but the mechanism is visible in the queries rather than inferred from
+the score.
+
+**Effort varies more than correctness does.** Median 6 tool calls per pick,
+range 4&ndash;17. `c050` spent 17 calls and 13 distinct query patterns before
+landing; `c022` needed 5 and 2. Both score identically. Cost is now recorded per
+pick precisely because the correct/wrong axis hides it.
+
 ## What this does not measure
 
 - **Whether the answer helps.** A correct pick is scored correct; nothing here

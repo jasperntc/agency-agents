@@ -114,6 +114,14 @@ def sample(cases: list[dict], n: int) -> list[dict]:
     avoid: case ids run in authoring order, so c001..c015 over-weights whichever
     divisions happened to get written first and would make a pilot's numbers a
     property of that accident.
+
+    KNOWN BIAS, measured on the first run: round-robin puts at most one case per
+    division until every division has one, so a small sample lands one case in
+    each of N divisions and never makes two cases compete inside the same one.
+    That removes within-division discrimination -- picking one of 58 engineering
+    specialists -- which is the harder half of routing. A sample drawn this way
+    is a fair breadth check and an EASY accuracy test; do not read a small
+    sample's accuracy as an estimate of the full set's.
     """
     registry = json.loads((REPO_ROOT / "registry.json").read_bytes().decode("utf-8"))
     division_of = {a["id"]: a["division"] for a in registry["agents"]}
@@ -191,6 +199,11 @@ def score_run(run: dict, cases: list[dict], reachable: dict[str, bool]) -> dict:
             "queries": pick.get("queries", []),
         })
 
+    # Effort, because correct/wrong hides a 3x spread in what a pick costs.
+    # A case answered in 2 queries and one answered in 13 both score correct;
+    # only one of them says the index found it quickly.
+    effort = sorted(p["tool_calls"] for p in picks.values() if "tool_calls" in p)
+
     answered = [r for r in rows if r["picked"] not in (None, "NONE")]
     declined = [r["case"] for r in rows if r["picked"] in (None, "NONE")]
     correct = [r for r in rows if r["correct"]]
@@ -209,6 +222,11 @@ def score_run(run: dict, cases: list[dict], reachable: dict[str, bool]) -> dict:
         "accuracy_when_answered_pct": round(
             100.0 * len(correct) / len(answered), 2) if answered else 0.0,
         "declined": declined,
+        "effort_tool_calls": {
+            "median": effort[len(effort) // 2] if effort else None,
+            "min": effort[0] if effort else None,
+            "max": effort[-1] if effort else None,
+        },
         "outcome_cells": {k: sorted(v) for k, v in cells.items()},
         "translation": {
             "_note": ("The cell scripts/eval_routing.py cannot measure. These "
@@ -321,6 +339,10 @@ def main() -> int:
         t = r["translation"]
         print(f"  translation recovery: {t['recovered']}/{t['unreachable_cases']} "
               f"({t['recovery_pct']}%) of cases Phase 6 cannot reach")
+        e = r["effort_tool_calls"]
+        if e["median"] is not None:
+            print(f"  tool calls per pick: median {e['median']}, "
+                  f"range {e['min']}-{e['max']}")
         if r["cases_missing"]:
             print(f"  NOT ANSWERED: {' '.join(r['cases_missing'])}")
         print()
