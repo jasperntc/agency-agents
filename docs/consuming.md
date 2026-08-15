@@ -15,7 +15,7 @@ Enable one plugin and get all 270 specialists, searched on demand:
 }
 ```
 
-The router is a **skill**, not 270 subagents. It costs about 800 tokens of
+The router is a **skill**, not 270 subagents. It costs about 1,100 tokens of
 instructions. When a task would benefit from a specialist, Claude greps a
 compact index, reads the one matching agent, and adopts its standards.
 
@@ -23,7 +23,7 @@ Compare that with enabling divisions as subagents:
 
 | approach | context cost before you type | delegation |
 | --- | ---: | --- |
-| `router@agency` | ~800 tokens | no — the specialist is read inline |
+| `router@agency` | ~1,100 tokens | no — the specialist is read inline |
 | `engineering@agency` | ~3,800 tokens (58 agents) | yes — real subagents |
 | all 17 divisions | **~17,900 tokens** (270 agents) | yes |
 
@@ -31,11 +31,13 @@ They complement each other. Use the router when you want the right perspective
 cheaply; use division plugins when you want to *delegate* to a subagent in
 parallel. Enabling both is reasonable.
 
-**Known limit:** the index describes each specialist in its own vocabulary,
-which is not always the task's vocabulary. A task about React bundle size does
-not match "bundle" anywhere — the frontend specialist says "performance
-optimization". The skill tells Claude to verify a match rather than trust the
-grep, and measuring this properly is what Phase 6 (routing evaluation) is for.
+**Known limit, now measured.** The index describes each specialist in its own
+vocabulary, which is not always the task's. On a 58-task benchmark, only **67%
+of tasks share even one word** with the right specialist's index line — the
+other third are reachable only if Claude first translates the request into the
+field's terms ("second pair of eyes on this pull request" → `code review`). The
+skill teaches that translation explicitly, and the numbers in it are the
+measured ones. See [routing-evaluation.md](routing-evaluation.md).
 
 ## 1. Link the repository (division plugins)
 

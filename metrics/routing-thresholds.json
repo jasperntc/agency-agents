@@ -1,0 +1,47 @@
+{
+  "_note": "Gate configuration for scripts/eval_routing.py --gate. Read metrics/thresholds.json first: the diversity thresholds there are each pinned STRICTLY BETWEEN a measured clean baseline and a measured known-bad corpus, which is the strongest form of calibration available. These thresholds deliberately do NOT claim that, because the measurement below shows there is no such separation to claim. They are one-sided guards around a single clean observation, with the margin stated per entry.",
+
+  "known_bad_does_not_separate": {
+    "_note": "Recorded because a threshold file that silently omitted this would imply a calibration that was never done.",
+    "measured": {
+      "clean_head": {"literal_reachability_pct": 67.24, "bag_lift": 58.62, "bag_control_pct": 8.62},
+      "merge_base_459dce8": {"literal_reachability_pct": 65.52, "bag_lift": 58.62, "bag_control_pct": 6.9},
+      "archive_fable_upgrade": {"literal_reachability_pct": 65.52, "bag_lift": 58.62, "bag_control_pct": 6.9}
+    },
+    "finding": "The Fable upgrade rewrote 263 of 264 agent bodies and moved nine corpus-diversity dimensions by up to +1442%. It moved every routing metric by exactly zero -- the known-bad ref and its own merge base are identical on all of them. Routing is computed from frontmatter descriptions; the upgrade rewrote bodies. The two instruments are blind to each other's failure mode, which is precisely why this project reports metrics individually and refuses an aggregate score.",
+    "consequence": "Do not treat a passing routing gate as evidence the corpus is healthy, and do not treat a passing diversity gate as evidence routing works. See docs/routing-evaluation.md."
+  },
+
+  "thresholds": {
+    "cases.total": {
+      "min": 58,
+      "observed": 58,
+      "rationale": "A ratchet on benchmark SIZE, not on quality. Every other number here improves if you delete the cases that fail, so the cheapest way to make routing look good is to shrink the benchmark. This makes that a build failure. Raise it when cases are added; it must never be lowered."
+    },
+    "literal_reachability.pct": {
+      "min": 55.0,
+      "observed": 67.24,
+      "rationale": "Share of tasks where some word the user typed appears in the right agent's index line. Falls if descriptions drift toward generic marketing language and stop naming the concrete problems they solve. Margin is wide because adding deliberately hard cases lowers this legitimately -- it guards against description rot, not against an honest benchmark getting harder."
+    },
+    "strategies.bag.lift_over_control": {
+      "min": 45.0,
+      "observed": 58.62,
+      "rationale": "Hit rate minus the same query's score against the wrong agent. The one number that measures discrimination rather than match volume. Collapses toward zero if descriptions converge on shared vocabulary, which is the failure mode that would make the index useless while every individual description still reads well."
+    },
+    "negative_control.bag_hit_pct": {
+      "max": 20.0,
+      "observed": 8.62,
+      "rationale": "How often a task's words hit an agent that is definitively wrong for it. Rises when descriptions become interchangeable. Capped well above the observation because this is noisy at 58 cases: one extra coincidental match moves it 1.7 points."
+    },
+    "benchmark_leakage.median_overlap": {
+      "max": 0.1,
+      "observed": 0.0271,
+      "rationale": "Token overlap between a case and its expected agent's description. Guards the BENCHMARK, not the corpus. A case written by copying the agent's own wording scores highly on every metric here while proving nothing, so this fails the build before that can become the norm."
+    },
+    "benchmark_leakage.max_overlap": {
+      "max": 0.35,
+      "observed": 0.125,
+      "rationale": "The single worst-leaking case. The median can stay healthy while one case is written straight out of the description, and that case would then be quoted as evidence routing works."
+    }
+  }
+}

@@ -720,6 +720,8 @@ stays bash-only with no runtime dependencies.
 | [corpus-metrics.md](docs/corpus-metrics.md) | corpus-level diversity measurement |
 | [homogenization.md](docs/homogenization.md) | the case study this project is built around |
 | [conversion-determinism.md](docs/conversion-determinism.md) | why the same source must produce the same bytes |
+| [routing-evaluation.md](docs/routing-evaluation.md) | whether the right specialist can actually be found, and what that measurement is blind to |
+| [consuming.md](docs/consuming.md) | using these agents from another project |
 | [metrics.md](docs/metrics.md) | the frozen baselines and how to reproduce them |
 
 `registry.json` is the generated machine-readable catalogue of every agent —
