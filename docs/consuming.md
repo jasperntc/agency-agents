@@ -2,7 +2,42 @@
 
 Three ways, depending on how much you want the project to control.
 
-## 1. Link the repository (recommended)
+## 0. The router — start here
+
+Enable one plugin and get all 270 specialists, searched on demand:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "agency": { "source": { "source": "github", "repo": "jasperntc/agency-agents" } }
+  },
+  "enabledPlugins": { "router@agency": true }
+}
+```
+
+The router is a **skill**, not 270 subagents. It costs about 800 tokens of
+instructions. When a task would benefit from a specialist, Claude greps a
+compact index, reads the one matching agent, and adopts its standards.
+
+Compare that with enabling divisions as subagents:
+
+| approach | context cost before you type | delegation |
+| --- | ---: | --- |
+| `router@agency` | ~800 tokens | no — the specialist is read inline |
+| `engineering@agency` | ~3,800 tokens (58 agents) | yes — real subagents |
+| all 17 divisions | **~17,900 tokens** (270 agents) | yes |
+
+They complement each other. Use the router when you want the right perspective
+cheaply; use division plugins when you want to *delegate* to a subagent in
+parallel. Enabling both is reasonable.
+
+**Known limit:** the index describes each specialist in its own vocabulary,
+which is not always the task's vocabulary. A task about React bundle size does
+not match "bundle" anywhere — the frontend specialist says "performance
+optimization". The skill tells Claude to verify a match rather than trust the
+grep, and measuring this properly is what Phase 6 (routing evaluation) is for.
+
+## 1. Link the repository (division plugins)
 
 Add to the project's `.claude/settings.json`:
 

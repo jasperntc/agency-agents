@@ -1,0 +1,8 @@
+{
+  "author": {
+    "name": "Jasper Ng",
+    "url": "https://github.com/jasperntc/agency-agents"
+  },
+  "description": "Search 270 Agency specialists and load only the one a task needs. One skill instead of hundreds of subagent listings.",
+  "name": "router"
+}
