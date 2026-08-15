@@ -29,12 +29,14 @@ JSON="divisions.json"
 # into the repo), not a source-agent category. strategy/ holds playbooks and
 # runbooks (no agent frontmatter), not agents. Neither is a division — they must
 # never be scanned as source-agent categories.
-# docs/ and metrics/ belong to the skill engineering layer: docs/ is prose,
-# metrics/ holds generated measurement records (corpus inventory, diversity
-# baselines). Neither contains agent frontmatter. Any future engineering-layer
-# directory added at the repo root must be registered here too, or this check
-# will correctly report it as an unregistered division.
-NON_DIVISION_DIRS=(examples scripts integrations strategy docs metrics tests schema)
+# docs/, metrics/, tests/ and schema/ belong to the skill engineering layer:
+# prose, generated measurement records, tests, and the frontmatter contract.
+# plugins/ is the GENERATED Claude Code marketplace — it contains copies of
+# agent files under plugins/<division>/agents/, so it must never be scanned as a
+# source-agent category or every agent would be counted twice.
+# Any future directory added at the repo root must be registered here too, or
+# this check will correctly report it as an unregistered division.
+NON_DIVISION_DIRS=(examples scripts integrations strategy docs metrics tests schema plugins)
 
 errors=0
 fail() { echo "ERROR $*"; errors=$((errors + 1)); }
