@@ -135,7 +135,7 @@ Building the future, one commit at a time.
 | 🗄️ [Database Optimizer](engineering/engineering-database-optimizer.md) | Schema design, query optimization, indexing strategies | PostgreSQL/MySQL tuning, slow query debugging, migration planning |
 | 🌿 [Git Workflow Master](engineering/engineering-git-workflow-master.md) | Branching strategies, conventional commits, advanced Git | Git workflow design, history cleanup, CI-friendly branch management |
 | 🏛️ [Software Architect](engineering/engineering-software-architect.md) | System design, DDD, architectural patterns, trade-off analysis | Architecture decisions, domain modeling, system evolution strategy |
-| 🛡️ [SRE](engineering/engineering-sre.md) | SLOs, error budgets, observability, chaos engineering | Production reliability, toil reduction, capacity planning |
+| 🛡️ [SRE (Site Reliability Engineer)](engineering/engineering-sre.md) | SLOs, error budgets, observability, chaos engineering | Production reliability, toil reduction, capacity planning |
 | 🧬 [AI Data Remediation Engineer](engineering/engineering-ai-data-remediation-engineer.md) | Self-healing pipelines, air-gapped SLMs, semantic clustering | Fixing broken data at scale with zero data loss |
 | 🔧 [Data Engineer](engineering/engineering-data-engineer.md) | Data pipelines, lakehouse architecture, ETL/ELT | Building reliable data infrastructure and warehousing |
 | 🔗 [Feishu Integration Developer](engineering/engineering-feishu-integration-developer.md) | Feishu/Lark Open Platform, bots, workflows | Building integrations for the Feishu ecosystem |
@@ -376,7 +376,7 @@ The unique specialists who don't fit in a box.
 | 📚 [Corporate Training Designer](specialized/corporate-training-designer.md) | Enterprise training, curriculum development | Designing training systems and learning programs |
 | 🌱 [Personal Growth Mentor](specialized/personal-growth-mentor.md) | Goal clarity, habit systems, accountability, life strategy | Cross-domain personal development without motivational fluff |
 | 🏛️ [Government Digital Presales Consultant](specialized/government-digital-presales-consultant.md) | China ToG presales, digital transformation | Government digital transformation proposals and bids |
-| ⚕️ [Healthcare Marketing Compliance](specialized/healthcare-marketing-compliance.md) | China healthcare advertising compliance | Healthcare marketing regulatory compliance |
+| ⚕️ [Healthcare Marketing Compliance Specialist](specialized/healthcare-marketing-compliance.md) | China healthcare advertising compliance | Healthcare marketing regulatory compliance |
 | 🎯 [Recruitment Specialist](specialized/recruitment-specialist.md) | Talent acquisition, recruiting operations | Recruitment strategy, sourcing, and hiring processes |
 | 🎓 [Study Abroad Advisor](specialized/study-abroad-advisor.md) | International education, application planning | Study abroad planning across US, UK, Canada, Australia |
 | 🔗 [Supply Chain Strategist](specialized/supply-chain-strategist.md) | Supply chain management, procurement strategy | Supply chain optimization and procurement planning |
@@ -472,7 +472,7 @@ Building worlds, systems, and experiences across every major engine.
 
 | Agent | Specialty | When to Use |
 |-------|-----------|-------------|
-| 🧩 [Blender Addon Engineer](game-development/blender/blender-addon-engineer.md) | Blender Python (`bpy`), custom operators/panels, asset validators, exporters, pipeline automation | Building Blender add-ons, asset prep tools, export workflows, and DCC pipeline automation |
+| 🧩 [Blender Add-on Engineer](game-development/blender/blender-addon-engineer.md) | Blender Python (`bpy`), custom operators/panels, asset validators, exporters, pipeline automation | Building Blender add-ons, asset prep tools, export workflows, and DCC pipeline automation |
 
 #### Roblox Studio
 
@@ -513,7 +513,7 @@ Mapping the Earth, analyzing the built world, and extracting intelligence from g
 | 🏗️ [BIM/GIS Specialist](gis/gis-bim-specialist.md) | Revit/IFC to GIS, indoor mapping, digital twin architecture, facility management | Smart campus, airport digital twins, indoor navigation, building operations |
 | 🏔️ [3D & Scene Developer](gis/gis-3d-scene-developer.md) | Cesium, ArcGIS Scene Viewer, 3D Tiles, point clouds, terrain visualization | 3D city scenes, terrain flyovers, point cloud web viewers, OAuth-gated scene sharing |
 | 📊 [Spatial Data Scientist](gis/gis-spatial-data-scientist.md) | Spatial statistics, clustering, regression, interpolation, point pattern analysis | Hotspot detection, spatial modeling, predictive analytics, research-grade analysis |
-| 🛸 [Drone/Reality Mapping](gis/gis-drone-reality-mapping.md) | Photogrammetry, orthomosaic, DTM/DSM, point cloud classification, 3D mesh | Drone survey processing, reality capture, construction monitoring, environmental mapping |
+| 🛸 [Drone/Reality Mapping Specialist](gis/gis-drone-reality-mapping.md) | Photogrammetry, orthomosaic, DTM/DSM, point cloud classification, 3D mesh | Drone survey processing, reality capture, construction monitoring, environmental mapping |
 | 🌐 [Web GIS Developer](gis/gis-web-gis-developer.md) | MapLibre GL JS, ArcGIS JS API, Leaflet, real-time dashboards, REST APIs | Building interactive web maps, operational dashboards, real-time data visualization |
 | 🎨 [Cartography Designer](gis/gis-cartography-designer.md) | Color theory, typography, basemap design, visual hierarchy, print and web aesthetics | Making maps beautiful and readable, colorblind-safe palettes, professional map layouts |
 
@@ -695,11 +695,36 @@ Each agent is designed with:
 
 ## 📊 Stats
 
-- 🎭 **230+ Specialized Agents** across every division
+- 🎭 **270 Specialized Agents** across every division
 - 📝 **10,000+ lines** of personality, process, and code examples
 - ⏱️ **Months of iteration** from real-world usage
 - 🌟 **Battle-tested** in production environments
 - 💬 **50+ requests** in first 12 hours on Reddit
+
+> The agent count above is **checked in CI** against `registry.json`
+> (`scripts/check_readme_roster.py`), along with every roster link below. It
+> previously read "230+" while 270 shipped.
+
+---
+
+## 🔬 Engineering layer
+
+This fork adds a measurement and validation layer alongside the agent library.
+It does not change how agents are written or installed — the distribution path
+stays bash-only with no runtime dependencies.
+
+| doc | what it covers |
+|-----|----------------|
+| [identity.md](docs/identity.md) | the immutable `id` every agent carries, and why a third identifier was needed |
+| [frontmatter.md](docs/frontmatter.md) | the frontmatter contract, the four parsers, and where they disagree |
+| [corpus-metrics.md](docs/corpus-metrics.md) | corpus-level diversity measurement |
+| [homogenization.md](docs/homogenization.md) | the case study this project is built around |
+| [conversion-determinism.md](docs/conversion-determinism.md) | why the same source must produce the same bytes |
+| [metrics.md](docs/metrics.md) | the frozen baselines and how to reproduce them |
+
+`registry.json` is the generated machine-readable catalogue of every agent —
+derived from frontmatter, `divisions.json` and git history, and regenerated by
+CI so it cannot drift.
 
 ---
 

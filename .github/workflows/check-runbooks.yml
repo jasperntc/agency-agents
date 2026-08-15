@@ -10,7 +10,8 @@ on:
 
 jobs:
   check-runbooks:
-    name: runbook rosters reference real agent slugs
+    # runbook rosters reference real agent slugs
+    name: Check Runbooks Consistency
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

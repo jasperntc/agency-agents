@@ -34,7 +34,8 @@ on:
 
 jobs:
   lint:
-    name: Validate agent frontmatter and structure
+    # Validate agent frontmatter and structure
+    name: Lint Agent Files
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

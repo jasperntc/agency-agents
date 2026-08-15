@@ -1,0 +1,56 @@
+name: Check Registry
+
+# registry.json is DERIVED. It is committed so consumers can fetch it directly,
+# but it must never be hand-edited -- this job regenerates it from source and
+# fails if the committed copy is stale.
+#
+# That combination is the point: a committed catalogue is useful, a
+# hand-maintained one drifts. This repository has already seen the failure once,
+# in a README that advertised "230+ agents" while 270 shipped.
+#
+# No path filter: the registry derives from agent frontmatter, divisions.json
+# AND git history, so a commit that touches none of those can still change it
+# (provenance counts, last_modified).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  registry:
+    # registry.json is current
+    name: Check Registry
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history: provenance (created, last_modified, commit count) is
+          # read from the git log, so a shallow clone would produce a different
+          # registry and fail spuriously.
+          fetch-depth: 0
+          # On a pull request, check out the CONTRIBUTOR'S HEAD rather than the
+          # default merge commit. Provenance is history-derived, so building
+          # from the merge would measure a commit the contributor cannot
+          # regenerate against -- they would be told their registry is stale
+          # with no local reproduction. Empty on push, where it is ignored.
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      - name: Registry is up to date
+        run: python3 scripts/build_registry.py --check registry.json
+
+      # The README roster is validated, not generated. Three of its five columns
+      # (emoji, Specialty, When to Use) are editorial and exist nowhere else --
+      # 0 of 270 Specialty cells match the frontmatter description, and 47 of
+      # 270 emoji deliberately differ. Generating would delete that writing;
+      # this enforces the properties that matter instead: every agent listed
+      # exactly once, every link resolving, and the advertised count correct.
+      - name: README roster matches the registry
+        run: python3 scripts/check_readme_roster.py

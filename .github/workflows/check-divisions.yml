@@ -9,7 +9,8 @@ on:
 
 jobs:
   check-divisions:
-    name: divisions.json is the single source of truth
+    # divisions.json is the single source of truth
+    name: Check Divisions Consistency
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

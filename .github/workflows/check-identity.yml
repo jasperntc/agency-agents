@@ -15,7 +15,8 @@ on:
 
 jobs:
   identity:
-    name: Ids are present, unique and immutable
+    # Ids are present, unique and immutable
+    name: Check Identity
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

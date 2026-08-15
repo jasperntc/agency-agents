@@ -42,7 +42,8 @@ on:
 
 jobs:
   schema:
-    name: Frontmatter validates against the schema
+    # Frontmatter validates against the schema
+    name: Check Agent Schema
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -19,7 +19,8 @@ on:
 
 jobs:
   metrics:
-    name: Corpus diversity gate
+    # Corpus diversity gate
+    name: Corpus Metrics
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
