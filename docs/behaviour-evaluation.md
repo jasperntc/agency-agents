@@ -212,6 +212,83 @@ wrong. Read it like `effort_tool_calls` in the selection harness.
 The four unplanted defects were promoted into `planted`, so the recall
 denominator now matches what is actually in the fixtures.
 
+## The second pilot (2026-08-16, v2): the right answer, for the wrong reason
+
+12 blind subagents under the line-citation contract. Recorded in
+`eval/behaviour/responses/2026-08-16-subagent-pilot12-v2.json`. Output contract
+held **12 of 12**, against 12 of 15 in the selection pilot.
+
+| condition | recall | lines cited | density | vs `none` |
+| --- | ---: | ---: | ---: | ---: |
+| `none` | 10/13 (76.92%) | 15 | 0.667 | |
+| `current` | 12/13 (92.31%) | 15 | 0.800 | **+15.39** |
+| `flattened` | 11/13 (84.62%) | 13 | 0.846 | +7.70 |
+
+That is exactly the shape this phase was built to detect: the real agent ahead of
+both controls, in the right order, with the generic control in between. **It is
+an artifact, and every point of it dissolves under a hand audit.**
+
+### Auditing each scored miss against what the answer actually says
+
+| cell | scored miss | what the answer says | verdict |
+| --- | --- | --- | --- |
+| `b004/none` | race (key L22–27) | "**L21**: The check-then-insert … is a TOCTOU race" | artifact |
+| `b002/none` | negative limit (key L14) | "**L13**: … and negative values are not rejected" | artifact |
+| `b002/flattened` | negative limit (key L14) | "**L13**: … non-numeric **or negative** value … bypasses the intended bound" | artifact |
+| `b004/*` | `bool` guard (key L14) | not mentioned by any condition | **genuine** |
+
+Credit the three artifacts and every condition lands on **12/13, 92.31%**. No
+separation whatsoever. Each one missed exactly the same single defect.
+
+### The two mechanisms, both mine
+
+- **Granularity.** A reviewer writes one finding covering two adjacent defects —
+  "`int()` is unguarded **and** negative values are not rejected" — because that
+  is how people write. The key splits them across L13 and L14, so one is scored
+  a miss. The answer key's granularity and a human's are different things.
+- **Deduplication.** `b004/none` filed two distinct findings at L21. `cited_lines`
+  dedups, so the second is erased before scoring. That was my choice, made to
+  stop a repeated citation inflating `lines_cited`, and it silently destroys a
+  correct diagnosis instead.
+
+### Why this is worse than the v1 failure
+
+The v1 pilot produced an obviously wrong answer — the generic control beating the
+real agent by 25 points — so nobody could have acted on it. **This one produced
+the expected answer.** A run that confirms the hypothesis is the one least likely
+to get audited, and it took a line-by-line reading to find that the entire
+margin was mechanical.
+
+Two pilots, two headline numbers, both artifacts. The instrument is not yet
+measuring agent quality; it has so far only measured its own defects — which is
+what pilots are for, and is also the reason no behavioural number from this
+repository should be quoted yet.
+
+### What the run does establish
+
+- **The contract works.** 12/12 compliance, and `contract_pct` is now a live
+  metric that would expose any drop.
+- **Line citation beat prose matching.** The v1 oracle scored the control above
+  the real agent; v2 at least ordered them plausibly, and its errors are
+  identifiable by reading rather than invisible.
+- **Three of four tasks are at full recall in every condition.** `b001` 3/3,
+  `b003` 4/4 across the board. These fixtures cannot separate conditions because
+  the defects are too findable — the selection benchmark's ceiling problem,
+  arriving in a new phase within a day.
+- **On these tasks the agent files add nothing detectable.** That is a real,
+  if narrow, negative finding, and it is confounded by the ceiling above, so it
+  is not yet evidence that the agents are worthless. It is evidence that four
+  easy fixtures cannot tell.
+
+### What has to change before a third run
+
+Harder fixtures, where a non-specialist plausibly misses something a specialist
+catches; the `bool`/`int` guard is the only defect in this set with that
+property, and every condition missed it. And a scoring rule that survives normal
+human phrasing — most likely crediting a defect when *any* cited line falls
+within a small window of it, with the window recorded per defect rather than
+inferred.
+
 ## What is bound to a run
 
 `tasks_sha256` covers `(task id, prompt, sha256 of the fixture)` — the question
