@@ -220,6 +220,35 @@ class RoutingGate(unittest.TestCase):
                 f"ROUTER_SKILL text in scripts/build_plugins.py and regenerate.",
             )
 
+    def test_consumer_docs_quote_the_live_measurement(self):
+        """The same rule for prose a consumer reads before installing anything.
+
+        docs/consuming.md quotes reachability to argue the router is worth its
+        context cost. It went stale the moment the benchmark was corrected --
+        it said 67% while the skill said 66% -- and nothing caught it, because
+        the test above only ever looked at SKILL.md. Found by accident while
+        diffing an old branch before deleting it.
+
+        Deliberately loose about WHICH figures appear: a doc may quote a subset
+        or none. It is strict that any figure it does quote is the current one,
+        which is the only property that matters.
+        """
+        pct = round(self.report["literal_reachability"]["pct"])
+        total = self.report["cases"]["total"]
+        for rel in ("docs/consuming.md", "README.md"):
+            path = REPO_ROOT / rel
+            if not path.exists():
+                continue
+            text = " ".join(path.read_bytes().decode("utf-8").split())
+            if "% of tasks" in text:
+                self.assertIn(
+                    f"**{pct}% of tasks", text,
+                    f"{rel} quotes a stale literal reachability. Current: {pct}%")
+            if "-task benchmark" in text:
+                self.assertIn(
+                    f"{total}-task benchmark", text,
+                    f"{rel} quotes a stale benchmark size. Current: {total}")
+
     # --- determinism ----------------------------------------------------------
 
     def test_report_is_byte_stable(self):
