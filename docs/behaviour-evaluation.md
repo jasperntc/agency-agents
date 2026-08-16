@@ -36,27 +36,16 @@ file scores like the real one, no result from this harness means anything. The
 control keeps the real frontmatter and replaces only the body, so a score drop
 cannot be blamed on a malformed file.
 
-## Recall alone is a trap
+## Recall alone would be a trap
 
-An answer listing twenty possible problems will hit the planted one by accident.
+An answer listing twenty possible problems hits the planted one by accident.
 That is the same failure as OR-ing every word in the routing harness: widen the
 answer and the hit rate rises for free.
 
-So every task also names **`clean` aspects** — things deliberately *correct* in
-the fixture. Claiming one is a false claim.
-
-```
-found_pct   planted defects identified
-false_pct   deliberately-correct aspects claimed as broken
-lift        found_pct − false_pct
-```
-
-`lift` is the only figure comparable between conditions, for exactly the reason
-`lift_over_control` is in [routing-evaluation.md](routing-evaluation.md).
-
-In `b002` the SQL injection is real, and the `limit` is deliberately
-parameterised **and** clamped, and the connection is closed in a `finally`.
-A reviewer padding its list will claim one of those and pay for it.
+The first design answered this with `clean` aspects — code asserted to be
+correct, where a claim was a false claim. **It did not survive its own pilot**,
+and the replacement is `defect_density` rather than a precision score. Both are
+explained under [Precision was dropped, not fixed](#precision-was-dropped-not-fixed).
 
 ## Why planted defects, and not "generate code and run the tests"
 
@@ -73,30 +62,27 @@ that spots every bug and writes terrible code scores perfectly here. Extending
 to generated-and-executed artifacts is the obvious next increment, and it needs
 a sandbox story first.
 
-## Matching is literal, and that is a deliberate choice
+## The oracle is a line number
 
-No model decides whether a finding "counts". A judge would put rung 4 evidence
+No model decides whether a finding "counts" — that would put rung 4 evidence
 where rung 1 belongs and make every score depend on a second model nobody
-calibrated. The cost is that phrasing lists are maintained by hand — visible
-work rather than invisible drift.
+calibrated. But the first attempt at a literal oracle matched **prose** against
+hand-written phrasing lists, and the pilot below destroyed it.
 
-Two traps found while building this, both by
-`tests/test_eval_behaviour.py` before a single answer was collected:
+Three traps were caught by `tests/test_eval_behaviour.py` before any answer was
+collected, and they are worth keeping because they are the shape of the problem:
 
-- **Substring matching scored `SQLi` inside `sqlite3`.** Any answer mentioning
-  the import counted as finding a SQL injection. Matching now requires a word
-  boundary at each alphanumeric end — and only at alphanumeric ends, so
-  `.aggregate` and similar still fire, since a blanket `\b…\b` would make them
-  silently never match, which is the worse failure.
-- **A phrasing that is a literal token of the defect cannot distinguish
-  diagnosis from quotation.** `key={index}` appears in the fixture, so matching
-  it scored any answer that quoted the line. The surviving phrasings are all
-  diagnostic language — *index as key*, *stable key* — which require describing
-  the problem rather than echoing it.
+- **`Sum(`**, listed as a phrasing for "aggregate in the database", matched the
+  fixture's own `sum(o.total_cents ...)` — so quoting the *broken* line scored as
+  recommending the fix.
+- **`SQLi` matched inside `sqlite3`**, so mentioning the import scored a SQL
+  injection find.
+- **`key={index}` is a literal token of the defect**, so matching it could not
+  distinguish diagnosis from quotation.
 
-A third was caught the same way: `Sum(` as a phrasing for "aggregate in the
-database" matched the fixture's own `sum(o.total_cents ...)`, so quoting the
-broken line scored as recommending the fix. Exactly backwards.
+Fixing all three left the oracle still fundamentally unsound, which the pilot
+then demonstrated. Scoring is now by **location**: every `FINDING` carries
+`L<line>`, and a defect is found when a cited line falls in its range.
 
 ## The first pilot (2026-08-16) found the instrument invalid
 
