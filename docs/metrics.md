@@ -39,14 +39,31 @@ without touching the working tree — including branches such as
 
 ## Baseline
 
-`metrics/inventory-baseline.json`, taken at tag `upstream-baseline-2026-08-13`
-(the fork point, byte-identical to upstream `main`).
+`metrics/inventory-baseline.json` is a **working-tree snapshot**, not a frozen
+fork-point one. Its `ref` field reads `WORKING_TREE`, and CI runs
+`--check` against it, so it has to track current state or the check could never
+pass. It has been deliberately re-baselined twice — after the Step 0.4 source
+repairs, and again when Phase 3 added `id` to all 270 files.
+
+The fork point is tag `upstream-baseline-2026-08-13` (byte-identical to upstream
+`main`), measurable any time with `--ref` and useful for exactly one comparison:
+
+| Measure | fork point | committed baseline |
+| --- | ---: | ---: |
+| Agents | 270 | 270 |
+| Divisions | 17 | 17 |
+| Total body words | 502,635 | **502,634** |
+| Agents carrying an `id` | 0 | **270** |
+
+The one-word difference is Step 0.4 repairing real source defects; the `id`
+column is Phase 3. Both are why the baseline moved, and both are the reason this
+file cannot be described as the fork point.
 
 | Measure | Value |
 | --- | --- |
 | Agents | 270 |
 | Divisions | 17 |
-| Total body words | 502,635 |
+| Total body words | 502,634 |
 | Duplicate filename stems | 0 |
 | Duplicate name-slugs | 0 |
 | Stem ≠ name-slug | 198 (73%) |
