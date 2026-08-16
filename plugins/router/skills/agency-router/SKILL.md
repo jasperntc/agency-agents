@@ -21,7 +21,7 @@ right one, then load only that one.
 
 1. **Translate the task into the field's own words before searching.** Each line
    describes a specialist the way that specialist's field talks, which is
-   usually not how the user talks. Measured on a 58-task benchmark, only **67%
+   usually not how the user talks. Measured on a 58-task benchmark, only **66%
    of tasks share even one word** with the right specialist's line, and phrases
    lifted straight out of the user's sentence match anything only 7% of the
    time. Searching the user's words is the single most common way to miss.
@@ -38,7 +38,7 @@ right one, then load only that one.
 2. **One distinctive phrase, not every word OR'd together.** On the same
    benchmark, OR-ing a task's words returns a median of **30 agents** and as
    many as 127 -- nearly half the corpus -- while a single well-chosen query
-   returns a median of **3**, with no loss of recall. Generic words --
+   returns a median of **2**, with no loss of recall. Generic words --
    strategy, optimization, performance, analysis, conversion -- appear in dozens
    of descriptions and bury the answer.
 

@@ -57,10 +57,18 @@ Measured on 270 agents, 58 cases:
 
 | query strategy | hit % | control % | **lift** | median noise | max noise |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| every word OR'd | 67.24 | 8.62 | **58.62** | 29.5 | 127 |
+| every word OR'd | 65.52 | 8.62 | **56.90** | 29.5 | 127 |
 | the user's own phrases | 6.90 | 0.00 | 6.90 | 1 | 2 |
-| every word stemmed, OR'd | 74.14 | 18.97 | 55.17 | 44.5 | 214 |
-| narrowest query (oracle) | 67.24 | 8.62 | **58.62** | 3 | 50 |
+| every word stemmed, OR'd | 72.41 | 17.24 | 55.17 | 44.5 | 214 |
+| narrowest query (oracle) | 65.52 | 8.62 | **56.90** | 2.5 | 46 |
+
+> Re-measured 2026-08-16 after three benchmark expectations were corrected (see
+> [selection-evaluation.md](selection-evaluation.md#the-corrections)). Reachability
+> fell 67.24 → 65.52 and bag lift 58.62 → 56.90. The drop is the correction
+> working: `c046` had counted as reachable only because the word *every* appears
+> in both "every morning" (the task) and "every system" (the description of the
+> agent that turned out to be the **wrong** answer). Fixing the expectation
+> removed a coincidence the metric had been crediting.
 
 **Lift** — hit rate minus that same query's score against the wrong agent — is
 the only column comparable between rows. Widening a query raises the hit rate for
@@ -69,7 +77,7 @@ free and raises the control with it.
 Three findings.
 
 **1. A third of tasks share no word with the right specialist.** Literal
-reachability is 67.24%. The other 19 cases are named in the baseline under
+reachability is 65.52%. The other 20 cases are named in the baseline under
 `literal_reachability.requires_expansion`. They fail for ordinary reasons: the
 code reviewer's description never says "pull request", the SRE's never says
 "downtime", the recruiter's never says "applicants". Routing those depends on
@@ -80,12 +88,12 @@ these numbers as the justification.
 **2. A narrow query costs nothing and removes almost all the noise.** Recall for
 the word bag and for the narrowest query is *identical* — necessarily so, since a
 phrase can only match a line whose text contains its first word. They differ only
-in what comes back: a median of 3 agents versus 29.5, worst case 50 versus 127.
+in what comes back: a median of 2.5 agents versus 29.5, worst case 46 versus 127.
 Half the corpus, for the same answer.
 
 **3. Stemming looks like an improvement and is not.** Stemming every word lifts
-the hit rate from 67.24% to 74.14% — and lifts the wrong-agent rate from 8.62% to
-18.97%. The gain in lift is *negative*: 55.17 against 58.62. Four cases are
+the hit rate from 65.52% to 72.41% — and lifts the wrong-agent rate from 8.62% to
+17.24%. The gain in lift is *negative*: 55.17 against 56.90. Four cases are
 genuinely recovered by stemming, and more than four are newly matched to the
 wrong specialist. Without the control this would have read as a 7-point
 improvement and gone straight into the guidance.
@@ -100,9 +108,9 @@ It moves every routing metric by **exactly zero**:
 
 | ref | literal reachability | bag lift | wrong-agent rate |
 | --- | ---: | ---: | ---: |
-| clean HEAD | 67.24% | 58.62 | 8.62% |
-| `459dce8` (the upgrade's merge base) | 65.52% | 58.62 | 6.90% |
-| `archive/fable-upgrade` (known bad) | 65.52% | 58.62 | 6.90% |
+| clean HEAD | 65.52% | 56.90 | 8.62% |
+| `459dce8` (the upgrade's merge base) | 63.79% | 56.89 | 6.90% |
+| `archive/fable-upgrade` (known bad) | 63.79% | 56.89 | 6.90% |
 
 The known-bad ref and its own merge base are identical on every metric. The
 reason is not subtle once seen: routing reads frontmatter `description` fields,
@@ -134,7 +142,7 @@ practice recommendations for your project needs"* — and re-measure.
 
 | | lift | literal reachability |
 | --- | ---: | ---: |
-| real descriptions | 58.62 | 67.24% |
+| real descriptions | 56.90 | 65.52% |
 | all descriptions flattened | 12.07 | 20.69% |
 
 Lift collapses by 79% and lands below the gate's floor of 45.0. The residual
