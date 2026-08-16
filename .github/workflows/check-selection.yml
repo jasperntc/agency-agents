@@ -1,0 +1,45 @@
+name: Check Selection
+
+# Phase 8. Measures whether a model PICKS the right specialist, including on the
+# third of tasks that literal search cannot reach at all.
+#
+# This workflow exists because Phase 8 shipped without one. The harness was
+# designed from the start so that scoring never calls a model -- that is the
+# entire reason `--check` is possible -- and then nothing was wired up to run
+# it. PR #12 reported nine green checks, none of which touched the phase it was
+# opened for. Same failure as the vacuous promotion test in Phase 7: a passing
+# check that was not checking anything.
+#
+# No path filter, and no secret. Scoring is a pure function of the committed
+# cases and the committed picks, so this is deterministic and free.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  selection:
+    name: Check Selection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Hard gate. Also the enforcement point for the digest binding: a run
+      # whose `tasks_sha256` no longer matches the task text it answered exits
+      # non-zero here rather than being silently re-scored.
+      - name: Selection baseline is current
+        run: python3 scripts/eval_selection.py --check
+
+      # Hard gate. Covers prompt blindness -- the generated prompt must never
+      # carry `expect` -- and the digest rules, which decide which recorded runs
+      # survive a benchmark edit.
+      - name: Regression tests
+        run: python3 tests/test_eval_selection.py

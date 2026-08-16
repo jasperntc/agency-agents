@@ -3,8 +3,8 @@
   "model": "claude-opus-5",
   "scope": "full",
   "recorded_at": "2026-08-15",
-  "cases_sha256": "676c2e068b84544fd3cfb0d82c75728690a0651018ee5c53cfb4b50a2d1881ea",
-  "notes": "All 58 cases. Collected in two batches on the same day with the same prompt and the same model: the 15 stratified pilot cases first (reproduced here verbatim, not re-run -- see 2026-08-15-subagent-pilot15.json), then the remaining 43. One blind general-purpose subagent per case, each given only the task text and a pointer to the shipped SKILL.md; none saw expect, why, or kind. Picks extracted by pattern rather than line position because several subagents prepended prose despite the two-line output contract. tool_calls is an effort proxy.",
+  "tasks_sha256": "49fcf1d9018cc22a64f816f96dcc39f95f0a26761f504ca386d22df9b0e8233e",
+  "notes": "MIGRATED 2026-08-16: `cases_sha256` (whole-file) became `tasks_sha256` (task text only). No pick was altered -- the task strings these subagents answered are byte-identical to the ones in cases.jsonl today; only `expect` and `why` changed, and no subagent ever saw those fields. All 58 cases. Collected in two batches on the same day with the same prompt and the same model: the 15 stratified pilot cases first (reproduced here verbatim, not re-run -- see 2026-08-15-subagent-pilot15.json), then the remaining 43. One blind general-purpose subagent per case, each given only the task text and a pointer to the shipped SKILL.md; none saw expect, why, or kind. Picks extracted by pattern rather than line position because several subagents prepended prose despite the two-line output contract. tool_calls is an effort proxy.",
   "picks": {
     "c001": { "agent": "gis-cartography-designer", "tool_calls": 6, "queries": ["cartograph", "map design|label placement|choropleth", "color ramp|colour|color scale|data visualization"] },
     "c002": { "agent": "marketing-app-store-optimizer", "tool_calls": 6, "queries": ["app store", "ASO|app.?store optimi", "screenshot|listing"] },

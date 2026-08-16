@@ -69,10 +69,20 @@ the prompt rather than the skill consumers actually get.
 
 Two mechanical guards back this up:
 
-- Every responses file records a **sha256 of `cases.jsonl`**, and scoring is a
-  hard error if it no longer matches. Picks are answers to specific questions;
-  scoring them against an edited benchmark changes the number with no other
-  visible sign.
+- Every responses file records a **sha256 of the task text it answered**, and
+  scoring is a hard error if it no longer matches. Picks are answers to specific
+  questions; scoring them against an edited benchmark changes the number with no
+  other visible sign.
+
+  The hash covers `(case id, task)` pairs, **not the whole file**. It hashed the
+  whole file first, which was wrong in a way worth recording: a blind subagent
+  never sees `expect` or `why`, so binding its answers to those fields means
+  correcting one wrong expectation invalidates all 58 picks and forces a full
+  re-run. That is a guard that makes the honest move expensive — a standing
+  incentive to leave a known-wrong benchmark alone. It was found the first time
+  a correction was actually needed, which is the only reason it was found at
+  all. `tasks_digest()` documents the rules; `tests/test_eval_selection.py`
+  asserts them against literal dicts rather than today's data.
 - `--sample N` is **deterministic and stratified** — round-robin across the
   divisions of the expected agents, no RNG. The obvious alternative, the first
   N cases, over-weights whichever divisions were authored first, which would
@@ -103,13 +113,15 @@ distinct divisions, 7 of them cases Phase 6 marks unreachable. It does not
 include the two `adversarial` cases — those land in the full run, and the pilot
 should not be read as covering them.
 
-## The full run (2026-08-15): 94.83%, and every failure in the wrong column
+## The full run (2026-08-15): every failure in the wrong column
 
-58 cases, blind subagents, `claude-opus-5`. **55 correct, 3 wrong, 0 declined.**
+58 cases, blind subagents, `claude-opus-5`. As first scored: **55 correct, 3
+wrong, 0 declined — 94.83%.**
 
-The number that matters is not the accuracy. It is where the failures landed:
+The number that mattered was never the accuracy. It was where the failures
+landed:
 
-| | picked right | picked wrong |
+| as first scored | picked right | picked wrong |
 | --- | ---: | ---: |
 | literally reachable | 36 | **3** |
 | not reachable | **19** | **0** |
@@ -123,18 +135,54 @@ exists because of it. In practice that third recovered completely, and every
 error came from **choosing between candidates that were all present**. The
 failure mode is discrimination, not retrieval.
 
-### The three failures
+That shape is also what made the failures worth reading one at a time — and
+reading them is what showed all three to be errors in the benchmark. The
+corrected cross-tab is 38 / 0 / 20 / 0, and the section after next explains why
+that is a worse outcome than it looks.
 
-| case | expected | picked | why it went wrong |
+### The three failures — and the corrections
+
+The first reading of these was that two of the three were **collisions between
+similarly-named agents**, and that the fix was to disambiguate the corpus. Then
+the four candidate descriptions were read side by side, and that conclusion did
+not survive. **All three were benchmark errors.** No agent needed changing.
+
+| case | expected | picked | verdict |
 | --- | --- | --- | --- |
-| `c046` | `specialized-workflow-architect` | `testing-workflow-optimizer` | Two agents share the distinctive word **workflow** across different divisions. 7 query patterns, 10 tool calls, wrong division. |
-| `c058` | `testing-tool-evaluator` | `testing-test-automation-engineer` | Same division, adjacent scope. The model searched `tool evaluation` and still took the broader agent. |
-| `c010` | `godot-shader-developer` / `unity-shader-graph-artist` | `technical-artist` | **Disputed.** The task names no engine, so a general technical artist is arguably the better answer and the expectation may be too narrow. Recorded as failed and left unedited — changing a benchmark to make a run pass is the trap this project exists to avoid. Flagged for review as a case, not as a result. |
+| `c046` | `specialized-workflow-architect` | `testing-workflow-optimizer` | **Model right, benchmark wrong.** The expected agent's deliverable is "build-ready specs that agents can implement against and QA can test against" — a specification. The task asks for a morning copy-paste chore to run by itself. The picked agent is "automating workflows across all business functions". The expectation had been authored from the agent's *name*, Workflow Architect, without reading its description. |
+| `c010` | `godot-shader-developer` / `unity-shader-graph-artist` | `technical-artist` | **Model right, benchmark wrong.** The task names no engine and adds a hard perf constraint; `technical-artist` is "shaders, VFX systems, LOD pipelines, performance budgeting, and cross-engine asset optimization". The case's own `why` field said "engine unstated" and then demanded an engine-specific pick. |
+| `c058` | `testing-tool-evaluator` | `testing-test-automation-engineer` | **Genuinely ambiguous.** `tool-evaluator` scopes itself to "business use and productivity optimization"; `test-automation-engineer` names "Playwright and Cypress" verbatim — the exact question. Both defensible, so the second was added as an alternate. This is the weakest of the three corrections and the first to revisit if the benchmark is tightened. |
 
-Two of three are **collisions between similarly-named or adjacent agents**. That
-points at the corpus, not the skill: the fix is descriptions that disambiguate
-neighbours, not better prompting. It is the first finding here that argues for
-changing an agent rather than a gate.
+<a id="the-corrections"></a>
+Each correction is recorded in the case's own `why` field, dated, with the
+description text it rests on. The test is whether the reasoning stands
+**independent of the run's outcome** — it is quoting agent descriptions, not
+scores — and c058 is flagged precisely because it is closest to the line.
+
+### 100% is not a result. It is a ceiling.
+
+Re-scored against the corrected benchmark, the same 58 recorded picks — **not
+re-run, not a single answer altered** — score **58/58, 100%**.
+
+That number should be read as bad news about the instrument, not good news about
+the router. A benchmark edited until every failure disappears has stopped being
+able to detect anything. At 100% this benchmark cannot measure a regression,
+cannot separate two candidate skills, and cannot tell an improvement from noise.
+**The next work on selection is harder cases, not a victory lap.**
+
+Two things keep the correction honest rather than self-serving:
+
+- **A headline number went down.** Literal reachability fell 67.24% → 65.52%,
+  because `c046` had been counted reachable only on the word *every* — "every
+  morning" in the task against "every system" in the description of the agent
+  that turned out to be the wrong answer. The metric had been crediting a
+  coincidence. Correcting the case removed it.
+- **Nothing was re-run.** The digest fix is what made that possible, and it is
+  also what proves the picks were untouched: the task text these subagents
+  answered is byte-identical today, and `tasks_sha256` is the receipt.
+
+The original 94.83% and the original expectations are in git history and in the
+table above rather than quietly overwritten.
 
 ### Cost is where the variation actually lives
 
