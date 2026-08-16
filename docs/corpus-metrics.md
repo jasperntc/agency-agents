@@ -75,17 +75,20 @@ Runs in ~2s per ref. `--ref` streams blobs via `git cat-file --batch`, so
 
 ## Baseline
 
-`metrics/diversity-baseline.json` at tag `upstream-baseline-2026-08-13`
-(270 agents):
+`metrics/diversity-baseline.json` at commit `c7f51dd` — the end of the Step 0.4
+source repairs, **not** the fork-point tag. It was re-baselined there
+deliberately, because Step 0.4 fixed genuine defects (mojibake, truncation) and
+measuring diversity against uncorrected text would have carried those defects
+into every later comparison. 270 agents:
 
 | metric | value |
 | --- | ---: |
 | median / p95 / p99 pairwise | 0.0% / 0.0% / 0.0635% |
 | max pairwise | 4.7377% |
 | mean-of-max per file | 0.2074% |
-| distinct headers | 4,917 |
+| distinct headers | 4,909 |
 | headers in ≥50% / ≥75% of files | 9 / 1 |
-| total words | 473,579 |
+| total words | 473,566 |
 | mean words per agent | 1,754 |
 | shared blocks (≥3 files) | 11 |
 | duplicated word % | 0.0610% |
@@ -93,6 +96,14 @@ Runs in ~2s per ref. `--ref` streams blobs via `git cat-file --batch`, so
 106 of 270 agents have a max similarity of exactly zero — they share no 8-word
 run with any other agent. That is what a healthy, genuinely specialized library
 looks like.
+
+> **Not machine-verified.** Every other figure in this table is re-derived from
+> `metrics/diversity-baseline.json` by `tests/test_docs_figures.py`. This one and
+> the nonzero-only mean below are not: the harness reports distribution
+> percentiles, not the per-file zero count, so no committed artifact holds them.
+> They were measured once, at the same time and from the same corpus as the rest
+> of the table. Treat them as a one-time observation rather than a live metric,
+> or add the count to `corpus_diversity.measure()` to make them checkable.
 
 ## Design decisions worth keeping
 
@@ -139,11 +150,14 @@ it has run on **20 merged changes with zero false positives**. Started
 evidence* (which requires updating `metrics/thresholds.json` and its recorded
 observations, which `test_e`/`test_f` will check) and restart the count.
 
-**Why the drift checks never block.** `metrics/inventory-baseline.json` and
-`metrics/diversity-baseline.json` are snapshots of the fork point. Once source
-defects are intentionally repaired (Step 0.4), the corpus legitimately diverges
-from them. They answer "what has changed since the fork", which is a question,
-not a verdict. The `--gate` uses absolute thresholds precisely so it stays
+**Why the drift checks never block.** Despite the name, neither baseline is a
+fork-point snapshot. `metrics/inventory-baseline.json` records `WORKING_TREE`
+and has been re-baselined twice on purpose — after the Step 0.4 repairs, and
+again when Phase 3 added `id` to all 270 files. `metrics/diversity-baseline.json`
+sits at `c7f51dd`, the end of Step 0.4. So they answer "what has changed since
+the last deliberate re-baseline", which is a question, not a verdict. The actual
+fork point is tag `upstream-baseline-2026-08-13`, measurable any time with
+`--ref`. The `--gate` uses absolute thresholds precisely so it stays
 meaningful on any corpus state without a reference artifact.
 
 ## Determinism

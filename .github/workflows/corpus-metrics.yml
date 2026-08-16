@@ -55,11 +55,22 @@ jobs:
         run: |
           echo "::warning title=Corpus diversity gate breached::One or more corpus diversity dimensions exceeded their threshold. ADVISORY - does not fail the build yet. See the gate step output and docs/homogenization.md."
 
-      # Drift from the frozen fork-point snapshots. INFORMATIONAL, never
-      # blocking: once source defects are intentionally repaired (Step 0.4) the
-      # corpus legitimately diverges from the baseline captured at the tag.
-      # These record what changed since the fork, they do not judge it.
-      - name: Drift from frozen baseline (informational)
+      # Every figure the docs present as measured must still be the measured
+      # value. Blocking, and free -- it only reads committed JSON and committed
+      # markdown. Added after docs/consuming.md quoted a stale reachability
+      # figure for a week, and a sweep found three more claims that had drifted.
+      - name: Docs quote the measured figures
+        run: python3 tests/test_docs_figures.py
+
+      # Drift from the recorded baselines. INFORMATIONAL, never blocking.
+      # NOTE: these are NOT fork-point snapshots, whatever the name suggests.
+      # inventory-baseline.json records `WORKING_TREE` and is re-baselined
+      # deliberately (after the Step 0.4 repairs, then again when Phase 3 added
+      # `id`); diversity-baseline.json sits at c7f51dd, the end of Step 0.4.
+      # So this reports what has changed since the last re-baseline, which is a
+      # question rather than a verdict. The fork point is the tag, measurable
+      # any time with --ref.
+      - name: Drift from recorded baseline (informational)
         continue-on-error: true
         run: |
           python3 scripts/inventory.py --check metrics/inventory-baseline.json
