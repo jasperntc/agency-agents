@@ -272,6 +272,27 @@ def findings(answer: str) -> list[int]:
     return [int(m.group(1)) for m in FINDING_RE.finditer(answer)]
 
 
+def anchors(defect: dict) -> list[list[int]]:
+    """A defect's acceptable line ranges. `lines` is a list of [lo, hi] pairs.
+
+    MULTIPLE ANCHORS EXIST BECAUSE ATTRIBUTION GENUINELY DIVERGES. A wall-clock
+    timeout has two defensible homes: where `time.time()` is first taken and
+    where the elapsed comparison is made. A stale dependency array has two: the
+    literal that is rebuilt each render, and the deps list that consumes it.
+    Picking one and calling the other a miss is what the v2 pilot did, and it
+    manufactured a 15-point separation out of nothing.
+
+    Declaring both is honest. Crediting anything nearby would not be, which is
+    what the window cap is for.
+    """
+    return defect["lines"]
+
+
+def in_anchors(line: int, defect: dict) -> bool:
+    w = defect["window"]
+    return any(lo - w <= line <= hi + w for lo, hi in anchors(defect))
+
+
 def assign(lines: list[int], planted: list[dict]) -> dict[str, int]:
     """Maximum matching of findings to defects. One finding, one defect.
 
@@ -288,9 +309,7 @@ def assign(lines: list[int], planted: list[dict]) -> dict[str, int]:
 
     Returns {defect id: index into `lines`}.
     """
-    cand = {d["id"]: [i for i, n in enumerate(lines)
-                      if d["lines"][0] - d.get("window", 1) <= n
-                      <= d["lines"][1] + d.get("window", 1)]
+    cand = {d["id"]: [i for i, n in enumerate(lines) if in_anchors(n, d)]
             for d in planted}
 
     taken: dict[int, str] = {}
@@ -328,6 +347,7 @@ def score_answer(task: dict, answer: str) -> dict:
     return {
         "task": task["task"],
         "agent": task["agent"],
+        "tier": task.get("tier", "?"),
         "planted_total": len(task["planted"]),
         "found": found,
         "missed": missed,
@@ -347,11 +367,23 @@ def score_condition(rows: list[dict]) -> dict:
     cited = sum(len(r["lines_cited"]) for r in rows)
     declared = sum(r["findings_declared"] or 0 for r in rows)
     with_line = sum(r["findings_with_a_line"] for r in rows)
+    # Per tier, because an easy tier at ceiling would hide whatever the hard
+    # tier is doing. Same rule as every other metric here: no aggregate that
+    # conceals a per-dimension result.
+    tiers = {}
+    for tier in sorted({r.get("tier", "?") for r in rows}):
+        sub = [r for r in rows if r.get("tier", "?") == tier]
+        tp = sum(r["planted_total"] for r in sub)
+        tf = sum(len(r["found"]) for r in sub)
+        tiers[tier] = {"tasks": len(sub), "found": tf, "planted_total": tp,
+                       "recall_pct": pct(tf, tp)}
+
     return {
         "tasks": len(rows),
         "found": found,
         "planted_total": planted,
         "recall_pct": pct(found, planted),
+        "by_tier": tiers,
         # COST, not precision. A scattergun answer citing every line scores full
         # recall and terrible density. This does NOT claim the extra citations
         # are wrong -- the pilot found four real defects the answer key had

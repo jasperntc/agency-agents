@@ -58,10 +58,22 @@ class Tasks(unittest.TestCase):
             n = len((eb.FIXTURES / t["fixture"]).read_text(
                 encoding="utf-8").rstrip(NL).splitlines())
             for d in t["planted"]:
-                lo, hi = d["lines"]
-                self.assertTrue(1 <= lo <= hi <= n,
-                                f"{t['task']}/{d['id']}: range {lo}-{hi} is not "
-                                f"inside a {n}-line fixture, so it can never be hit")
+                self.assertTrue(d["lines"], f"{t['task']}/{d['id']}: no anchors")
+                for lo, hi in d["lines"]:
+                    self.assertTrue(1 <= lo <= hi <= n,
+                                    f"{t['task']}/{d['id']}: range {lo}-{hi} is "
+                                    f"not inside a {n}-line fixture, so it can "
+                                    f"never be hit")
+
+    def test_both_tiers_exist(self):
+        """An easy-only benchmark cannot separate anything -- that is the whole
+        finding of the v2 pilot, where three of four tasks sat at full recall in
+        every condition. A hard tier is the fix, and its absence must fail."""
+        tiers = {t.get("tier") for t in self.tasks}
+        self.assertEqual(tiers, {"easy", "hard"})
+        for tier in ("easy", "hard"):
+            self.assertGreaterEqual(
+                sum(1 for t in self.tasks if t.get("tier") == tier), 4, tier)
 
     def test_every_defect_declares_its_window(self):
         """Overlap is intentional now; the tolerance must still be chosen.
@@ -151,12 +163,12 @@ def answer(*findings: str) -> str:
 
 class Scoring(unittest.TestCase):
     TASK = {"task": "t", "agent": "engineering-code-reviewer", "fixture": "x",
-            "planted": [{"id": "a", "lines": [10, 10], "window": 1, "what": ""},
-                        {"id": "b", "lines": [20, 25], "window": 1, "what": ""}]}
+            "planted": [{"id": "a", "lines": [[10, 10]], "window": 1, "what": ""},
+                        {"id": "b", "lines": [[20, 25]], "window": 1, "what": ""}]}
     # Deliberately overlapping, like b004's race and its row-count.
     OVERLAP = {"task": "o", "agent": "x", "fixture": "x",
-               "planted": [{"id": "race", "lines": [21, 27], "window": 1, "what": ""},
-                           {"id": "count", "lines": [21, 21], "window": 0, "what": ""}]}
+               "planted": [{"id": "race", "lines": [[21, 27]], "window": 1, "what": ""},
+                           {"id": "count", "lines": [[21, 21]], "window": 0, "what": ""}]}
 
     def test_a_cited_line_inside_a_range_scores(self):
         r = eb.score_answer(self.TASK, answer("FINDING: L10: x", "FINDING: L22: y"))
@@ -181,6 +193,22 @@ class Scoring(unittest.TestCase):
         """The other half. Independent lookup would credit both here."""
         r = eb.score_answer(self.OVERLAP, answer("FINDING: L21: something"))
         self.assertEqual(len(r["found"]), 1)
+
+    def test_a_defect_may_declare_several_anchors(self):
+        """A wall-clock timeout lives both where the stamp is taken and where it
+        is compared. Declaring one and calling the other a miss is what
+        manufactured the v2 pilot's phantom separation."""
+        two = {"task": "m", "agent": "x", "fixture": "x",
+               "planted": [{"id": "clock", "lines": [[19, 19], [31, 31]],
+                            "window": 1, "what": ""}]}
+        self.assertEqual(
+            eb.score_answer(two, answer("FINDING: L19: wall clock"))["found"],
+            ["clock"])
+        self.assertEqual(
+            eb.score_answer(two, answer("FINDING: L31: wall clock"))["found"],
+            ["clock"])
+        self.assertEqual(
+            eb.score_answer(two, answer("FINDING: L25: unrelated"))["found"], [])
 
     def test_a_finding_without_a_line_is_not_scoreable(self):
         r = eb.score_answer(self.TASK, answer("FINDING: line 10 is wrong"))
@@ -217,7 +245,7 @@ class Digest(unittest.TestCase):
 
     def test_editing_the_answer_key_does_not_invalidate(self):
         """What let the v2 answers be re-scored under a fixed oracle, free."""
-        changed = [dict(t, planted=[{"id": "x", "lines": [1, 1], "window": 1,
+        changed = [dict(t, planted=[{"id": "x", "lines": [[1, 1]], "window": 1,
                                      "what": "y"}]) for t in self.T]
         self.assertEqual(eb.tasks_digest(self.T), eb.tasks_digest(changed))
 

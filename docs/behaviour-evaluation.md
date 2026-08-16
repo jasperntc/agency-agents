@@ -289,6 +289,45 @@ human phrasing — most likely crediting a defect when *any* cited line falls
 within a small window of it, with the window recorded per defect rather than
 inferred.
 
+## Two tiers, because an easy benchmark cannot separate anything
+
+The v2 pilot put three of four tasks at full recall in **every** condition. A
+benchmark like that is not measuring the agent; it is measuring whether the
+defect is famous.
+
+| tier | tasks | defects | what a defect requires |
+| --- | ---: | ---: | --- |
+| `easy` | 4 | 12 | recognising a well-known anti-pattern — N+1, SQL injection, index keys, check-then-act |
+| `hard` | 4 | 13 | knowing a specific rule, in code that looks correct |
+
+The hard tier was built around the one defect in the easy tier that **every**
+condition missed: `isinstance(True, int)` is `True`, so a boolean passes an
+integer guard. That is the shape worth testing — code that reads as fine unless
+you happen to know the rule.
+
+| task | agent | defects |
+| --- | --- | --- |
+| `b005` | database-optimizer | `date_trunc` on an indexed column defeats the index; a `(tenant_id, created_at)` index cannot serve a `created_at`-only filter; `NOT IN` against a nullable column returns zero rows |
+| `b006` | backend-architect | exponential backoff with no jitter synchronises every retrying worker; 40 connections × 12 processes against one database; `time.time()` where `time.monotonic()` is required |
+| `b007` | frontend-developer | `debounce()` called during render debounces nothing; a non-lazy `useState` initializer runs every render; an object literal in a dependency array changes identity every render |
+| `b008` | code-reviewer | `random` instead of `secrets` for a reset token; a 404 that enumerates accounts; `==` on a token digest; unsalted SHA-256 for password storage |
+
+Recall is reported **per tier**, never blended. An easy tier at ceiling would
+otherwise hide whatever the hard tier is doing — the same rule that governs
+every other metric in this repository.
+
+### Anchors, and why a defect may declare several
+
+`lines` is a list of `[lo, hi]` ranges. Some defects have more than one
+defensible home: a wall-clock timeout lives both where the timestamp is taken
+and where the elapsed comparison happens; a stale dependency array lives both at
+the literal that is rebuilt and at the array that consumes it.
+
+Picking one and scoring the other a miss is exactly what produced the v2 pilot's
+phantom 15-point separation. Declaring both is honest; widening the window until
+anything nearby counts would not be, which is why the window is capped at 2 and
+must be stated per defect.
+
 ## What is bound to a run
 
 `tasks_sha256` covers `(task id, prompt, sha256 of the fixture)` — the question
