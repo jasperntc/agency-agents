@@ -12,10 +12,10 @@
       "conditions": {
         "current": {
           "contract_pct": 100.0,
-          "defect_density": 0.8,
+          "defect_density": 0.733,
           "findings_declared": 15,
           "findings_with_a_line": 15,
-          "found": 12,
+          "found": 11,
           "lines_cited": 15,
           "per_task": [
             {
@@ -42,16 +42,15 @@
               "findings_with_a_line": 3,
               "found": [
                 "sql_injection",
-                "unguarded_int_cast",
-                "negative_limit_unbounded"
+                "limit_handling"
               ],
               "lines_cited": [
-                22,
                 13,
-                14
+                14,
+                22
               ],
               "missed": [],
-              "planted_total": 3,
+              "planted_total": 2,
               "task": "b002"
             },
             {
@@ -67,9 +66,9 @@
               "lines_cited": [
                 25,
                 38,
+                39,
                 40,
-                42,
-                39
+                42
               ],
               "missed": [],
               "planted_total": 4,
@@ -96,8 +95,8 @@
               "task": "b004"
             }
           ],
-          "planted_total": 13,
-          "recall_pct": 92.31,
+          "planted_total": 12,
+          "recall_pct": 91.67,
           "tasks": 4
         },
         "flattened": {
@@ -132,16 +131,14 @@
               "findings_with_a_line": 2,
               "found": [
                 "sql_injection",
-                "unguarded_int_cast"
+                "limit_handling"
               ],
               "lines_cited": [
-                22,
-                13
+                13,
+                22
               ],
-              "missed": [
-                "negative_limit_unbounded"
-              ],
-              "planted_total": 3,
+              "missed": [],
+              "planted_total": 2,
               "task": "b002"
             },
             {
@@ -185,16 +182,16 @@
               "task": "b004"
             }
           ],
-          "planted_total": 13,
-          "recall_pct": 84.62,
+          "planted_total": 12,
+          "recall_pct": 91.67,
           "tasks": 4
         },
         "none": {
           "contract_pct": 100.0,
-          "defect_density": 0.667,
+          "defect_density": 0.733,
           "findings_declared": 16,
           "findings_with_a_line": 16,
-          "found": 10,
+          "found": 11,
           "lines_cited": 15,
           "per_task": [
             {
@@ -207,11 +204,11 @@
                 "python_side_aggregation"
               ],
               "lines_cited": [
+                16,
+                20,
                 25,
                 28,
                 29,
-                20,
-                16,
                 31
               ],
               "missed": [],
@@ -224,16 +221,14 @@
               "findings_with_a_line": 2,
               "found": [
                 "sql_injection",
-                "unguarded_int_cast"
+                "limit_handling"
               ],
               "lines_cited": [
-                22,
-                13
+                13,
+                22
               ],
-              "missed": [
-                "negative_limit_unbounded"
-              ],
-              "planted_total": 3,
+              "missed": [],
+              "planted_total": 2,
               "task": "b002"
             },
             {
@@ -247,12 +242,12 @@
                 "uncontrolled_checkbox"
               ],
               "lines_cited": [
+                6,
+                13,
                 22,
                 38,
-                42,
                 40,
-                13,
-                6
+                42
               ],
               "missed": [],
               "planted_total": 4,
@@ -263,27 +258,27 @@
               "findings_declared": 2,
               "findings_with_a_line": 2,
               "found": [
+                "check_then_act_race",
                 "count_rows_not_seats"
               ],
               "lines_cited": [
                 21
               ],
               "missed": [
-                "check_then_act_race",
                 "bool_passes_int_guard"
               ],
               "planted_total": 3,
               "task": "b004"
             }
           ],
-          "planted_total": 13,
-          "recall_pct": 76.92,
+          "planted_total": 12,
+          "recall_pct": 91.67,
           "tasks": 4
         }
       },
       "lift_over_no_skill": {
-        "current": 15.39,
-        "flattened": 7.7,
+        "current": 0.0,
+        "flattened": 0.0,
         "none": 0.0
       },
       "model": "claude-opus-5",

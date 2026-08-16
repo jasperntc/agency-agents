@@ -260,49 +260,79 @@ def prompt_for(task: dict, condition: str) -> str:
         fixture_name=task["fixture"], fixture=fixture.rstrip("\n"))
 
 
-def cited_lines(answer: str) -> list[int]:
-    """Every line number the answer points at, in order, deduplicated.
+def findings(answer: str) -> list[int]:
+    """The line each FINDING points at, in order, NOT deduplicated.
 
-    A finding without a line is invisible here. That is a hard edge, not an
-    oversight: the alternative is falling back to prose matching for the
-    unlabelled ones, which is precisely the oracle the 2026-08-16 pilot
-    invalidated. An answer that ignores the output contract has not been
-    measured, and the contract-compliance rate is reported so that failure is
-    visible rather than silently scored as a miss.
+    Deduplicating was wrong. `b004/none` filed two distinct findings at L21 --
+    a TOCTOU race and a rows-vs-seats miscount -- and collapsing them to one
+    line makes it impossible for both to be credited. Duplicates are kept here
+    and deduplicated only for `lines_cited`, which is a breadth-of-claim
+    measure where counting the same line twice would be misleading.
     """
-    seen, out = set(), []
-    for m in FINDING_RE.finditer(answer):
-        n = int(m.group(1))
-        if n not in seen:
-            seen.add(n)
-            out.append(n)
-    return out
+    return [int(m.group(1)) for m in FINDING_RE.finditer(answer)]
+
+
+def assign(lines: list[int], planted: list[dict]) -> dict[str, int]:
+    """Maximum matching of findings to defects. One finding, one defect.
+
+    WHY NOT INDEPENDENT MATCHING. Checking each defect against the whole set of
+    cited lines lets a single vague finding score every defect whose window it
+    touches. Windows must overlap here -- `b004`'s race and its rows-vs-seats
+    miscount both centre on L21 -- so independent matching would over-credit
+    exactly where the fixture is most subtle.
+
+    Matching gives the honest reading in both directions: two findings on the
+    same line can be credited with two defects, and one finding on that line
+    can be credited with only one. Sizes are tiny (<= 5 defects, <= 12
+    findings), so a plain augmenting-path search is more than fast enough.
+
+    Returns {defect id: index into `lines`}.
+    """
+    cand = {d["id"]: [i for i, n in enumerate(lines)
+                      if d["lines"][0] - d.get("window", 1) <= n
+                      <= d["lines"][1] + d.get("window", 1)]
+            for d in planted}
+
+    taken: dict[int, str] = {}
+
+    def augment(did: str, seen: set[int]) -> bool:
+        for i in cand[did]:
+            if i in seen:
+                continue
+            seen.add(i)
+            if i not in taken or augment(taken[i], seen):
+                taken[i] = did
+                return True
+        return False
+
+    for d in planted:
+        augment(d["id"], set())
+    return {did: i for i, did in taken.items()}
 
 
 def score_answer(task: dict, answer: str) -> dict:
-    """Recall by line citation. See the module docstring for why not precision.
+    """Recall by line citation, within a per-defect window.
 
-    A planted defect counts as found when the answer cites a line inside its
-    range. Ranges never overlap within a task, so one citation cannot score two
-    defects -- asserted by test_planted_line_ranges_do_not_overlap.
+    The window exists because the 2026-08-16 v2 pilot scored three correct
+    diagnoses as misses purely on attribution: a reviewer put the race at the
+    line where the count is taken rather than where it is compared, and folded
+    two adjacent defects into one finding. The key's granularity and a human's
+    are different things, and the key is the one that has to give.
     """
-    lines = cited_lines(answer)
-    found, missed = [], []
-    for defect in task["planted"]:
-        lo, hi = defect["lines"]
-        hit = next((n for n in lines if lo <= n <= hi), None)
-        (found if hit is not None else missed).append(defect["id"])
+    lines = findings(answer)
+    matched = assign(lines, task["planted"])
+    found = [d["id"] for d in task["planted"] if d["id"] in matched]
+    missed = [d["id"] for d in task["planted"] if d["id"] not in matched]
 
-    total_findings = len(FINDING_RE.findall(answer))
-    declared = re.search(r"(?m)^[ \t]*DONE:[ \t]*(\d+)", answer)
+    declared = re.search(r"(?m)^[ 	]*DONE:[ 	]*(\d+)", answer)
     return {
         "task": task["task"],
         "agent": task["agent"],
         "planted_total": len(task["planted"]),
         "found": found,
         "missed": missed,
-        "lines_cited": lines,
-        "findings_with_a_line": total_findings,
+        "lines_cited": sorted(set(lines)),
+        "findings_with_a_line": len(lines),
         "findings_declared": int(declared.group(1)) if declared else None,
     }
 

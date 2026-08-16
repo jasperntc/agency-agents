@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 """Tests for scripts/eval_behaviour.py.
 
-The prose-matching oracle this replaced was invalidated by its own first pilot:
-the generic positive control beat the real agent by 25 points on wording luck
-alone. These assert the properties whose absence made that possible, plus the
-ones that make a line-citation oracle sound.
+Two pilots invalidated two oracles here, so these assert the properties whose
+absence made each failure possible.
 
-  RANGES MUST NOT OVERLAP  One citation scoring two defects would inflate recall
-                           silently.
-  RANGES MUST BE REAL      A range past the end of the fixture is unhittable, so
-                           the defect is permanently missed and looks like a
-                           finding about the agent.
-  THE CONTROL IS A CONTROL `flattened` must deliver a different file from
-                           `current`. It did not in the first draft.
-  IDENTICAL DELIVERY       Conditions differ only in the agent file.
-  DIGEST COVERS THE PROMPT The pilot was answered under a template that never
-                           asked for lines. A digest blind to the template would
-                           have let those answers be re-scored by an oracle they
-                           could not satisfy, and nine of twelve would have
-                           scored zero as an artifact.
+  WINDOWS ARE DECLARED    The v2 pilot scored three correct diagnoses as misses
+                          purely on attribution -- a race cited at the line
+                          where the count is taken rather than compared. Every
+                          defect now declares its own tolerance, explicitly.
+  MATCHING, NOT LOOKUP    Windows must overlap (b004's race and row-count both
+                          centre on L21), so scoring assigns each finding to at
+                          most one defect. Independent lookup would let one
+                          vague finding score both.
+  THE CONTROL IS A CONTROL  `flattened` must deliver a different file from
+                          `current`. It did not in the first draft.
+  IDENTICAL DELIVERY      Conditions differ only in the agent file.
+  DIGEST COVERS THE PROMPT  The v1 pilot was answered under a template that
+                          never asked for lines. A digest blind to the template
+                          would have let those answers be re-scored by an oracle
+                          they could not satisfy.
 """
 from __future__ import annotations
 
@@ -31,6 +31,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 import eval_behaviour as eb  # noqa: E402
+
+NL = "\n"
 
 
 class Tasks(unittest.TestCase):
@@ -54,25 +56,25 @@ class Tasks(unittest.TestCase):
     def test_planted_line_ranges_are_inside_the_fixture(self):
         for t in self.tasks:
             n = len((eb.FIXTURES / t["fixture"]).read_text(
-                encoding="utf-8").rstrip("\n").splitlines())
+                encoding="utf-8").rstrip(NL).splitlines())
             for d in t["planted"]:
                 lo, hi = d["lines"]
                 self.assertTrue(1 <= lo <= hi <= n,
                                 f"{t['task']}/{d['id']}: range {lo}-{hi} is not "
                                 f"inside a {n}-line fixture, so it can never be hit")
 
-    def test_planted_line_ranges_do_not_overlap(self):
-        """One citation must not score two defects."""
+    def test_every_defect_declares_its_window(self):
+        """Overlap is intentional now; the tolerance must still be chosen.
+
+        A defaulted window is a scoring decision nobody made. Capped at 2
+        because beyond that it stops being attribution tolerance and starts
+        crediting a finding for pointing near the right area.
+        """
         for t in self.tasks:
-            seen = {}
             for d in t["planted"]:
-                lo, hi = d["lines"]
-                for n in range(lo, hi + 1):
-                    self.assertNotIn(
-                        n, seen,
-                        f"{t['task']}: line {n} is claimed by both "
-                        f"{seen.get(n)} and {d['id']}")
-                    seen[n] = d["id"]
+                self.assertIn("window", d,
+                              f"{t['task']}/{d['id']}: window must be explicit")
+                self.assertLessEqual(d["window"], 2, f"{t['task']}/{d['id']}")
 
 
 class Blindness(unittest.TestCase):
@@ -91,22 +93,17 @@ class Blindness(unittest.TestCase):
                     self.assertNotIn(d["id"], prompt, t["task"])
 
     def test_line_numbering_is_uniform(self):
-        """Every line is numbered, so numbering marks nothing.
-
-        If only some lines carried numbers, the numbering itself would point at
-        the answer.
-        """
+        """Every line is numbered, so the numbering marks nothing."""
         for t in self.tasks:
-            body = eb.numbered(t).splitlines()
-            for i, line in enumerate(body, 1):
+            for i, line in enumerate(eb.numbered(t).splitlines(), 1):
                 self.assertTrue(line.lstrip().startswith(str(i)),
                                 f"{t['task']} line {i} is not numbered")
 
     def test_numbering_matches_the_real_file(self):
-        """A numbering offset would make every honest citation wrong."""
+        """An offset would make every honest citation wrong."""
         for t in self.tasks:
             raw = (eb.FIXTURES / t["fixture"]).read_text(
-                encoding="utf-8").rstrip("\n").splitlines()
+                encoding="utf-8").rstrip(NL).splitlines()
             for i, shown in enumerate(eb.numbered(t).splitlines(), 1):
                 self.assertEqual(shown, f"{i:>4}  {raw[i - 1]}", t["task"])
 
@@ -125,7 +122,7 @@ class Conditions(unittest.TestCase):
         self.assertNotIn("fixtures/flattened/", current)
 
     def test_conditions_differ_only_in_the_preamble(self):
-        bodies = {eb.prompt_for(self.task, c).split("TASK\n----\n", 1)[1]
+        bodies = {eb.prompt_for(self.task, c).split("TASK" + NL + "----" + NL, 1)[1]
                   for c in eb.CONDITIONS}
         self.assertEqual(len(bodies), 1)
 
@@ -147,47 +144,68 @@ class Conditions(unittest.TestCase):
             len((REPO_ROOT / eb.agent_path(agent)).read_text(encoding="utf-8")))
 
 
+def answer(*findings: str) -> str:
+    """Build an answer body without embedding escapes in a heredoc."""
+    return NL.join(list(findings) + [f"DONE: {len(findings)}"])
+
+
 class Scoring(unittest.TestCase):
     TASK = {"task": "t", "agent": "engineering-code-reviewer", "fixture": "x",
-            "planted": [{"id": "a", "lines": [10, 10], "what": "..."},
-                        {"id": "b", "lines": [20, 25], "what": "..."}]}
+            "planted": [{"id": "a", "lines": [10, 10], "window": 1, "what": ""},
+                        {"id": "b", "lines": [20, 25], "window": 1, "what": ""}]}
+    # Deliberately overlapping, like b004's race and its row-count.
+    OVERLAP = {"task": "o", "agent": "x", "fixture": "x",
+               "planted": [{"id": "race", "lines": [21, 27], "window": 1, "what": ""},
+                           {"id": "count", "lines": [21, 21], "window": 0, "what": ""}]}
 
     def test_a_cited_line_inside_a_range_scores(self):
-        r = eb.score_answer(self.TASK, "FINDING: L10: bad\nFINDING: L22: also\nDONE: 2")
+        r = eb.score_answer(self.TASK, answer("FINDING: L10: x", "FINDING: L22: y"))
         self.assertEqual(sorted(r["found"]), ["a", "b"])
-        self.assertEqual(r["missed"], [])
 
-    def test_a_line_outside_every_range_scores_nothing(self):
-        r = eb.score_answer(self.TASK, "FINDING: L99: unrelated\nDONE: 1")
+    def test_the_window_forgives_adjacent_attribution(self):
+        """The v2 failure: a race keyed at L22 was cited at L21 by everyone."""
+        r = eb.score_answer(self.TASK, answer("FINDING: L9: just outside"))
+        self.assertEqual(r["found"], ["a"])
+
+    def test_the_window_is_not_unbounded(self):
+        r = eb.score_answer(self.TASK, answer("FINDING: L15: far off"))
         self.assertEqual(r["found"], [])
-        self.assertEqual(sorted(r["missed"]), ["a", "b"])
+
+    def test_two_findings_on_one_line_can_score_two_defects(self):
+        """b004/none filed a race and a row-count both at L21. Both are real."""
+        r = eb.score_answer(
+            self.OVERLAP, answer("FINDING: L21: race", "FINDING: L21: rows"))
+        self.assertEqual(sorted(r["found"]), ["count", "race"])
+
+    def test_one_finding_on_that_line_scores_only_one(self):
+        """The other half. Independent lookup would credit both here."""
+        r = eb.score_answer(self.OVERLAP, answer("FINDING: L21: something"))
+        self.assertEqual(len(r["found"]), 1)
 
     def test_a_finding_without_a_line_is_not_scoreable(self):
-        """The hard edge. Falling back to prose here would restore the old oracle."""
-        r = eb.score_answer(self.TASK, "FINDING: line 10 is wrong\nDONE: 1")
+        r = eb.score_answer(self.TASK, answer("FINDING: line 10 is wrong"))
         self.assertEqual(r["found"], [])
         self.assertEqual(r["findings_with_a_line"], 0)
         self.assertEqual(r["findings_declared"], 1)
 
-    def test_duplicate_citations_count_once(self):
-        r = eb.score_answer(self.TASK, "FINDING: L10: a\nFINDING: L10: again\nDONE: 2")
-        self.assertEqual(r["lines_cited"], [10])
+    def test_lines_cited_deduplicates_but_scoring_does_not(self):
+        r = eb.score_answer(
+            self.OVERLAP, answer("FINDING: L21: a", "FINDING: L21: b"))
+        self.assertEqual(r["lines_cited"], [21])
+        self.assertEqual(r["findings_with_a_line"], 2)
+        self.assertEqual(len(r["found"]), 2)
 
     def test_density_punishes_a_scattergun_answer(self):
-        """Recall alone would reward citing every line; density is what does not."""
-        precise = eb.score_condition(
-            [eb.score_answer(self.TASK, "FINDING: L10: a\nFINDING: L20: b\nDONE: 2")])
+        precise = eb.score_condition([eb.score_answer(
+            self.TASK, answer("FINDING: L10: a", "FINDING: L20: b"))])
         scatter = eb.score_condition([eb.score_answer(
-            self.TASK,
-            "\n".join(f"FINDING: L{n}: maybe" for n in range(1, 31)) + "\nDONE: 30")])
+            self.TASK, answer(*[f"FINDING: L{n}: maybe" for n in range(1, 31)]))])
         self.assertEqual(precise["recall_pct"], scatter["recall_pct"])
         self.assertGreater(precise["defect_density"], scatter["defect_density"])
 
     def test_contract_pct_exposes_unscoreable_answers(self):
         c = eb.score_condition([eb.score_answer(
-            self.TASK, "FINDING: L10: a\nFINDING: no line here\nDONE: 2")])
-        self.assertEqual(c["findings_declared"], 2)
-        self.assertEqual(c["findings_with_a_line"], 1)
+            self.TASK, answer("FINDING: L10: a", "FINDING: no line here"))])
         self.assertEqual(c["contract_pct"], 50.0)
 
 
@@ -198,8 +216,9 @@ class Digest(unittest.TestCase):
           "planted": []}]
 
     def test_editing_the_answer_key_does_not_invalidate(self):
-        changed = [dict(t, planted=[{"id": "x", "lines": [1, 1], "what": "y"}])
-                   for t in self.T]
+        """What let the v2 answers be re-scored under a fixed oracle, free."""
+        changed = [dict(t, planted=[{"id": "x", "lines": [1, 1], "window": 1,
+                                     "what": "y"}]) for t in self.T]
         self.assertEqual(eb.tasks_digest(self.T), eb.tasks_digest(changed))
 
     def test_editing_a_prompt_invalidates(self):
@@ -213,11 +232,11 @@ class Digest(unittest.TestCase):
         self.assertNotEqual(eb.tasks_digest(self.T), eb.tasks_digest(changed))
 
     def test_changing_the_prompt_template_invalidates(self):
-        """The defect the pilot exposed: the template is part of the question."""
+        """The v1 defect: the template is part of the question."""
         before = eb.tasks_digest(self.T)
         original = eb.PROMPT_TEMPLATE
         try:
-            eb.PROMPT_TEMPLATE = original + "\nAlso cite a column number.\n"
+            eb.PROMPT_TEMPLATE = original + "Also cite a column." + NL
             self.assertNotEqual(before, eb.tasks_digest(self.T))
         finally:
             eb.PROMPT_TEMPLATE = original
@@ -232,14 +251,13 @@ class Digest(unittest.TestCase):
 
 
 class SupersededRuns(unittest.TestCase):
-    def test_the_pilot_is_kept_and_excluded_with_a_reason(self):
+    def test_the_v1_pilot_is_kept_and_excluded_with_a_reason(self):
         """Evidence that invalidated an oracle must not be quietly deleted."""
         path = eb.RESPONSES / "2026-08-16-subagent-pilot12.json"
         self.assertTrue(path.exists(), "the v1 pilot was deleted")
         run = json.loads(path.read_text(encoding="utf-8"))
-        self.assertTrue(run.get("superseded"), "no reason recorded")
-        self.assertGreater(len(run["superseded"]), 120,
-                           "a superseding reason must actually explain itself")
+        self.assertGreater(len(run.get("superseded", "")), 120,
+                           "a superseding reason must explain itself")
         scored, superseded = eb.load_runs(eb.load_tasks())
         self.assertIn("2026-08-16-subagent-pilot12",
                       [s["run"] for s in superseded])
@@ -249,17 +267,16 @@ class SupersededRuns(unittest.TestCase):
     def test_a_stale_run_without_a_reason_is_still_a_hard_error(self):
         """`superseded` must not become a way to wave through any mismatch.
 
-        Writes a real, non-superseded run with a wrong digest and asserts
-        load_runs refuses it. An earlier version of this test raised SystemExit
-        itself as a fallback, so it passed whatever the code did -- the vacuous
-        pass this project keeps rediscovering.
+        Writes a real non-superseded run with a wrong digest. An earlier version
+        raised SystemExit itself as a fallback, so it passed whatever the code
+        did -- the vacuous pass this project keeps rediscovering.
         """
         tasks = eb.load_tasks()
         probe = eb.RESPONSES / "_zz-probe-not-superseded.json"
         probe.write_text(json.dumps({
             "runner": "test", "model": "test", "recorded_at": "2026-01-01",
             "tasks_sha256": "0" * 64,
-            "answers": {"none": {tasks[0]["task"]: "FINDING: L1: x\nDONE: 1"}},
+            "answers": {"none": {tasks[0]["task"]: "FINDING: L1: x"}},
         }), encoding="utf-8")
         try:
             with self.assertRaises(SystemExit) as ctx:
@@ -267,7 +284,6 @@ class SupersededRuns(unittest.TestCase):
             self.assertIn("_zz-probe-not-superseded", str(ctx.exception))
         finally:
             probe.unlink()
-        # and the suite is left clean
         eb.load_runs(tasks)
 
 
