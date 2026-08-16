@@ -181,16 +181,50 @@ Nothing about agent quality yet. Two things about the method:
   Whether depth is *quality* is precisely what a working precision measure would
   settle, and this run had none.
 
-### The fix being considered
+### The fix, now built
 
-Score on **location, not wording**: require every `FINDING` to cite a line
-number, and check whether the planted defect's line is among those cited. Line
-numbers are unambiguous, need no phrasing list, and leak nothing — the answerer
-still has to find the line. Phrase matching would drop to a secondary signal, so
-citing the right line for the wrong reason does not score.
+Scoring is by **location, not wording**. Every `FINDING` must carry
+`L<line>`; a planted defect counts as found when a cited line falls in its
+range. Line numbers are unambiguous, need no phrasing list, and leak nothing —
+the fixture is shown numbered so citing costs no counting, and every line gets a
+number so the numbering marks nothing.
 
-That is a redesign of the oracle, not a widening of the lists, and it is
-deliberately not applied to this run's numbers.
+**The twelve pilot answers could not be re-scored.** Only 3 of 12 cite any line,
+because the old prompt never asked. Scoring them under the new oracle would give
+nine of them 0 found — an artifact of the old contract that would read as a
+result. `tasks_digest` now covers `PROMPT_TEMPLATE` for exactly this reason; it
+did not, which was a real defect, and without the fix those answers would have
+been silently re-scored.
+
+The run is kept in place, marked `superseded` with a written reason, and
+excluded from scoring rather than deleted. It is the evidence that invalidated
+the first oracle.
+
+### Precision was dropped, not fixed
+
+`clean` aspects are gone. Two findings killed them: the measure never fired once
+across 12 answers, and the pilot found four real defects in code the key had
+asserted was clean — two of them *inside* `clean` aspects.
+
+The second generalises. **The author of a fixture does not reliably know what is
+wrong with it.** A precision measure built on a complete defect inventory
+inherits that, and one that punishes an answer for being right about an unlisted
+defect is worse than none.
+
+What is reported instead is cost, not correctness:
+
+| | |
+| --- | --- |
+| `recall_pct` | planted defects whose line was cited — **the scored metric** |
+| `lines_cited` | distinct lines pointed at |
+| `defect_density` | `found / lines_cited` — a scattergun answer scores badly |
+| `contract_pct` | findings carrying a line, over findings declared |
+
+`defect_density` makes padding visible without claiming the extra citations are
+wrong. Read it like `effort_tool_calls` in the selection harness.
+
+The four unplanted defects were promoted into `planted`, so the recall
+denominator now matches what is actually in the fixtures.
 
 ## What is bound to a run
 

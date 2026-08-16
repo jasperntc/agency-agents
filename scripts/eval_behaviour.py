@@ -41,21 +41,45 @@ reviewable in a diff, and no sandbox.
 The cost is honest to state: this measures DIAGNOSIS, not construction. An agent
 that spots every bug and writes terrible code scores perfectly here.
 
-RECALL ALONE IS A TRAP, SO PRECISION IS MEASURED WITH IT
+THE ORACLE IS A LINE NUMBER, AFTER PROSE MATCHING FAILED
 
-An answer that lists twenty possible problems will hit the planted one by
-accident. That is the same failure the routing harness has with OR-ing every
-word: widen the query and the hit rate rises for free. So every task also names
-`clean` aspects -- things deliberately CORRECT in the fixture -- and claiming
-one is a false claim.
+Findings are scored by WHERE they point, not by how they are worded. A planted
+defect is found when the answer cites a line inside its range.
 
-    found_pct     planted defects identified
-    false_pct     deliberately-correct aspects claimed as broken
-    lift          found_pct - false_pct
+The first version matched prose against hand-written phrasing lists, and the
+2026-08-16 pilot invalidated it outright: the generic positive control beat the
+real agent by 25 points because it happened to write "two queries per customer"
+where the real agent wrote "evaluates the same orders queryset twice". Same
+diagnosis, 3/3 against 1/3. Widening the lists to fit answers already collected
+would be fitting the key to the data, so the oracle was replaced instead.
 
-`lift` is the only figure comparable between conditions, for exactly the reason
-`lift_over_control` is in scripts/eval_routing.py: padding the answer raises
-both terms.
+Line numbers are unambiguous, need no phrasing list, and leak nothing -- the
+answerer still has to find the line. A finding with no `L<n>` is unscoreable and
+is counted as such, so contract failures are visible rather than silently
+scored as misses.
+
+PRECISION IS NOT SCORED, AND THAT IS A DELIBERATE RETREAT
+
+The first version scored `clean` aspects -- code asserted to be correct, where a
+claim was a false claim. Two things killed it. It never fired once across 12
+answers, so `lift = found - false` was plain recall in disguise. And the pilot
+found FOUR real defects in code the key had asserted was clean, two of them
+inside `clean` aspects.
+
+That second one generalises: the author of a fixture does not reliably know
+what is wrong with it. Any precision measure built on a complete defect
+inventory inherits that, and a precision measure that punishes an answer for
+being right about an unlisted defect is worse than none.
+
+So what is reported instead is COST, not correctness:
+
+    recall_pct       planted defects whose line was cited
+    lines_cited      distinct lines the answer points at
+    defect_density   found / lines_cited -- a scattergun answer scores badly
+    contract_pct     findings carrying a line, over findings declared
+
+`defect_density` makes padding visible without claiming the extra citations are
+wrong. Read it the way `effort_tool_calls` is read in the selection harness.
 """
 from __future__ import annotations
 
@@ -99,22 +123,29 @@ TASK
 {prompt}
 
 FILE UNDER REVIEW: {fixture_name}
+Line numbers are shown for reference and are not part of the file.
 ```
 {fixture}
 ```
 
-List every real problem you find. For each one give a single line:
+For every real problem you find, give one line in exactly this form:
 
-FINDING: <one sentence naming the problem and where it is>
+FINDING: L<line>: <one sentence naming the problem>
 
-Then a final line:
+<line> is the single line number where the problem lives. Give the most
+specific line, not a range. Then a final line:
 
 DONE: <how many findings you reported>
 
-Report only problems you are confident are real. Listing everything that might
-conceivably be wrong is not thoroughness -- a claim about correct code is a
-false claim, and is scored as one.
+Report only problems you are confident are real. Every line you cite is
+counted, so an answer that points at many lines to be safe is a worse answer,
+not a more thorough one.
 """
+
+# The scoring contract. A finding must carry a line, or it does not exist as
+# far as this harness is concerned -- see score_answer() for why that is a
+# deliberate hard edge rather than a leniency worth adding.
+FINDING_RE = re.compile(r"^[^\S\n]*FINDING:\s*L(\d+)\s*:", re.MULTILINE)
 
 PREAMBLE = {
     "none": "You are reviewing a file for a colleague.\n",
@@ -180,7 +211,13 @@ def tasks_digest(tasks: list[dict], task_ids: list[str] | None = None) -> str:
     fixture IS a different question, and must.
     """
     wanted = None if task_ids is None else set(task_ids)
-    parts = []
+    # PROMPT_TEMPLATE is part of the question, and leaving it out was a real
+    # defect: the 2026-08-16 pilot was answered under a template that never
+    # asked for line numbers, and a digest blind to that would have let those
+    # answers be silently re-scored by an oracle they could not satisfy. Nine of
+    # the twelve would have scored zero, and the zero would have looked like a
+    # measurement.
+    parts = [hashlib.sha256(PROMPT_TEMPLATE.encode("utf-8")).hexdigest()]
     for t in sorted(tasks, key=lambda t: t["task"]):
         if wanted is not None and t["task"] not in wanted:
             continue
@@ -188,6 +225,18 @@ def tasks_digest(tasks: list[dict], task_ids: list[str] | None = None) -> str:
         parts.append(f"{t['task']}\t{t['prompt']}\t"
                      f"{hashlib.sha256(fixture).hexdigest()}")
     return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
+
+
+def numbered(task: dict) -> str:
+    """The fixture with line numbers, so a citation costs no counting.
+
+    Without this the answerer has to count lines by hand, and a miscount would
+    be scored as a wrong diagnosis. The numbers leak nothing -- every line gets
+    one.
+    """
+    body = (FIXTURES / task["fixture"]).read_text(encoding="utf-8").rstrip("\n")
+    return "\n".join(f"{i:>4}  {line}"
+                     for i, line in enumerate(body.splitlines(), 1))
 
 
 def agent_path(agent_id: str) -> str:
@@ -198,7 +247,7 @@ def agent_path(agent_id: str) -> str:
 def prompt_for(task: dict, condition: str) -> str:
     if condition not in CONDITIONS:
         raise KeyError(condition)
-    fixture = (FIXTURES / task["fixture"]).read_text(encoding="utf-8")
+    fixture = numbered(task)
     # The control must be delivered exactly as `current` is -- a file to read at
     # a path. Handing one condition a path and another inline text would confound
     # the comparison with the delivery mechanism.
@@ -211,57 +260,50 @@ def prompt_for(task: dict, condition: str) -> str:
         fixture_name=task["fixture"], fixture=fixture.rstrip("\n"))
 
 
-def matched(answer: str, phrasings: list[str]) -> str | None:
-    """The first phrasing present, case-insensitively.
+def cited_lines(answer: str) -> list[int]:
+    """Every line number the answer points at, in order, deduplicated.
 
-    Matching is literal, not a model. Asking a judge whether a finding "counts"
-    would put rung 4 evidence where rung 1 is supposed to be, and would make
-    every score depend on a second model nobody calibrated. The cost is that
-    phrasing lists are maintained by hand -- visible work rather than invisible
-    drift.
-
-    WORD BOUNDARIES, and why they are not optional. Plain substring matching
-    scores `SQLi` inside `sqlite3`, so any answer that merely mentioned the
-    import counted as having found a SQL injection. That was caught by
-    test_no_planted_phrasing_appears_in_the_prompt_or_fixture before a single
-    answer was collected, which is the only reason it is a footnote instead of
-    a result.
-
-    A boundary is required only at an end that is alphanumeric, so phrases like
-    `.aggregate` and `key={index}` still match where a naive `\\b...\\b` would
-    silently never fire -- the worse failure, because it looks like a clean miss.
+    A finding without a line is invisible here. That is a hard edge, not an
+    oversight: the alternative is falling back to prose matching for the
+    unlabelled ones, which is precisely the oracle the 2026-08-16 pilot
+    invalidated. An answer that ignores the output contract has not been
+    measured, and the contract-compliance rate is reported so that failure is
+    visible rather than silently scored as a miss.
     """
-    low = answer.lower()
-    for p in phrasings:
-        needle = p.lower()
-        left = r"\b" if needle[:1].isalnum() else ""
-        right = r"\b" if needle[-1:].isalnum() else ""
-        if re.search(left + re.escape(needle) + right, low):
-            return p
-    return None
+    seen, out = set(), []
+    for m in FINDING_RE.finditer(answer):
+        n = int(m.group(1))
+        if n not in seen:
+            seen.add(n)
+            out.append(n)
+    return out
 
 
 def score_answer(task: dict, answer: str) -> dict:
-    found, missed, false_claims = [], [], []
-    for defect in task["planted"]:
-        hit = matched(answer, defect["any_of"])
-        (found if hit else missed).append(
-            {"id": defect["id"], "matched": hit} if hit else {"id": defect["id"]})
-    for clean in task["clean"]:
-        hit = matched(answer, clean["any_of"])
-        if hit:
-            false_claims.append({"id": clean["id"], "matched": hit})
+    """Recall by line citation. See the module docstring for why not precision.
 
-    claimed = len(re.findall(r"^\s*FINDING:", answer, re.MULTILINE))
+    A planted defect counts as found when the answer cites a line inside its
+    range. Ranges never overlap within a task, so one citation cannot score two
+    defects -- asserted by test_planted_line_ranges_do_not_overlap.
+    """
+    lines = cited_lines(answer)
+    found, missed = [], []
+    for defect in task["planted"]:
+        lo, hi = defect["lines"]
+        hit = next((n for n in lines if lo <= n <= hi), None)
+        (found if hit is not None else missed).append(defect["id"])
+
+    total_findings = len(FINDING_RE.findall(answer))
+    declared = re.search(r"(?m)^[ \t]*DONE:[ \t]*(\d+)", answer)
     return {
         "task": task["task"],
         "agent": task["agent"],
         "planted_total": len(task["planted"]),
-        "found": [f["id"] for f in found],
-        "missed": [m["id"] for m in missed],
-        "false_claims": [c["id"] for c in false_claims],
-        "clean_total": len(task["clean"]),
-        "findings_reported": claimed,
+        "found": found,
+        "missed": missed,
+        "lines_cited": lines,
+        "findings_with_a_line": total_findings,
+        "findings_declared": int(declared.group(1)) if declared else None,
     }
 
 
@@ -272,25 +314,50 @@ def pct(n: int, d: int) -> float:
 def score_condition(rows: list[dict]) -> dict:
     planted = sum(r["planted_total"] for r in rows)
     found = sum(len(r["found"]) for r in rows)
-    clean = sum(r["clean_total"] for r in rows)
-    false_ = sum(len(r["false_claims"]) for r in rows)
-    found_pct, false_pct = pct(found, planted), pct(false_, clean)
+    cited = sum(len(r["lines_cited"]) for r in rows)
+    declared = sum(r["findings_declared"] or 0 for r in rows)
+    with_line = sum(r["findings_with_a_line"] for r in rows)
     return {
         "tasks": len(rows),
-        "found": found, "planted_total": planted, "found_pct": found_pct,
-        "false_claims": false_, "clean_total": clean, "false_pct": false_pct,
-        "lift": round(found_pct - false_pct, 2),
-        "findings_reported": sum(r["findings_reported"] for r in rows),
+        "found": found,
+        "planted_total": planted,
+        "recall_pct": pct(found, planted),
+        # COST, not precision. A scattergun answer citing every line scores full
+        # recall and terrible density. This does NOT claim the extra citations
+        # are wrong -- the pilot found four real defects the answer key had
+        # missed, so treating unlisted citations as errors would punish being
+        # right. Read it as breadth-of-claim, the way effort_tool_calls is read
+        # in the selection harness.
+        "lines_cited": cited,
+        "defect_density": round(found / cited, 3) if cited else 0.0,
+        # Contract compliance. Findings without an L<n> prefix are unscoreable,
+        # so a gap between these two numbers means the run measured less than it
+        # appears to.
+        "findings_with_a_line": with_line,
+        "findings_declared": declared,
+        "contract_pct": pct(with_line, declared) if declared else 0.0,
         "per_task": rows,
     }
 
 
 def load_runs(tasks: list[dict]) -> list[dict]:
     known = {t["task"] for t in tasks}
-    runs = []
+    runs, superseded = [], []
     for path in sorted(RESPONSES.glob("*.json")):
         rel = path.relative_to(REPO_ROOT).as_posix()
         run = json.loads(path.read_text(encoding="utf-8"))
+
+        # A run answered under an older protocol is evidence, not an error, and
+        # not something to delete. It is skipped with its reason surfaced in the
+        # report rather than silently dropped or force-fitted to an oracle it
+        # could not have satisfied. The field is explicit and requires a written
+        # reason precisely so it cannot become a quiet way to discard an
+        # inconvenient result.
+        if run.get("superseded"):
+            superseded.append({"run": path.stem, "reason": run["superseded"],
+                               "protocol": run.get("protocol")})
+            continue
+
         answered = sorted({tid for c in run.get("answers", {}).values()
                            for tid in c if tid in known})
         expected = tasks_digest(tasks, answered)
@@ -304,22 +371,23 @@ def load_runs(tasks: list[dict]) -> list[dict]:
                 f"`clean` does NOT trip this -- only prompts and fixtures do.")
         run["_name"] = path.stem
         runs.append(run)
-    return runs
+    return runs, superseded
 
 
 def build_report() -> dict:
     tasks = load_tasks()
     by_id = {t["task"]: t for t in tasks}
     runs = []
-    for run in load_runs(tasks):
+    scored, superseded = load_runs(tasks)
+    for run in scored:
         conditions = {}
         for condition, answers in run["answers"].items():
             rows = [score_answer(by_id[tid], text)
                     for tid, text in sorted(answers.items()) if tid in by_id]
             conditions[condition] = score_condition(rows)
 
-        base = conditions.get("none", {}).get("lift")
-        deltas = {c: round(v["lift"] - base, 2)
+        base = conditions.get("none", {}).get("recall_pct")
+        deltas = {c: round(v["recall_pct"] - base, 2)
                   for c, v in conditions.items() if base is not None}
         runs.append({
             "run": run["_name"], "runner": run.get("runner"),
@@ -338,6 +406,7 @@ def build_report() -> dict:
                   "function of (tasks, fixtures, answers) -- no model is "
                   "called here, which is what lets CI verify it."),
         "tasks": {"total": len(tasks), "tasks_sha256": tasks_digest(tasks)},
+        "superseded_runs": superseded,
         "conditions": CONDITIONS,
         "runs": runs,
     }
@@ -399,7 +468,10 @@ def main() -> int:
     if not report["runs"]:
         print(f"Tasks: {report['tasks']['total']}   "
               f"digest: {report['tasks']['tasks_sha256'][:16]}")
-        print(f"\nNo runs recorded in "
+        for sup in report["superseded_runs"]:
+            print(f"\n  SUPERSEDED  {sup['run']}  (protocol {sup['protocol']})")
+            print(f"    {sup['reason']}")
+        print(f"\nNo scoreable runs in "
               f"{RESPONSES.relative_to(REPO_ROOT).as_posix()}/ yet.")
         print("Generate a prompt with --prompt <task> --condition <condition>, "
               "collect answers blind, then re-run this script.")
@@ -410,17 +482,18 @@ def main() -> int:
     print(f"Tasks: {report['tasks']['total']}\n")
     for r in report["runs"]:
         print(f"{r['run']}  [{r['runner']} / {r['model']}]")
-        print(f"  {'condition':<11}{'found':>12}{'false':>12}{'lift':>9}"
-              f"{'vs none':>9}")
+        print(f"  {'condition':<11}{'recall':>14}{'lines':>7}{'density':>9}"
+              f"{'contract':>10}{'vs none':>9}")
         for cond in ("none", "current", "candidate", "flattened"):
             c = r["conditions"].get(cond)
             if not c:
                 continue
             delta = r["lift_over_no_skill"].get(cond)
             print(f"  {cond:<11}"
-                  f"{c['found']}/{c['planted_total']} ({c['found_pct']}%)".rjust(12)
-                  + f"{c['false_claims']}/{c['clean_total']} ({c['false_pct']}%)".rjust(12)
-                  + f"{c['lift']:>9}"
+                  + f"{c['found']}/{c['planted_total']} ({c['recall_pct']}%)".rjust(14)
+                  + f"{c['lines_cited']:>7}"
+                  + f"{c['defect_density']:>9}"
+                  + f"{c['contract_pct']:>9}%"
                   + (f"{delta:>+9}" if delta is not None and cond != "none" else " " * 9))
         print()
 

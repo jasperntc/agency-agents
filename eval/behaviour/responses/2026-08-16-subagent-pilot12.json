@@ -2,6 +2,8 @@
   "runner": "subagent",
   "model": "claude-opus-5",
   "recorded_at": "2026-08-16",
+  "protocol": "v1-prose-matching",
+  "superseded": "Answered under a prompt that never asked for line numbers. The line-citation oracle that replaced prose matching cannot score these answers: 9 of the 12 cite no line at all, so they would score 0 found as an artifact of the old contract rather than a measurement. Kept because the answers are the evidence that invalidated the original oracle -- three near-miss phrasings, a precision measure that never fired, and four real defects the answer key had asserted were clean. Deleting it would erase the reason the harness changed.",
   "tasks_sha256": "71b96769ed964d53335c80f6fa1e999568142564f88a8724e0ed75faeb143cff",
   "notes": "INSTRUMENT CHECK, NOT A RESULT. 4 tasks x 3 conditions (none, current, flattened); `candidate` is absent because no candidate agent file exists yet. One blind general-purpose subagent per cell, 12 total, each given only the generated prompt and forbidden from reading eval/behaviour/. Answers stored verbatim. Read docs/behaviour-evaluation.md before quoting any number from this file: the pilot's own finding is that the phrasing lists under-match correct answers badly enough that the scores are not yet a measurement of agent quality.",
   "answers": {
