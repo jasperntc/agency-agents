@@ -98,6 +98,100 @@ A third was caught the same way: `Sum(` as a phrasing for "aggregate in the
 database" matched the fixture's own `sum(o.total_cents ...)`, so quoting the
 broken line scored as recommending the fix. Exactly backwards.
 
+## The first pilot (2026-08-16) found the instrument invalid
+
+12 blind subagents, 4 tasks × 3 conditions, `claude-opus-5`. Recorded in
+`eval/behaviour/responses/2026-08-16-subagent-pilot12.json`.
+
+| condition | found | false claims | lift | vs `none` |
+| --- | ---: | ---: | ---: | ---: |
+| `none` | 4/8 (50.0%) | 0/12 (0.0%) | 50.0 | |
+| `current` | 5/8 (62.5%) | 0/12 (0.0%) | 62.5 | +12.5 |
+| `flattened` | 7/8 (87.5%) | 0/12 (0.0%) | 87.5 | **+37.5** |
+
+**The generic positive control beat the real agent by 25 points.** Do not read
+that as a finding about the corpus. It is a finding about this harness, and the
+pilot existed to produce exactly this kind of result before anyone acted on a
+number.
+
+### Defect 1 — matching measures phrasing, not diagnosis
+
+`b001/current` and `b001/flattened` give the *same* diagnosis. One scored 3/3
+and the other 1/3:
+
+| | wrote | list had | scored |
+| --- | --- | --- | ---: |
+| `flattened` | "roughly **two queries per** customer", "**annotate**", "**GROUP BY**" | matched | 3/3 |
+| `current` | "evaluates the same `orders` queryset twice", "letting the database compute `SUM(total_cents)`" | "evaluates the queryset twice", "let the database do the sum" | 1/3 |
+
+Near-misses by one word. Three separate correct diagnoses of the index-key
+defect in `b003` — "index-based in a reorderable list", "the key must be a
+stable `task.id`", "binds React's element identity to position" — matched **none**
+of the phrasings, all of which were written before any answer existed.
+
+The deeper problem is that this is not fixable by adding phrasings. Widening the
+lists to match the answers already collected is fitting the answer key to the
+data, which is the trap this project exists to avoid. **Literal matching over
+free-form prose is deterministic in computation and arbitrary in what it
+recognises** — which is not the same thing as a rung-1 oracle, whatever the
+original docstring claimed.
+
+### Defect 2 — the precision half never fired
+
+`false_pct` is **0.0% in every condition**. The `clean` aspects, which exist so
+that padding an answer cannot pay, did not trigger once — even though
+`b004/current` reported 11 findings against `b004/none`'s 3.
+
+So `lift = found_pct − false_pct` collapsed to plain recall, and the control
+that was supposed to make thoroughness cost something was inert for the entire
+run. A metric that cannot move is indistinguishable from a metric that does not
+exist, which is the same lesson as `pairwise.max_pct` in
+[corpus-metrics.md](corpus-metrics.md).
+
+### Defect 3 — the fixtures contain defects I did not plant
+
+Four, found by the subagents:
+
+| fixture | unplanted defect |
+| --- | --- |
+| `b002` | `if limit > 200` leaves `?limit=-1` untouched, and SQLite reads a negative LIMIT as unbounded |
+| `b003` | `e.currentTarget.dataset.to` reads a `data-to` attribute that is never rendered, so every drag moves the row to the top |
+| `b004` | `taken` counts reservation *rows*, not seats, so a 10-seat booking counts as 1 and the event oversells 10× with no concurrency at all |
+| `b004` | `isinstance(True, int)` is `True`, so `{"quantity": true}` passes the "integer 1-10" guard |
+
+Two of those sit **inside `clean` aspects** — code the answer key asserts is
+correct. A correct finding could therefore be scored as a false claim, and the
+recall denominator is wrong because the fixture has more real defects than the
+key lists.
+
+This is the most uncomfortable of the three, because it generalises: **the author
+of a fixture does not reliably know what is wrong with it.** Any design that
+assumes a complete defect inventory inherits that.
+
+### What the run does say
+
+Nothing about agent quality yet. Two things about the method:
+
+- **Blindness held.** No subagent read the answer key, every answer was
+  attributable, and the output contract was followed in 12 of 12 — better than
+  the selection pilot managed.
+- **A depth gradient exists**, visible by eye rather than by score: on `b004`,
+  `current` produced 11 findings, `flattened` 7, `none` 3, and the extra ones are
+  real (idempotency, missing auth, connection exhaustion on the sold-out path).
+  Whether depth is *quality* is precisely what a working precision measure would
+  settle, and this run had none.
+
+### The fix being considered
+
+Score on **location, not wording**: require every `FINDING` to cite a line
+number, and check whether the planted defect's line is among those cited. Line
+numbers are unambiguous, need no phrasing list, and leak nothing — the answerer
+still has to find the line. Phrase matching would drop to a secondary signal, so
+citing the right line for the wrong reason does not score.
+
+That is a redesign of the oracle, not a widening of the lists, and it is
+deliberately not applied to this run's numbers.
+
 ## What is bound to a run
 
 `tasks_sha256` covers `(task id, prompt, sha256 of the fixture)` — the question
