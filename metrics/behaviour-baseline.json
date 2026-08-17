@@ -12,6 +12,333 @@
       "conditions": {
         "current": {
           "by_tier": {
+            "hard": {
+              "found": 11,
+              "planted_total": 13,
+              "recall_pct": 84.62,
+              "tasks": 4
+            }
+          },
+          "contract_pct": 100.0,
+          "defect_density": 0.611,
+          "findings_declared": 18,
+          "findings_with_a_line": 18,
+          "found": 11,
+          "lines_cited": 18,
+          "per_task": [
+            {
+              "agent": "engineering-database-optimizer",
+              "findings_declared": 3,
+              "findings_with_a_line": 3,
+              "found": [
+                "non_sargable_predicate",
+                "leftmost_prefix_unusable",
+                "not_in_null_trap"
+              ],
+              "lines_cited": [
+                16,
+                31,
+                46
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b005",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-backend-architect",
+              "findings_declared": 6,
+              "findings_with_a_line": 6,
+              "found": [
+                "backoff_without_jitter",
+                "pool_sized_per_process"
+              ],
+              "lines_cited": [
+                13,
+                23,
+                26,
+                34,
+                42,
+                44
+              ],
+              "missed": [
+                "wall_clock_for_elapsed"
+              ],
+              "planted_total": 3,
+              "task": "b006",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-frontend-developer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "debounce_recreated_each_render",
+                "eager_usestate_initializer",
+                "object_literal_in_deps"
+              ],
+              "lines_cited": [
+                10,
+                16,
+                28,
+                34
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b007",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-code-reviewer",
+              "findings_declared": 5,
+              "findings_with_a_line": 5,
+              "found": [
+                "weak_token_randomness",
+                "user_enumeration",
+                "unsalted_fast_password_hash"
+              ],
+              "lines_cited": [
+                18,
+                26,
+                43,
+                46,
+                52
+              ],
+              "missed": [
+                "timing_unsafe_compare"
+              ],
+              "planted_total": 4,
+              "task": "b008",
+              "tier": "hard"
+            }
+          ],
+          "planted_total": 13,
+          "recall_pct": 84.62,
+          "tasks": 4
+        },
+        "flattened": {
+          "by_tier": {
+            "hard": {
+              "found": 11,
+              "planted_total": 13,
+              "recall_pct": 84.62,
+              "tasks": 4
+            }
+          },
+          "contract_pct": 100.0,
+          "defect_density": 0.647,
+          "findings_declared": 17,
+          "findings_with_a_line": 17,
+          "found": 11,
+          "lines_cited": 17,
+          "per_task": [
+            {
+              "agent": "engineering-database-optimizer",
+              "findings_declared": 3,
+              "findings_with_a_line": 3,
+              "found": [
+                "non_sargable_predicate",
+                "leftmost_prefix_unusable",
+                "not_in_null_trap"
+              ],
+              "lines_cited": [
+                16,
+                31,
+                46
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b005",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-backend-architect",
+              "findings_declared": 6,
+              "findings_with_a_line": 6,
+              "found": [
+                "backoff_without_jitter",
+                "pool_sized_per_process"
+              ],
+              "lines_cited": [
+                13,
+                26,
+                34,
+                36,
+                42,
+                44
+              ],
+              "missed": [
+                "wall_clock_for_elapsed"
+              ],
+              "planted_total": 3,
+              "task": "b006",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-frontend-developer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "debounce_recreated_each_render",
+                "eager_usestate_initializer",
+                "object_literal_in_deps"
+              ],
+              "lines_cited": [
+                10,
+                16,
+                26,
+                28
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b007",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-code-reviewer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "weak_token_randomness",
+                "user_enumeration",
+                "unsalted_fast_password_hash"
+              ],
+              "lines_cited": [
+                18,
+                26,
+                43,
+                52
+              ],
+              "missed": [
+                "timing_unsafe_compare"
+              ],
+              "planted_total": 4,
+              "task": "b008",
+              "tier": "hard"
+            }
+          ],
+          "planted_total": 13,
+          "recall_pct": 84.62,
+          "tasks": 4
+        },
+        "none": {
+          "by_tier": {
+            "hard": {
+              "found": 11,
+              "planted_total": 13,
+              "recall_pct": 84.62,
+              "tasks": 4
+            }
+          },
+          "contract_pct": 100.0,
+          "defect_density": 0.786,
+          "findings_declared": 14,
+          "findings_with_a_line": 14,
+          "found": 11,
+          "lines_cited": 14,
+          "per_task": [
+            {
+              "agent": "engineering-database-optimizer",
+              "findings_declared": 3,
+              "findings_with_a_line": 3,
+              "found": [
+                "non_sargable_predicate",
+                "leftmost_prefix_unusable",
+                "not_in_null_trap"
+              ],
+              "lines_cited": [
+                16,
+                31,
+                46
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b005",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-backend-architect",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "backoff_without_jitter",
+                "pool_sized_per_process"
+              ],
+              "lines_cited": [
+                13,
+                21,
+                34,
+                43
+              ],
+              "missed": [
+                "wall_clock_for_elapsed"
+              ],
+              "planted_total": 3,
+              "task": "b006",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-frontend-developer",
+              "findings_declared": 3,
+              "findings_with_a_line": 3,
+              "found": [
+                "debounce_recreated_each_render",
+                "eager_usestate_initializer",
+                "object_literal_in_deps"
+              ],
+              "lines_cited": [
+                10,
+                14,
+                16
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b007",
+              "tier": "hard"
+            },
+            {
+              "agent": "engineering-code-reviewer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "weak_token_randomness",
+                "user_enumeration",
+                "unsalted_fast_password_hash"
+              ],
+              "lines_cited": [
+                18,
+                26,
+                43,
+                52
+              ],
+              "missed": [
+                "timing_unsafe_compare"
+              ],
+              "planted_total": 4,
+              "task": "b008",
+              "tier": "hard"
+            }
+          ],
+          "planted_total": 13,
+          "recall_pct": 84.62,
+          "tasks": 4
+        }
+      },
+      "lift_over_no_skill": {
+        "current": 0.0,
+        "flattened": 0.0,
+        "none": 0.0
+      },
+      "model": "claude-opus-5",
+      "recorded_at": "2026-08-16",
+      "run": "2026-08-16-subagent-hard12",
+      "runner": "subagent"
+    },
+    {
+      "_note": "lift_over_no_skill is the only figure that answers the question this phase exists for. A `current` value at or below zero means the agent file changed nothing, whatever its absolute score.",
+      "conditions": {
+        "current": {
+          "by_tier": {
             "easy": {
               "found": 11,
               "planted_total": 12,

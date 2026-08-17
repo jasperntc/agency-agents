@@ -328,6 +328,71 @@ phantom 15-point separation. Declaring both is honest; widening the window until
 anything nearby counts would not be, which is why the window is capped at 2 and
 must be stated per defect.
 
+## The hard tier (2026-08-16): still no separation, and now it means something
+
+12 blind subagents over `b005`–`b008`. Contract held 12/12.
+
+| condition | recall | lines cited | density | vs `none` |
+| --- | ---: | ---: | ---: | ---: |
+| `none` | 11/13 (84.62%) | 14 | **0.786** | |
+| `current` | 11/13 (84.62%) | 18 | 0.611 | **+0.0** |
+| `flattened` | 11/13 (84.62%) | 17 | 0.647 | **+0.0** |
+
+Not merely the same totals. The **same defects, found and missed, task by task**:
+
+| | `b005` | `b006` | `b007` | `b008` |
+| --- | ---: | ---: | ---: | ---: |
+| `none` | 3/3 | 2/3 | 3/3 | 3/4 |
+| `current` | 3/3 | 2/3 | 3/3 | 3/4 |
+| `flattened` | 3/3 | 2/3 | 3/3 | 3/4 |
+
+Both misses are uniform. Every condition missed `time.time()` where `monotonic`
+is required, and every condition missed `==` on a token digest. The agent file
+did not help on the two defects that were actually hard.
+
+### Combined across both tiers
+
+**24 blind subagents. 8 tasks. 25 defects. Three conditions. Zero separation,
+anywhere.** `none` 22/25, `current` 22/25, `flattened` 22/25.
+
+### Density runs the wrong way
+
+On the hard tier the control is the *most* precise: `none` 0.786 against
+`current` 0.611. The agent-file conditions cite more lines for identical recall.
+That is not evidence they are worse — the extra citations are largely real
+defects — but it is the opposite of the direction a useful specialist file
+should push, and it is the only dimension that moved at all.
+
+### The finding
+
+**On diagnostic code review, with `claude-opus-5`, these four agent files make
+no measurable difference.** The base model already saturates the task. That is
+a real, controlled negative result and it bears directly on Goal A.
+
+It is not a claim that the corpus is worthless, and the limits are specific:
+
+- **Diagnosis, not construction.** Nothing here measures whether an agent
+  produces better code, only whether it spots defects.
+- **One model, one sample per cell.** A weaker model might separate; two runs of
+  this one would differ.
+- **Four agents of 270**, chosen because rung-1 evidence exists for them.
+- **The instrument is now trustworthy enough to believe a null.** Both known
+  failure modes were fixed and then validated in this very run: `none` cited L14
+  and `current` cited L28 for the same defect, and multi-anchor scoring credited
+  both. Under the previous key that alone would have manufactured a difference.
+
+### Seven defects the answer key does not list
+
+Across three pilots the subagents found, in code this benchmark authored:
+
+`?limit=-1` unbounded in SQLite · a `data-to` attribute never rendered ·
+`count()` on rows not seats · `isinstance(True, int)` · a password reset that
+accepts an empty password · 4xx swallowing retryable 429/408 · a claim `UPDATE`
+with no `FOR UPDATE SKIP LOCKED` and no lease
+
+All real. **The author of a fixture does not know what is wrong with it**, and
+that is now established across three independent runs rather than asserted once.
+
 ## What is bound to a run
 
 `tasks_sha256` covers `(task id, prompt, sha256 of the fixture)` — the question
