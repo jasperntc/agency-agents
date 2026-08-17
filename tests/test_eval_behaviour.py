@@ -65,15 +65,30 @@ class Tasks(unittest.TestCase):
                                     f"not inside a {n}-line fixture, so it can "
                                     f"never be hit")
 
-    def test_both_tiers_exist(self):
-        """An easy-only benchmark cannot separate anything -- that is the whole
-        finding of the v2 pilot, where three of four tasks sat at full recall in
-        every condition. A hard tier is the fix, and its absence must fail."""
-        tiers = {t.get("tier") for t in self.tasks}
-        self.assertEqual(tiers, {"easy", "hard"})
-        for tier in ("easy", "hard"):
-            self.assertGreaterEqual(
-                sum(1 for t in self.tasks if t.get("tier") == tier), 4, tier)
+    REQUIRED_TIERS = ("easy", "hard", "niche")
+
+    def test_the_required_tiers_exist_and_are_not_thin(self):
+        """An easy-only benchmark cannot separate anything -- the v2 pilot put
+        three of four tasks at full recall in every condition.
+
+        `hard` answers 'is the defect obscure enough'; the hard tier still found
+        nothing, because a strong model saturates code review whatever it is
+        given. `niche` answers a different question -- 'is the DOMAIN one the
+        base model knows less about' -- which is the only remaining place an
+        agent file could plausibly add something.
+
+        Every tier must carry at least four tasks. A tier of one or two is a
+        sampling accident dressed as a dimension.
+        """
+        counts = {tier: sum(1 for t in self.tasks if t.get("tier") == tier)
+                  for tier in self.REQUIRED_TIERS}
+        for tier, n in counts.items():
+            self.assertGreaterEqual(n, 4, f"{tier} tier has only {n} tasks")
+        self.assertFalse(
+            [t["task"] for t in self.tasks
+             if t.get("tier") not in self.REQUIRED_TIERS],
+            "a task carries an unrecognised tier; add it to REQUIRED_TIERS "
+            "deliberately rather than letting tiers accumulate")
 
     def test_every_defect_declares_its_window(self):
         """Overlap is intentional now; the tolerance must still be chosen.

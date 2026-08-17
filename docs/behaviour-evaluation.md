@@ -393,6 +393,77 @@ with no `FOR UPDATE SKIP LOCKED` and no lease
 All real. **The author of a fixture does not know what is wrong with it**, and
 that is now established across three independent runs rather than asserted once.
 
+## The niche tier (2026-08-16): the last hypothesis, also null
+
+The hard tier failed to separate anything, so the remaining explanation was
+**domain**: perhaps the base model is only saturated on mainstream engineering,
+and a specialist file earns its place where training signal is thinner. Four
+domains chosen on that basis — PostGIS spatial semantics, Cortex-M0+ firmware,
+Solidity, and clinical trial methodology.
+
+| condition | recall | lines cited | density | vs `none` |
+| --- | ---: | ---: | ---: | ---: |
+| `none` | **15/15 (100%)** | 15 | 1.000 | |
+| `current` | 15/15 (100%) | 19 | 0.789 | +0.0 |
+| `flattened` | 14/15 (93.33%) | 17 | 0.824 | −6.67 |
+
+**The control scored 100%.** With no agent file, blind, it found every planted
+defect: `ST_Distance` returning degrees, the non-sargable predicate, degree
+buffers, square-degree areas, torn 64-bit reads, missing `volatile`, soft-float
+in an ISR, a 1 KB stack frame on a 4 KB part, `tx.origin`, division-before-
+multiplication, an unchecked `call`, the gas stipend, intention-to-treat,
+censoring, and multiplicity.
+
+`flattened`'s single miss is **not real**. On `b009` it wrote *"returns degrees,
+not metres … and the predicate is also non-sargable so the GIST index is never
+used"* — both keyed defects, correctly, in one sentence. Matching credits one
+finding with one defect, so it scores 3/4 where `none` split the same content
+across two lines and scored 4/4. Corrected, **all three are 15/15**.
+
+That is the `b002` granularity error, which had already been diagnosed and fixed
+once by merging the two defects, and which I then reintroduced in `b009` the
+same day. It is recorded rather than silently repaired because the rate at which
+this specific mistake recurs is itself the finding.
+
+### Combined, across all three tiers
+
+**36 blind subagents. 12 tasks. 40 defects. Three conditions. No separation
+anywhere.**
+
+| tier | `none` | `current` | `flattened` |
+| --- | ---: | ---: | ---: |
+| easy | 11/12 | 11/12 | 11/12 |
+| hard | 11/13 | 11/13 | 11/13 |
+| niche | 15/15 | 15/15 | 14/15 → 15/15 corrected |
+| **total** | **37/40** | **37/40** | **37/40** |
+
+### What is now established, and what is not
+
+**Established.** On defect diagnosis, across mainstream and specialist domains,
+with `claude-opus-5`, an agent file makes no measurable difference. The
+"thinner knowledge" hypothesis was the strongest remaining explanation for the
+hard-tier null and it does not survive: there is no thin domain here to exploit.
+
+**Not established.** That the corpus is worthless. Every run measures
+*diagnosis*, and the agent files may still shape *construction* — what gets
+built, in what order, to what standard. Nothing here touches that. Nor does it
+touch weaker models, longer tasks, or multi-step work where a standard has to be
+held over time rather than applied once.
+
+### The limitation the niche tier exposed in the oracle
+
+Location-based scoring cannot tell **which** defect at a line was found, and this
+run showed it cutting both ways on the same line. At `b011` L39, `current` named
+the planted defect exactly — *"`transfer`, whose 2300-gas stipend also reverts"* —
+while `none` and `flattened` cited L39 for an unplanted and more severe bug, the
+sweep draining escrowed principal. All three scored identically.
+
+So the oracle **over-credits** an answer that found something else at the right
+line, and **hides** a real advantage when one condition is more precise there.
+Prose matching failed worse, and no third option has been found that is both
+deterministic and content-aware. It is a known, bounded cost, stated here rather
+than left for a reader to discover.
+
 ## What is bound to a run
 
 `tasks_sha256` covers `(task id, prompt, sha256 of the fixture)` — the question

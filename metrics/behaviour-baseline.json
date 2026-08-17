@@ -339,6 +339,336 @@
       "conditions": {
         "current": {
           "by_tier": {
+            "niche": {
+              "found": 15,
+              "planted_total": 15,
+              "recall_pct": 100.0,
+              "tasks": 4
+            }
+          },
+          "contract_pct": 100.0,
+          "defect_density": 0.789,
+          "findings_declared": 19,
+          "findings_with_a_line": 19,
+          "found": 15,
+          "lines_cited": 19,
+          "per_task": [
+            {
+              "agent": "gis-spatial-data-engineer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "distance_in_degrees",
+                "no_index_usable",
+                "buffer_in_degrees",
+                "area_in_square_degrees"
+              ],
+              "lines_cited": [
+                11,
+                14,
+                21,
+                24
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b009",
+              "tier": "niche"
+            },
+            {
+              "agent": "engineering-embedded-firmware-engineer",
+              "findings_declared": 5,
+              "findings_with_a_line": 5,
+              "found": [
+                "missing_volatile",
+                "non_atomic_64bit_read",
+                "float_and_printf_in_isr",
+                "oversized_stack_buffer"
+              ],
+              "lines_cited": [
+                10,
+                19,
+                20,
+                26,
+                31
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b010",
+              "tier": "niche"
+            },
+            {
+              "agent": "engineering-solidity-smart-contract-engineer",
+              "findings_declared": 5,
+              "findings_with_a_line": 5,
+              "found": [
+                "tx_origin_auth",
+                "division_before_multiplication",
+                "unchecked_call_return",
+                "transfer_gas_stipend"
+              ],
+              "lines_cited": [
+                16,
+                22,
+                29,
+                33,
+                39
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b011",
+              "tier": "niche"
+            },
+            {
+              "agent": "healthcare-clinical-evidence-agent",
+              "findings_declared": 5,
+              "findings_with_a_line": 5,
+              "found": [
+                "per_protocol_not_itt",
+                "no_multiplicity_correction",
+                "ttest_ignores_censoring"
+              ],
+              "lines_cited": [
+                11,
+                16,
+                17,
+                26,
+                29
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b012",
+              "tier": "niche"
+            }
+          ],
+          "planted_total": 15,
+          "recall_pct": 100.0,
+          "tasks": 4
+        },
+        "flattened": {
+          "by_tier": {
+            "niche": {
+              "found": 14,
+              "planted_total": 15,
+              "recall_pct": 93.33,
+              "tasks": 4
+            }
+          },
+          "contract_pct": 100.0,
+          "defect_density": 0.824,
+          "findings_declared": 17,
+          "findings_with_a_line": 17,
+          "found": 14,
+          "lines_cited": 17,
+          "per_task": [
+            {
+              "agent": "gis-spatial-data-engineer",
+              "findings_declared": 3,
+              "findings_with_a_line": 3,
+              "found": [
+                "distance_in_degrees",
+                "buffer_in_degrees",
+                "area_in_square_degrees"
+              ],
+              "lines_cited": [
+                11,
+                21,
+                24
+              ],
+              "missed": [
+                "no_index_usable"
+              ],
+              "planted_total": 4,
+              "task": "b009",
+              "tier": "niche"
+            },
+            {
+              "agent": "engineering-embedded-firmware-engineer",
+              "findings_declared": 6,
+              "findings_with_a_line": 6,
+              "found": [
+                "missing_volatile",
+                "non_atomic_64bit_read",
+                "float_and_printf_in_isr",
+                "oversized_stack_buffer"
+              ],
+              "lines_cited": [
+                10,
+                19,
+                20,
+                26,
+                31,
+                37
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b010",
+              "tier": "niche"
+            },
+            {
+              "agent": "engineering-solidity-smart-contract-engineer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "tx_origin_auth",
+                "division_before_multiplication",
+                "unchecked_call_return",
+                "transfer_gas_stipend"
+              ],
+              "lines_cited": [
+                16,
+                29,
+                33,
+                39
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b011",
+              "tier": "niche"
+            },
+            {
+              "agent": "healthcare-clinical-evidence-agent",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "per_protocol_not_itt",
+                "no_multiplicity_correction",
+                "ttest_ignores_censoring"
+              ],
+              "lines_cited": [
+                11,
+                16,
+                17,
+                29
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b012",
+              "tier": "niche"
+            }
+          ],
+          "planted_total": 15,
+          "recall_pct": 93.33,
+          "tasks": 4
+        },
+        "none": {
+          "by_tier": {
+            "niche": {
+              "found": 15,
+              "planted_total": 15,
+              "recall_pct": 100.0,
+              "tasks": 4
+            }
+          },
+          "contract_pct": 100.0,
+          "defect_density": 1.0,
+          "findings_declared": 15,
+          "findings_with_a_line": 15,
+          "found": 15,
+          "lines_cited": 15,
+          "per_task": [
+            {
+              "agent": "gis-spatial-data-engineer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "distance_in_degrees",
+                "no_index_usable",
+                "buffer_in_degrees",
+                "area_in_square_degrees"
+              ],
+              "lines_cited": [
+                11,
+                14,
+                21,
+                24
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b009",
+              "tier": "niche"
+            },
+            {
+              "agent": "engineering-embedded-firmware-engineer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "missing_volatile",
+                "non_atomic_64bit_read",
+                "float_and_printf_in_isr",
+                "oversized_stack_buffer"
+              ],
+              "lines_cited": [
+                10,
+                20,
+                26,
+                31
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b010",
+              "tier": "niche"
+            },
+            {
+              "agent": "engineering-solidity-smart-contract-engineer",
+              "findings_declared": 4,
+              "findings_with_a_line": 4,
+              "found": [
+                "tx_origin_auth",
+                "division_before_multiplication",
+                "unchecked_call_return",
+                "transfer_gas_stipend"
+              ],
+              "lines_cited": [
+                16,
+                29,
+                33,
+                39
+              ],
+              "missed": [],
+              "planted_total": 4,
+              "task": "b011",
+              "tier": "niche"
+            },
+            {
+              "agent": "healthcare-clinical-evidence-agent",
+              "findings_declared": 3,
+              "findings_with_a_line": 3,
+              "found": [
+                "per_protocol_not_itt",
+                "no_multiplicity_correction",
+                "ttest_ignores_censoring"
+              ],
+              "lines_cited": [
+                11,
+                16,
+                29
+              ],
+              "missed": [],
+              "planted_total": 3,
+              "task": "b012",
+              "tier": "niche"
+            }
+          ],
+          "planted_total": 15,
+          "recall_pct": 100.0,
+          "tasks": 4
+        }
+      },
+      "lift_over_no_skill": {
+        "current": 0.0,
+        "flattened": -6.67,
+        "none": 0.0
+      },
+      "model": "claude-opus-5",
+      "recorded_at": "2026-08-16",
+      "run": "2026-08-16-subagent-niche12",
+      "runner": "subagent"
+    },
+    {
+      "_note": "lift_over_no_skill is the only figure that answers the question this phase exists for. A `current` value at or below zero means the agent file changed nothing, whatever its absolute score.",
+      "conditions": {
+        "current": {
+          "by_tier": {
             "easy": {
               "found": 11,
               "planted_total": 12,
@@ -658,7 +988,7 @@
     }
   ],
   "tasks": {
-    "tasks_sha256": "50e6e685f5df48a19c76ae26de8341cbc82fdb6447706c7de54bf482ccc9c560",
-    "total": 8
+    "tasks_sha256": "96d85cc086394112f010bbe0c729dc9b536f3cf2236aaeb137af6f9065874a26",
+    "total": 12
   }
 }
