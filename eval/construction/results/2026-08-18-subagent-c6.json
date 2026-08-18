@@ -1,0 +1,860 @@
+{
+  "_note": "Written by eval_construction.py --execute, which is a LOCAL command. CI never executes generated code -- it re-verifies the digests below against the committed bytes and re-scores these recorded outcomes.",
+  "conditions": {
+    "current": {
+      "c001": {
+        "artifact_sha256": "b7528e44350173ade71b4570896e17dcfab4c0334cd7839950f1c74ddc4f1cee",
+        "checks": {
+          "i_no_change_is_zero": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_out_of_period_is_not_nonsense": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_period_end_is_zero": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_symmetric_rounding": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_downgrade_is_negative": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_full_period_full_difference": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_int": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_upgrade_is_positive": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "988c22839a26b03199988273db324a72dfe37d07385e4d661bac84144cb31a8a"
+      },
+      "c002": {
+        "artifact_sha256": "e64cd315263304b2fa48944173612013dd89c658c45e5c505a10a18f2777d39a",
+        "checks": {
+          "i_full_walk_returns_each_row_once": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_limit_is_bounded_safely": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_stable_when_a_newer_row_arrives": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_ties_do_not_break_the_walk": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_first_page_is_newest": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_last_page_cursor_is_none": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_respects_limit": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_items_and_cursor": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "2abfb20cff762d7780e64b53176e5f1acec39c3b4a15022e48487e448b52ba6f"
+      },
+      "c003": {
+        "artifact_sha256": "72fe134345381e6292c2d7e16cabd6c3f95bbdcd181c23e24dc41c54237076ed",
+        "checks": {
+          "i_dedup_within_one_batch": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_does_not_mutate_its_inputs": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_idempotent_on_replay": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_late_arriving_does_not_overwrite": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_empty_batch_changes_nothing": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_existing_keys_are_updated": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_new_keys_are_added": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_a_list_of_records": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "9fd86fab7be3ac8c5403492487e5ca2f1bccea2cfc91752b5e054daa10107ad3"
+      },
+      "c004": {
+        "artifact_sha256": "91a048ee8c87a78041a3859b009d0dce754418fdc1ee8b73c0dd081bd9c96196",
+        "checks": {
+          "i_caller_record_is_not_mutated": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_no_plaintext_survives": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_pseudonym_is_not_an_encoding": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_salt_changes_the_pseudonym": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_email_is_replaced": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_other_fields_survive": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_phone_is_replaced": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_same_person_same_pseudonym": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "a49d96d0161e38fd4cf1f090dc8c2e8f6ed1fa015bf2a96d74b72e63efcadae3"
+      },
+      "c005": {
+        "artifact_sha256": "ad3aeeca7ff6b3eab7aca0eb71ac0ed693653ddd6490dab786b9bb0859c06445",
+        "checks": {
+          "i_english_zero_is_other": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_polish_bands_are_right": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_russian_teens_are_many": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_russian_twenty_one_is_one": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_english_one": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_english_other": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_japanese_has_one_form": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_a_valid_category": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "c21a69a4426d7234feabecdeca41181b68468253af42c05bc6f5c5d3e91b4ada"
+      },
+      "c006": {
+        "artifact_sha256": "310a44d1cb5a856aacf4762b5773c4f4e35a8f49786d3e328cd4dc97454d923d",
+        "checks": {
+          "i_no_prefix_of_a_token_verifies": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_secret_never_appears_in_the_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_signature_covers_the_whole_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_ttl_is_carried_by_the_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_expired_token_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_round_trip_returns_the_subject": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_tampered_token_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_wrong_secret_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "076bbd3804dfe030b777d60a192c829c0f15a1fecfcb2b27c3c1e8188c24935e"
+      }
+    },
+    "flattened": {
+      "c001": {
+        "artifact_sha256": "914e1d484785f2f4b3a2631f99ccac7272f0da04ca348ffb17a16db6f214eb9b",
+        "checks": {
+          "i_no_change_is_zero": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_out_of_period_is_not_nonsense": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_period_end_is_zero": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_symmetric_rounding": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_downgrade_is_negative": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_full_period_full_difference": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_int": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_upgrade_is_positive": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "988c22839a26b03199988273db324a72dfe37d07385e4d661bac84144cb31a8a"
+      },
+      "c002": {
+        "artifact_sha256": "006018c3105ad9b9c60711a438cd623b25f6b8a107a5167eb4ae561c09ad0bf7",
+        "checks": {
+          "i_full_walk_returns_each_row_once": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_limit_is_bounded_safely": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_stable_when_a_newer_row_arrives": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_ties_do_not_break_the_walk": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_first_page_is_newest": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_last_page_cursor_is_none": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_respects_limit": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_items_and_cursor": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "2abfb20cff762d7780e64b53176e5f1acec39c3b4a15022e48487e448b52ba6f"
+      },
+      "c003": {
+        "artifact_sha256": "e1daa7776ce00c36e726de0e4c74d2ecb1e0642c4aaf473ff8a0b1d5f4126f90",
+        "checks": {
+          "i_dedup_within_one_batch": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_does_not_mutate_its_inputs": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_idempotent_on_replay": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_late_arriving_does_not_overwrite": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_empty_batch_changes_nothing": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_existing_keys_are_updated": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_new_keys_are_added": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_a_list_of_records": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "9fd86fab7be3ac8c5403492487e5ca2f1bccea2cfc91752b5e054daa10107ad3"
+      },
+      "c004": {
+        "artifact_sha256": "e35b78fe9992af313fbc94a0996746ba57b92f6b15a45c93c770a038ffa61cc3",
+        "checks": {
+          "i_caller_record_is_not_mutated": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_no_plaintext_survives": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_pseudonym_is_not_an_encoding": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_salt_changes_the_pseudonym": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_email_is_replaced": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_other_fields_survive": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_phone_is_replaced": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_same_person_same_pseudonym": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "a49d96d0161e38fd4cf1f090dc8c2e8f6ed1fa015bf2a96d74b72e63efcadae3"
+      },
+      "c005": {
+        "artifact_sha256": "4f1af8cd320ed6d1c802a4893d84fca0c7a1ad8c5e1ec0aa156cdda4d8c5c952",
+        "checks": {
+          "i_english_zero_is_other": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_polish_bands_are_right": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_russian_teens_are_many": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_russian_twenty_one_is_one": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_english_one": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_english_other": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_japanese_has_one_form": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_a_valid_category": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "c21a69a4426d7234feabecdeca41181b68468253af42c05bc6f5c5d3e91b4ada"
+      },
+      "c006": {
+        "artifact_sha256": "534fd47917fde9474b0f710cbe0a379c0e2c526d45591a9cb4b848963f500b86",
+        "checks": {
+          "i_no_prefix_of_a_token_verifies": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_secret_never_appears_in_the_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_signature_covers_the_whole_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_ttl_is_carried_by_the_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_expired_token_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_round_trip_returns_the_subject": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_tampered_token_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_wrong_secret_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "076bbd3804dfe030b777d60a192c829c0f15a1fecfcb2b27c3c1e8188c24935e"
+      }
+    },
+    "none": {
+      "c001": {
+        "artifact_sha256": "85a1afa13f1388c6f615dbdcc1f6c97a6e88506917e5fdde278e9839002ca9d2",
+        "checks": {
+          "i_no_change_is_zero": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_out_of_period_is_not_nonsense": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_period_end_is_zero": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_symmetric_rounding": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_downgrade_is_negative": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_full_period_full_difference": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_int": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_upgrade_is_positive": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "988c22839a26b03199988273db324a72dfe37d07385e4d661bac84144cb31a8a"
+      },
+      "c002": {
+        "artifact_sha256": "2349e88885fc09d2807a3aba27b8ff8cae4b719e2c2ebbed12c6a57ff9057091",
+        "checks": {
+          "i_full_walk_returns_each_row_once": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_limit_is_bounded_safely": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_stable_when_a_newer_row_arrives": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_ties_do_not_break_the_walk": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_first_page_is_newest": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_last_page_cursor_is_none": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_respects_limit": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_items_and_cursor": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "2abfb20cff762d7780e64b53176e5f1acec39c3b4a15022e48487e448b52ba6f"
+      },
+      "c003": {
+        "artifact_sha256": "4d8b9c9bd0e53aabcda5f4eec92735657eb71639674cc16ed89db749af22c6f1",
+        "checks": {
+          "i_dedup_within_one_batch": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_does_not_mutate_its_inputs": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_idempotent_on_replay": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_late_arriving_does_not_overwrite": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_empty_batch_changes_nothing": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_existing_keys_are_updated": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_new_keys_are_added": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_a_list_of_records": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "9fd86fab7be3ac8c5403492487e5ca2f1bccea2cfc91752b5e054daa10107ad3"
+      },
+      "c004": {
+        "artifact_sha256": "1413464c9df043730727e2b0f3b37243ef75bc7c1acef3eb0b75abc56a0eba5d",
+        "checks": {
+          "i_caller_record_is_not_mutated": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_no_plaintext_survives": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_pseudonym_is_not_an_encoding": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_salt_changes_the_pseudonym": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_email_is_replaced": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_other_fields_survive": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_phone_is_replaced": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_same_person_same_pseudonym": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "a49d96d0161e38fd4cf1f090dc8c2e8f6ed1fa015bf2a96d74b72e63efcadae3"
+      },
+      "c005": {
+        "artifact_sha256": "48b85a4b4da3d64d467803bae1ff5b36ccebc71ddcbc3f0fcab521d2041521de",
+        "checks": {
+          "i_english_zero_is_other": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_polish_bands_are_right": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_russian_teens_are_many": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_russian_twenty_one_is_one": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_english_one": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_english_other": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_japanese_has_one_form": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_returns_a_valid_category": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "c21a69a4426d7234feabecdeca41181b68468253af42c05bc6f5c5d3e91b4ada"
+      },
+      "c006": {
+        "artifact_sha256": "97d9c23a850f918122992cec21dbb1dfb34347321f35a6a1b786bbc2ec18edb0",
+        "checks": {
+          "i_no_prefix_of_a_token_verifies": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_secret_never_appears_in_the_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_signature_covers_the_whole_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "i_ttl_is_carried_by_the_token": {
+            "error": null,
+            "kind": "implied",
+            "ok": true
+          },
+          "s_expired_token_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_round_trip_returns_the_subject": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_tampered_token_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          },
+          "s_wrong_secret_raises": {
+            "error": null,
+            "kind": "stated",
+            "ok": true
+          }
+        },
+        "import_error": null,
+        "suite_sha256": "076bbd3804dfe030b777d60a192c829c0f15a1fecfcb2b27c3c1e8188c24935e"
+      }
+    }
+  },
+  "python": "3.12.6",
+  "run": "2026-08-18-subagent-c6",
+  "tasks_sha256": "a77699a0a63d83efd47ee7c48d9be74cfedc60fbc6545f30cad9681337ec1867"
+}

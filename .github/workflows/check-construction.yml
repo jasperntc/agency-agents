@@ -1,0 +1,60 @@
+name: Check Construction
+
+# Phase 7, construction half. Phase 7's diagnosis half asked whether an agent
+# file helps you FIND a defect and answered no across 36 blind subagents. This
+# half asks the other question -- whether it helps you BUILD the thing -- by
+# handing each condition a brief and grading the module it writes against an
+# acceptance suite it never sees.
+#
+# CI NEVER EXECUTES GENERATED CODE, AND THAT IS THE WHOLE DESIGN.
+#
+# Running model output was the cost that made the diagnosis half choose planted
+# defects instead. It is paid here exactly once, locally: `--execute` imports
+# each artifact in a subprocess on a maintainer's machine and writes per-check
+# outcomes to eval/construction/results/, each row carrying the sha256 of the
+# artifact it ran and of the suite it ran.
+#
+# Everything below reads those committed results. `--check` re-verifies both
+# digests against the committed bytes and re-scores. It imports nothing, calls
+# no model, and costs nothing -- the same property that makes check-selection
+# free. A result that no longer matches its artifact is a hard error here, not
+# a silent re-score.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  construction:
+    name: Check Construction
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Hard gate. Enforces the digest binding in both directions: an artifact
+      # edited after it was scored, or a suite corrected without re-executing,
+      # exits non-zero rather than being scored against stale outcomes.
+      - name: Construction baseline is current
+        run: python3 scripts/eval_construction.py --check
+
+      # Hard gate, and the one that matters most here. It runs every acceptance
+      # suite against a competent reference implementation AND against a
+      # deliberately naive draft, asserting that the reference passes
+      # everything, that the naive draft still clears the stated floor, and
+      # that every task has at least one implied check the naive draft fails.
+      #
+      # That last assertion is the anti-vacuity gate. This project has shipped
+      # five separate checks that were green while measuring nothing, and a
+      # suite nobody can fail is the sixth. Note that this step DOES import the
+      # reference and naive modules -- they are maintainer-written and
+      # committed, not model output.
+      - name: Regression tests
+        run: python3 tests/test_eval_construction.py
