@@ -22,7 +22,7 @@
   },
   "tools": {
     "aider": {
-      "CONVENTIONS.md": "e7d8451eff8f4a72cb08990f8c033fcf9d4eee6c027f95f2b4139a41a2fcc488"
+      "CONVENTIONS.md": "1b45ea3d6c24f03d25a7b61033223deaf6599dddf03ff58f35d60a6dd54a2848"
     },
     "antigravity": {
       "agency-3d-scene-developer/SKILL.md": "e48edc2b70c85877a3940aec1da2b00f4a2cb44e650a325851a253fb60f2af5b",
@@ -184,7 +184,7 @@
       "agency-paid-media-auditor/SKILL.md": "2d980cd3c3cdc63b0b17ed3b9bae5d84242a91cd78a904b68a4240e89e722b61",
       "agency-paid-social-strategist/SKILL.md": "eda924339179ab9a66808c0aa0d318c9c591dc4816584c9a21e13af3c13aa79d",
       "agency-payments-billing-engineer/SKILL.md": "7394c217097730a8b0105a322d9b523947cc633cdf63f7b65729c38730d4cb03",
-      "agency-penetration-tester/SKILL.md": "88a5d385b7aaabbb01fcf1d41894850523a3097622fe33e747752d951d48d48b",
+      "agency-penetration-tester/SKILL.md": "aa10d4a04da7c6959d05cf594ff4cfcbc070c3b5d3fdfa6d1ff5f6e726e82a35",
       "agency-performance-benchmarker/SKILL.md": "22aee7f82193fadae4804a5e592de4f93dbcc85d50c60050e48fd8ada3eb0ad0",
       "agency-persona-walkthrough-specialist/SKILL.md": "51829762248c2c351a2ae9ce68796e49881de17884a7e65b0a25c4c13a16d06c",
       "agency-personal-growth-mentor/SKILL.md": "6f0671e3c3f73c71449acb66a9e2f15055336e3e32821c911dc04559e4791a6e",
@@ -456,7 +456,7 @@
       "agents/paid-media-auditor.toml": "b0d6ef2d07e2f10009af6b5512c26a9149b6dd2838e6ffa4005b0d4914d9546d",
       "agents/paid-social-strategist.toml": "de9422f6b111d885fc58b0fb145b1a94d406889ae5944ff23466892d3ccd17a2",
       "agents/payments-billing-engineer.toml": "1d16ead0b5f6b210d69c398756f6a2d4e874fd30037721349f88870bd568ef77",
-      "agents/penetration-tester.toml": "8caef948958ced0384625a5a35053907d7dbd03febfbb4751d6f4c2fa914385c",
+      "agents/penetration-tester.toml": "6125a64a893f625a5e32aa016cf1b97aebc820eb7497b40421f9b7aca5701f64",
       "agents/performance-benchmarker.toml": "5ec6963b84c331b5cb3692c38255d68b8819395c4455104ef0cb040eac05d9e7",
       "agents/persona-walkthrough-specialist.toml": "b7764ba0c8148b2866d80e1a6b11dc41688fc3f9481b3c6984b97658b9cec115",
       "agents/personal-growth-mentor.toml": "a18fb88587dcd788405358668694d2004929c644aef89b6184a21c8e90a0e934",
@@ -728,7 +728,7 @@
       "rules/paid-media-auditor.mdc": "dcff3dff7df766b4b18ebe4047ff53e4b6ff14be6e29e2ef4af1f1953bf74a44",
       "rules/paid-social-strategist.mdc": "2aa5709410d91c7033bc3e0a9fe518a71f829ed0ef034269f4d602f716413555",
       "rules/payments-billing-engineer.mdc": "b7eaa32de72224187ad1bba0941237a69ca775adf61bfb7c2990597822eea8e0",
-      "rules/penetration-tester.mdc": "bf5c9b61dd7fead5434ebe111801ebd0fa42a50ae8fd4f1c30cde5ea59a9b4d4",
+      "rules/penetration-tester.mdc": "8eba3094347c3e8d8e124fa44bae38cf54999f9be64be21231ca8269008d8bb6",
       "rules/performance-benchmarker.mdc": "93358b0b43b2cd4f94688c20e8d8d5f0b607be1d284ac1152eade24041c4e444",
       "rules/persona-walkthrough-specialist.mdc": "206f73d4ba7af6111594eddd86dfb9597277dfd6cfb7783185cbadc481b0aab1",
       "rules/personal-growth-mentor.mdc": "537c5eab4e1720c65dec1ae2883412ff5a5e3a73b5f0c51643dbb6d4faccb9b5",
@@ -1000,7 +1000,7 @@
       "agents/paid-media-auditor.md": "99c4f72a50b0170ec22b19ec92ee9d47b10a70d2017257644fa6b20060b078e5",
       "agents/paid-social-strategist.md": "e34a9c5c8c485a5a72a828332df76d8bd77b9c2e35654e42ac60787683767712",
       "agents/payments-billing-engineer.md": "3822cef47a701c0d57acb176573870a061bc20ea9a00b91989519dd1978b8264",
-      "agents/penetration-tester.md": "a1d5337f3da45d44b307bfeadae77c6412e61ffd521472fddf386fb4fc6f8062",
+      "agents/penetration-tester.md": "e4532d8d38a643d8b16166853b4d1effd984bbe42935ee0ef4cae9151481bdf8",
       "agents/performance-benchmarker.md": "313cc9bcde9f06003d7a6cfad50621c963826776e23dc478c654cd00db6dc5be",
       "agents/persona-walkthrough-specialist.md": "028e4ce97a2f87c4452f1ad8293f5cd462cd105d4321d9763bbfd4c5891f335f",
       "agents/personal-growth-mentor.md": "677ac1a3ddd6770099482632abf846aeaddacafe91b193fab9952fd284da8897",
@@ -1114,7 +1114,7 @@
     },
     "hermes": {
       "agency-agents-router/__init__.py": "086e19aca4cb38418983d78b4c54cd9568875d00b1198c8ebd9865548b64121f",
-      "agency-agents-router/data/agents.json": "b0d93fc4f44badb6f61d2e947619380dd40deafee7855f5e1911dc7fd48f69f0",
+      "agency-agents-router/data/agents.json": "626387396257080be71f5be9af3d83d7e8f4544b44df30f7696c8947da301d65",
       "agency-agents-router/plugin.yaml": "79c441a8398be768e550e67adce25f32dc25552a586fbe5a3f726b3729ba0a37"
     },
     "kimi": {
@@ -1437,7 +1437,7 @@
       "payments-billing-engineer/agent.yaml": "3854ced066fef62ae781f945d26efc7835b93bd4d993041799d824ffef65c213",
       "payments-billing-engineer/system.md": "5344f9e8ebc2bf79ff460b4361c3c97c465e29fede681a7e525dceb0cedf388f",
       "penetration-tester/agent.yaml": "79fabe31cb4fcbeda4866721eadc0d6aa3c6b87a34306b7983f8b0732ad09e3e",
-      "penetration-tester/system.md": "0a813702746100d99f146f789c3d6442b8b3efb7ece842df448d9f3594382d09",
+      "penetration-tester/system.md": "31e308c796c84bc32ca8846ffdc1b4813c160688f8524dd2ba9070346ea3266f",
       "performance-benchmarker/agent.yaml": "1e5fd6d5464073ead3f3ef8b3c851b9e6fd9efc22e5af00f47ca9c8b5b44aa7f",
       "performance-benchmarker/system.md": "ccf8d34061f2148080e2ab472da3136bed406bbceb588ee46cdea5b733f8cce3",
       "persona-walkthrough-specialist/agent.yaml": "eea4271d8314aaaf7e652d7a3ce17970abc38b6b0487e43482c2c2a8465aeb72",
@@ -2631,7 +2631,7 @@
       "agents/paid-media-auditor.md": "49d6c09ca5223cdc4259df6876e678f9bf207c1e93dbc2e3e32d97828de144d2",
       "agents/paid-social-strategist.md": "335c0f5e5c7e43a2969968b981b081e01cc1c1c251596bad7f43c1d5e3695d22",
       "agents/payments-billing-engineer.md": "3cdfb305a7de506a6d35cdc5b806a55c2db4c8ac7c7556ea082e606b79939685",
-      "agents/penetration-tester.md": "08a662b9825dcb882c6f10547d3c2b396e083602e75146345e23e30d4994c190",
+      "agents/penetration-tester.md": "22ce1c434978bf0dabdc821596af20f1afe8fba62fda1cad4da84642ba48651c",
       "agents/performance-benchmarker.md": "603db5342a9c0b8af6974a135450ed4f91e941759a8f3d3a314776cab0e399dc",
       "agents/persona-walkthrough-specialist.md": "d7f0707a323c386850bb853065aadbb759144338632551efcb4e8cdf932dc91e",
       "agents/personal-growth-mentor.md": "758ba0f7d8dc10585bc6df6a186ac8e92699f481f0a3069e4beff84e349199cb",
@@ -2903,7 +2903,7 @@
       "agency-paid-media-auditor/SKILL.md": "2d980cd3c3cdc63b0b17ed3b9bae5d84242a91cd78a904b68a4240e89e722b61",
       "agency-paid-social-strategist/SKILL.md": "eda924339179ab9a66808c0aa0d318c9c591dc4816584c9a21e13af3c13aa79d",
       "agency-payments-billing-engineer/SKILL.md": "7394c217097730a8b0105a322d9b523947cc633cdf63f7b65729c38730d4cb03",
-      "agency-penetration-tester/SKILL.md": "88a5d385b7aaabbb01fcf1d41894850523a3097622fe33e747752d951d48d48b",
+      "agency-penetration-tester/SKILL.md": "aa10d4a04da7c6959d05cf594ff4cfcbc070c3b5d3fdfa6d1ff5f6e726e82a35",
       "agency-performance-benchmarker/SKILL.md": "22aee7f82193fadae4804a5e592de4f93dbcc85d50c60050e48fd8ada3eb0ad0",
       "agency-persona-walkthrough-specialist/SKILL.md": "51829762248c2c351a2ae9ce68796e49881de17884a7e65b0a25c4c13a16d06c",
       "agency-personal-growth-mentor/SKILL.md": "6f0671e3c3f73c71449acb66a9e2f15055336e3e32821c911dc04559e4791a6e",
@@ -3175,7 +3175,7 @@
       "agents/paid-media-auditor.md": "5cc1df26af8724b516e826aa986b64670de5461feb1f7791753997022367327c",
       "agents/paid-social-strategist.md": "a05ffa8bcf4612c49fdbee940a61ccfbb8bbd0929601ba034d11fcad9784413d",
       "agents/payments-billing-engineer.md": "3822cef47a701c0d57acb176573870a061bc20ea9a00b91989519dd1978b8264",
-      "agents/penetration-tester.md": "a1d5337f3da45d44b307bfeadae77c6412e61ffd521472fddf386fb4fc6f8062",
+      "agents/penetration-tester.md": "e4532d8d38a643d8b16166853b4d1effd984bbe42935ee0ef4cae9151481bdf8",
       "agents/performance-benchmarker.md": "313cc9bcde9f06003d7a6cfad50621c963826776e23dc478c654cd00db6dc5be",
       "agents/persona-walkthrough-specialist.md": "028e4ce97a2f87c4452f1ad8293f5cd462cd105d4321d9763bbfd4c5891f335f",
       "agents/personal-growth-mentor.md": "677ac1a3ddd6770099482632abf846aeaddacafe91b193fab9952fd284da8897",
@@ -3717,7 +3717,7 @@
       "prompts/paid-media-auditor.md": "d2aea51e19c9b6334beedea105062e2befbfe0aa4c921722d529ba2714b84ad7",
       "prompts/paid-social-strategist.md": "f4dde6156858c73aa0a37c3edbbfb67c46c020760cf0392c1e59bf8c08fc8c67",
       "prompts/payments-billing-engineer.md": "5344f9e8ebc2bf79ff460b4361c3c97c465e29fede681a7e525dceb0cedf388f",
-      "prompts/penetration-tester.md": "0a813702746100d99f146f789c3d6442b8b3efb7ece842df448d9f3594382d09",
+      "prompts/penetration-tester.md": "31e308c796c84bc32ca8846ffdc1b4813c160688f8524dd2ba9070346ea3266f",
       "prompts/performance-benchmarker.md": "ccf8d34061f2148080e2ab472da3136bed406bbceb588ee46cdea5b733f8cce3",
       "prompts/persona-walkthrough-specialist.md": "8d7a7e2109f00fbb4ca266e322952a09aa29e2407078610efe715e00bdae0773",
       "prompts/personal-growth-mentor.md": "b7d44fb267bd5861f8753bff2c36ba900978638413cc732e3095c9943dec5a06",
@@ -3830,7 +3830,7 @@
       "prompts/zk-steward.md": "dea52b9485c598d0fb1f1536802195492d66fcb035a6a6c71d6a9563938cc6fb"
     },
     "windsurf": {
-      ".windsurfrules": "fa0e4fa7441933dd0701b80c8eb7c863ee7cb467d334df70aab4a689b97b0e33"
+      ".windsurfrules": "d0342675e659dedc1717d561030a0232abaafb4b7eaf8c7d5a1af550261a06c0"
     },
     "zcode": {
       "agents/3d-scene-developer.md": "366762e8ea6ff65ea3970b971a6d8b6dcb60b286849e1a315c1ed0b8197adbc0",
@@ -3992,7 +3992,7 @@
       "agents/paid-media-auditor.md": "5cc1df26af8724b516e826aa986b64670de5461feb1f7791753997022367327c",
       "agents/paid-social-strategist.md": "a05ffa8bcf4612c49fdbee940a61ccfbb8bbd0929601ba034d11fcad9784413d",
       "agents/payments-billing-engineer.md": "3822cef47a701c0d57acb176573870a061bc20ea9a00b91989519dd1978b8264",
-      "agents/penetration-tester.md": "a1d5337f3da45d44b307bfeadae77c6412e61ffd521472fddf386fb4fc6f8062",
+      "agents/penetration-tester.md": "e4532d8d38a643d8b16166853b4d1effd984bbe42935ee0ef4cae9151481bdf8",
       "agents/performance-benchmarker.md": "313cc9bcde9f06003d7a6cfad50621c963826776e23dc478c654cd00db6dc5be",
       "agents/persona-walkthrough-specialist.md": "028e4ce97a2f87c4452f1ad8293f5cd462cd105d4321d9763bbfd4c5891f335f",
       "agents/personal-growth-mentor.md": "677ac1a3ddd6770099482632abf846aeaddacafe91b193fab9952fd284da8897",
