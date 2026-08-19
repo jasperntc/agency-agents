@@ -4369,10 +4369,10 @@
     },
     {
       "body_words": 2776,
-      "byte_count": 21469,
+      "byte_count": 21582,
       "color": "#dc2626",
-      "content_hash": "50ec36ffd3a783cbc8db252e3f6dbdfc7a06fa41b176b7fafb220caa48e26fb4",
-      "description": "Offensive security specialist conducting authorized penetration tests, red team operations, and vulnerability assessments across networks, web applications, and cloud infrastructure.",
+      "content_hash": "7560f257f244ed8cf5c8d6df78bd3e88971b881765eaaa6939302f506d543cc0",
+      "description": "Offensive security specialist who breaks into your staging or production environment on purpose — authorized penetration tests, red team operations, and vulnerability assessments across networks, web applications, and cloud infrastructure — then writes up exactly what was reachable and how.",
       "division": "security",
       "emoji": "🗡️",
       "id": "security-penetration-tester",

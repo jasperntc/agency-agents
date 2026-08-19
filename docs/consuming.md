@@ -46,7 +46,7 @@ The router sidesteps this by construction: no agent description ever enters the
 listing, because there is only one skill. It greps the index instead.
 
 **Known limit, now measured.** The index describes each specialist in its own
-vocabulary, which is not always the task's. On a 58-task benchmark, only **66%
+vocabulary, which is not always the task's. On a 58-task benchmark, only **67%
 of tasks share even one word** with the right specialist's index line — the
 other third are reachable only if Claude first translates the request into the
 field's terms ("second pair of eyes on this pull request" → `code review`). The

@@ -20,7 +20,7 @@
     },
     "literal_reachability.pct": {
       "min": 55.0,
-      "observed": 65.52,
+      "observed": 67.24,
       "rationale": "Share of tasks where some word the user typed appears in the right agent's index line. Falls if descriptions drift toward generic marketing language and stop naming the concrete problems they solve. Margin is wide because adding deliberately hard cases lowers this legitimately -- it guards against description rot, not against an honest benchmark getting harder.",
       "observation_history": [
         {"value": 67.24, "until": "2026-08-16", "why": "Included c046, which counted as reachable only because the word `every` appears in both `every morning` (task) and `every system` (the WRONG agent's description). Correcting c046's expectation removed that coincidence. The metric got lower and more honest at the same time, which is the direction a benchmark correction is supposed to be allowed to go."}
@@ -28,7 +28,7 @@
     },
     "strategies.bag.lift_over_control": {
       "min": 45.0,
-      "observed": 56.9,
+      "observed": 58.62,
       "rationale": "Hit rate minus the same query's score against the wrong agent. The one number that measures discrimination rather than match volume. Collapses toward zero if descriptions converge on shared vocabulary, which is the failure mode that would make the index useless while every individual description still reads well."
     },
     "negative_control.bag_hit_pct": {
@@ -38,7 +38,7 @@
     },
     "benchmark_leakage.median_overlap": {
       "max": 0.1,
-      "observed": 0.0271,
+      "observed": 0.0286,
       "rationale": "Token overlap between a case and its expected agent's description. Guards the BENCHMARK, not the corpus. A case written by copying the agent's own wording scores highly on every metric here while proving nothing, so this fails the build before that can become the norm."
     },
     "benchmark_leakage.max_overlap": {
