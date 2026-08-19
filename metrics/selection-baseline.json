@@ -4,6 +4,7 @@
     "tasks_sha256": "49fcf1d9018cc22a64f816f96dcc39f95f0a26761f504ca386d22df9b0e8233e",
     "total": 58
   },
+  "corpus_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
   "literal_reachability_pct": 67.24,
   "runs": [
     {
@@ -11,6 +12,12 @@
       "accuracy_when_answered_pct": 100.0,
       "cases_missing": [],
       "cases_scored": 58,
+      "corpus": {
+        "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
+        "cross_tab_is_current": false,
+        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "recorded_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f"
+      },
       "declined": [],
       "effort_tool_calls": {
         "max": 17,
@@ -1021,6 +1028,12 @@
         "c058"
       ],
       "cases_scored": 15,
+      "corpus": {
+        "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
+        "cross_tab_is_current": false,
+        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "recorded_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f"
+      },
       "declined": [],
       "effort_tool_calls": {
         "max": 17,
