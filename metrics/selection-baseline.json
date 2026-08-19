@@ -1308,6 +1308,470 @@
         "recovery_pct": 100.0,
         "unreachable_cases": 6
       }
+    },
+    {
+      "accuracy_pct": 85.19,
+      "accuracy_when_answered_pct": 92.0,
+      "cases_missing": [
+        "c003",
+        "c004",
+        "c005",
+        "c006",
+        "c009",
+        "c010",
+        "c012",
+        "c016",
+        "c018",
+        "c019",
+        "c020",
+        "c023",
+        "c025",
+        "c027",
+        "c028",
+        "c029",
+        "c031",
+        "c032",
+        "c034",
+        "c035",
+        "c039",
+        "c040",
+        "c043",
+        "c045",
+        "c048",
+        "c051",
+        "c052",
+        "c054",
+        "c056",
+        "c057",
+        "c058"
+      ],
+      "cases_scored": 27,
+      "corpus": {
+        "_note": "Picks were collected against this exact index, so the cross-tab is authoritative.",
+        "cross_tab_is_current": true,
+        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "recorded_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc"
+      },
+      "declined": [
+        "c038",
+        "c050"
+      ],
+      "effort_tool_calls": {
+        "max": 10,
+        "median": 5,
+        "min": 2
+      },
+      "model": "claude-sonnet-5",
+      "outcome_cells": {
+        "compound_failure": [
+          "c044",
+          "c046"
+        ],
+        "reachable_correct": [
+          "c001",
+          "c008",
+          "c017",
+          "c024",
+          "c030",
+          "c036",
+          "c047",
+          "c055"
+        ],
+        "reachable_wrong": [],
+        "translated": [
+          "c002",
+          "c007",
+          "c011",
+          "c013",
+          "c014",
+          "c015",
+          "c021",
+          "c022",
+          "c026",
+          "c033",
+          "c037",
+          "c041",
+          "c042",
+          "c049",
+          "c053"
+        ]
+      },
+      "per_case": [
+        {
+          "case": "c001",
+          "correct": true,
+          "expect": [
+            "gis-cartography-designer"
+          ],
+          "literally_reachable": true,
+          "picked": "gis-cartography-designer",
+          "queries": [
+            "label placement",
+            "color ramp",
+            "colour ramp"
+          ]
+        },
+        {
+          "case": "c002",
+          "correct": true,
+          "expect": [
+            "marketing-app-store-optimizer"
+          ],
+          "literally_reachable": false,
+          "picked": "marketing-app-store-optimizer",
+          "queries": [
+            "app store",
+            "ASO",
+            "screenshots title conversion"
+          ]
+        },
+        {
+          "case": "c007",
+          "correct": true,
+          "expect": [
+            "finance-tax-strategist"
+          ],
+          "literally_reachable": false,
+          "picked": "finance-tax-strategist",
+          "queries": [
+            "tax",
+            "entity structure tax planning",
+            "expense timing tax deduction"
+          ]
+        },
+        {
+          "case": "c008",
+          "correct": true,
+          "expect": [
+            "legal-document-review"
+          ],
+          "literally_reachable": true,
+          "picked": "legal-document-review",
+          "queries": [
+            "contract",
+            "renewal",
+            "vendor agreement"
+          ]
+        },
+        {
+          "case": "c011",
+          "correct": true,
+          "expect": [
+            "engineering-payments-billing-engineer"
+          ],
+          "literally_reachable": false,
+          "picked": "engineering-payments-billing-engineer",
+          "queries": [
+            "proration|usage-based|subscription billing|idempotent"
+          ]
+        },
+        {
+          "case": "c013",
+          "correct": true,
+          "expect": [
+            "product-feedback-synthesizer"
+          ],
+          "literally_reachable": false,
+          "picked": "product-feedback-synthesizer",
+          "queries": [
+            "feedback"
+          ]
+        },
+        {
+          "case": "c014",
+          "correct": true,
+          "expect": [
+            "engineering-sre"
+          ],
+          "literally_reachable": false,
+          "picked": "engineering-sre",
+          "queries": [
+            "error budget"
+          ]
+        },
+        {
+          "case": "c015",
+          "correct": true,
+          "expect": [
+            "marketing-seo-specialist"
+          ],
+          "literally_reachable": false,
+          "picked": "marketing-seo-specialist",
+          "queries": [
+            "seo|indexing|search engine|crawl",
+            "technical SEO organic search growth"
+          ]
+        },
+        {
+          "case": "c017",
+          "correct": true,
+          "expect": [
+            "hr-onboarding"
+          ],
+          "literally_reachable": true,
+          "picked": "hr-onboarding",
+          "queries": [
+            "onboard"
+          ]
+        },
+        {
+          "case": "c021",
+          "correct": true,
+          "expect": [
+            "engineering-embedded-firmware-engineer"
+          ],
+          "literally_reachable": false,
+          "picked": "engineering-embedded-firmware-engineer",
+          "queries": [
+            "power consumption|low.power|battery life|embedded"
+          ]
+        },
+        {
+          "case": "c022",
+          "correct": true,
+          "expect": [
+            "sales-discovery-coach"
+          ],
+          "literally_reachable": false,
+          "picked": "sales-discovery-coach",
+          "queries": [
+            "discovery call",
+            "sales"
+          ]
+        },
+        {
+          "case": "c024",
+          "correct": true,
+          "expect": [
+            "engineering-incident-response-commander"
+          ],
+          "literally_reachable": true,
+          "picked": "engineering-incident-response-commander",
+          "queries": [
+            "post-mortem|incident",
+            "production incident review",
+            "incident coordination"
+          ]
+        },
+        {
+          "case": "c026",
+          "correct": true,
+          "expect": [
+            "testing-performance-benchmarker"
+          ],
+          "literally_reachable": false,
+          "picked": "testing-performance-benchmarker",
+          "queries": [
+            "load test|capacity|concurrent|throughput|performance testing|stress test"
+          ]
+        },
+        {
+          "case": "c030",
+          "correct": true,
+          "expect": [
+            "unity-multiplayer-engineer"
+          ],
+          "literally_reachable": true,
+          "picked": "unity-multiplayer-engineer",
+          "queries": [
+            "unity",
+            "netcode",
+            "interpolation",
+            "multiplayer"
+          ]
+        },
+        {
+          "case": "c033",
+          "correct": true,
+          "expect": [
+            "marketing-email-strategist"
+          ],
+          "literally_reachable": false,
+          "picked": "marketing-email-strategist",
+          "queries": [
+            "email",
+            "unsubscribe|deliverability|open rate",
+            "newsletter"
+          ]
+        },
+        {
+          "case": "c036",
+          "correct": true,
+          "expect": [
+            "finance-fpa-analyst"
+          ],
+          "literally_reachable": true,
+          "picked": "finance-fpa-analyst",
+          "queries": [
+            "rolling forecast|cash forecast|13-week|thirteen week|budget vs|variance analysis"
+          ]
+        },
+        {
+          "case": "c037",
+          "correct": true,
+          "expect": [
+            "engineering-network-engineer"
+          ],
+          "literally_reachable": false,
+          "picked": "engineering-network-engineer",
+          "queries": [
+            "network",
+            "infrastructure",
+            "packet loss",
+            "datacent|data center|congestion|bandwidth"
+          ]
+        },
+        {
+          "case": "c038",
+          "correct": false,
+          "expect": [
+            "specialized-civil-engineer"
+          ],
+          "literally_reachable": false,
+          "picked": "NONE",
+          "queries": [
+            "stormwater|drainage|civil engineer|hydrology|hydraulic",
+            "| gis |",
+            "environmental engineer|site engineer|land development|flood|runoff|water resource"
+          ]
+        },
+        {
+          "case": "c041",
+          "correct": true,
+          "expect": [
+            "engineering-code-reviewer"
+          ],
+          "literally_reachable": false,
+          "picked": "engineering-code-reviewer",
+          "queries": [
+            "code review"
+          ]
+        },
+        {
+          "case": "c042",
+          "correct": true,
+          "expect": [
+            "project-management-meeting-notes-specialist"
+          ],
+          "literally_reachable": false,
+          "picked": "project-management-meeting-notes-specialist",
+          "queries": [
+            "meeting",
+            "decision record",
+            "sync"
+          ]
+        },
+        {
+          "case": "c044",
+          "correct": false,
+          "expect": [
+            "design-brand-guardian"
+          ],
+          "literally_reachable": false,
+          "picked": "design-ui-designer",
+          "queries": [
+            "design system",
+            "brand guidelines",
+            "style guide",
+            "brand identity",
+            "visual identity",
+            "presentation",
+            "deck",
+            "slide"
+          ]
+        },
+        {
+          "case": "c046",
+          "correct": false,
+          "expect": [
+            "testing-workflow-optimizer"
+          ],
+          "literally_reachable": false,
+          "picked": "automation-governance-architect",
+          "queries": [
+            "automation",
+            "workflow automation|no-code|zapier|n8n|integration"
+          ]
+        },
+        {
+          "case": "c047",
+          "correct": true,
+          "expect": [
+            "testing-test-automation-engineer"
+          ],
+          "literally_reachable": true,
+          "picked": "testing-test-automation-engineer",
+          "queries": [
+            "regression",
+            "test automation"
+          ]
+        },
+        {
+          "case": "c049",
+          "correct": true,
+          "expect": [
+            "sales-proposal-strategist"
+          ],
+          "literally_reachable": false,
+          "picked": "sales-proposal-strategist",
+          "queries": [
+            "proposal",
+            "feature list",
+            "win theme",
+            "document stage losing deals"
+          ]
+        },
+        {
+          "case": "c050",
+          "correct": false,
+          "expect": [
+            "support-analytics-reporter"
+          ],
+          "literally_reachable": false,
+          "picked": "NONE",
+          "queries": [
+            "changelog|release notes|weekly|digest|status report|summary",
+            "roadmap|shipped|newsletter|recap|standup|sprint|update"
+          ]
+        },
+        {
+          "case": "c053",
+          "correct": true,
+          "expect": [
+            "recruitment-specialist"
+          ],
+          "literally_reachable": false,
+          "picked": "recruitment-specialist",
+          "queries": [
+            "talent acquisition",
+            "screen.*resum|applicant|candidate screening",
+            "hiring|recruit|resume screen|ATS"
+          ]
+        },
+        {
+          "case": "c055",
+          "correct": true,
+          "expect": [
+            "marketing-xiaohongshu-specialist"
+          ],
+          "literally_reachable": true,
+          "picked": "marketing-xiaohongshu-specialist",
+          "queries": [
+            "xiaohongshu"
+          ]
+        }
+      ],
+      "picked_nonexistent_agent": [],
+      "recorded_at": "2026-08-19",
+      "run": "2026-08-19-subagent-sonnet27",
+      "runner": "subagent",
+      "scope": "targeted-27",
+      "translation": {
+        "_note": "The cell scripts/eval_routing.py cannot measure. These cases share no word with the right agent's index line, so a correct pick means the model translated the task into the field's vocabulary before searching -- which is exactly what the router skill instructs.",
+        "recovered": 15,
+        "recovery_pct": 78.95,
+        "unreachable_cases": 19
+      }
     }
   ]
 }

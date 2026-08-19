@@ -45,6 +45,61 @@ project.
 
 ---
 
+## The first positive result: reachability is load-bearing below Opus
+
+Every null above was measured on `claude-opus-5`. The obvious objection — that
+the base model is simply strong enough not to need help — was stated in *What is
+NOT claimed* and left untested. It has now been tested.
+
+**27 blind Sonnet subagents**, deliberately split: all **19** cases literal
+search cannot reach, where a correct pick *requires* translating the request
+into the field's vocabulary, plus **8 reachable controls** so a miss can be
+attributed to translation rather than to the model being weaker everywhere.
+
+| | `claude-opus-5` | `claude-sonnet-5` |
+|---|---:|---:|
+| reachable (control) | — | **8/8 (100%)** |
+| unreachable (needs translation) | **19/19 (100%)** | **15/19 (78.95%)** |
+
+**Sonnet is perfect on every case where the description shares a word with the
+task, and loses a fifth of the cases where it has to translate.** The failure is
+entirely concentrated in the cases reachability governs. That is the cleanest
+result this project has produced, and the first one where an intervention has a
+measurable payoff.
+
+### The four misses, audited rather than counted
+
+A result that confirms the hypothesis is the one to distrust, so each was
+checked against the expected agent's own description:
+
+| case | expected | picked | verdict |
+|---|---|---|---|
+| c038 stormwater drainage | `specialized-civil-engineer` | NONE | **description gap** — it advertises structural analysis and geotechnical design, never hydrology or drainage |
+| c050 weekly product summary | `support-analytics-reporter` | NONE | **description gap** — it advertises dashboards and KPIs, never a recurring written summary |
+| c044 decks, blues and fonts | `design-brand-guardian` | `design-ui-designer` | genuine near-miss; the task says *decks*, which is brand territory rather than UI |
+| c046 manual copying between tools | `testing-workflow-optimizer` | `automation-governance-architect` | genuinely ambiguous — two agents overlap heavily here |
+
+Two are description defects and two are benchmark or corpus ambiguity. Counting
+only the two unambiguous declines still leaves Sonnet at 17/19 against Opus's
+19/19, so the conclusion survives the least favourable reading.
+
+### What this changes
+
+The corpus is not uniformly inert. **The description carries measurable value,
+and how much depends on the model.** For a strong model reachability is close to
+cosmetic — Opus translates its way to the right specialist every time. For a
+weaker one it is load-bearing, and improving it has a payoff that can be
+measured for free, with no model in the loop.
+
+Tuning one description moved reachability 65.52% → 67.24% and cost ten minutes.
+Nineteen cases remain. The constraint on doing them is in
+[selection-evaluation.md](selection-evaluation.md): tuning descriptions toward
+the benchmark's own vocabulary raises `benchmark_leakage`, so the remaining
+cases must be tuned against held-out phrasings or the benchmark stops being
+independent evidence.
+
+---
+
 ## Diagnosis — no effect, with headroom
 
 [behaviour-evaluation.md](behaviour-evaluation.md)
