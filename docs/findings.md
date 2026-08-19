@@ -33,7 +33,7 @@ links to the full account, including the parts that went wrong.
 58 blind cases, one model, no access to the answer. **100% accuracy.**
 
 The figure worth keeping is not the accuracy, which is a ceiling and should be
-read as one. It is **literal reachability: 65.52%**. Only about two thirds of
+read as one. It is **literal reachability: 67.24%**. Only about two thirds of
 realistic tasks share even one word with the correct specialist's index line.
 The other third are reachable only if the request is first translated into the
 field's own vocabulary — *"second pair of eyes on this pull request"* →

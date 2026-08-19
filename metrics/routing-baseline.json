@@ -4,8 +4,8 @@
     "_note": "Token overlap between each case and its expected agent's index line. This is a property of the BENCHMARK, not of routing. If it rises, the cases are being written in the agents' own vocabulary and the scores above stop meaning anything.",
     "cases_over_0_25": [],
     "max_overlap": 0.125,
-    "mean_overlap": 0.0212,
-    "median_overlap": 0.0271
+    "mean_overlap": 0.0228,
+    "median_overlap": 0.0286
   },
   "cases": {
     "by_kind": {
@@ -21,11 +21,10 @@
   },
   "literal_reachability": {
     "_note": "Share of cases where SOME word the user actually typed appears in the right agent's index line. This is not a ceiling on routing accuracy -- a model can translate 'second pair of eyes' into 'code review' before grepping, and the harness cannot. It is the share of tasks where routing does NOT depend on that translation, and the misses name exactly where it does.",
-    "pct": 65.52,
-    "reachable": 38,
+    "pct": 67.24,
+    "reachable": 39,
     "requires_expansion": [
       "c002",
-      "c004",
       "c007",
       "c011",
       "c013",
@@ -56,7 +55,6 @@
       "c053"
     ],
     "semantic_gap_remaining": [
-      "c004",
       "c007",
       "c011",
       "c013",
@@ -134,19 +132,19 @@
       "verbatim_phrase_matches": 0
     },
     {
-      "bag_hit": false,
-      "bag_matches": 27,
+      "bag_hit": true,
+      "bag_matches": 28,
       "case": "c004",
-      "description_overlap": 0.0,
+      "description_overlap": 0.0909,
       "expect": [
         "security-penetration-tester"
       ],
       "kind": "independent",
-      "narrowest_matches": 0,
-      "narrowest_query": null,
-      "reachable": false,
-      "stemmed_hit": false,
-      "stemmed_matches": 73,
+      "narrowest_matches": 1,
+      "narrowest_query": "exactly",
+      "reachable": true,
+      "stemmed_hit": true,
+      "stemmed_matches": 74,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -170,7 +168,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 36,
+      "bag_matches": 37,
       "case": "c006",
       "description_overlap": 0.0286,
       "expect": [
@@ -181,7 +179,7 @@
       "narrowest_query": "layout",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 55,
+      "stemmed_matches": 56,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -479,18 +477,18 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 49,
+      "bag_matches": 50,
       "case": "c024",
       "description_overlap": 0.0312,
       "expect": [
         "engineering-incident-response-commander"
       ],
       "kind": "independent",
-      "narrowest_matches": 10,
+      "narrowest_matches": 11,
       "narrowest_query": "production",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 65,
+      "stemmed_matches": 66,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -923,7 +921,7 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 39,
+      "bag_matches": 40,
       "case": "c050",
       "description_overlap": 0.0,
       "expect": [
@@ -934,7 +932,7 @@
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 39,
+      "stemmed_matches": 40,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -1082,33 +1080,33 @@
     "_note": "Recall is identical for bag and narrowest_oracle by construction: a phrase can only match a line whose text contains its first word, so anything a narrow query finds the word soup finds too. The pair differ only in NOISE, and that difference is the entire argument for searching narrowly. verbatim_phrases is NOT a strategy evaluation -- see the docstring of strategy_phrases().",
     "bag": {
       "control_hit_pct": 8.62,
-      "hit_pct": 65.52,
-      "hits": 38,
-      "lift_over_control": 56.9,
+      "hit_pct": 67.24,
+      "hits": 39,
+      "lift_over_control": 58.62,
       "max_matches": 127,
-      "mean_matches": 34.4,
-      "median_matches": 29.5,
-      "misses": 20
+      "mean_matches": 34.47,
+      "median_matches": 30.0,
+      "misses": 19
     },
     "narrowest_oracle": {
       "control_hit_pct": 8.62,
-      "hit_pct": 65.52,
-      "hits": 38,
-      "lift_over_control": 56.9,
+      "hit_pct": 67.24,
+      "hits": 39,
+      "lift_over_control": 58.62,
       "max_matches": 46,
-      "mean_matches": 7.21,
-      "median_matches": 2.5,
-      "misses": 20
+      "mean_matches": 7.08,
+      "median_matches": 2,
+      "misses": 19
     },
     "stemmed": {
       "control_hit_pct": 17.24,
-      "hit_pct": 72.41,
-      "hits": 42,
-      "lift_over_control": 55.17,
+      "hit_pct": 74.14,
+      "hits": 43,
+      "lift_over_control": 56.9,
       "max_matches": 214,
-      "mean_matches": 57.02,
+      "mean_matches": 57.09,
       "median_matches": 44.5,
-      "misses": 16
+      "misses": 15
     },
     "verbatim_phrases": {
       "control_hit_pct": 0.0,

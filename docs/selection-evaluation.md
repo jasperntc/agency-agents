@@ -243,6 +243,44 @@ range 4&ndash;17. `c050` spent 17 calls and 13 distinct query patterns before
 landing; `c022` needed 5 and 2. Both score identically. Cost is now recorded per
 pick precisely because the correct/wrong axis hides it.
 
+## A pick is bound to a corpus, not just to a task
+
+`tasks_sha256` binds a pick to the task string. Necessary, and for a long time
+it was assumed sufficient. It is not: the model produced the pick by **grepping
+the index**, so changing a description can change the answer, and picks
+collected under one corpus are not answers about a different one.
+
+This was found the first time a description was deliberately tuned. Raising
+`security-penetration-tester`'s reachability moved case `c004` out of
+`translated` and into `reachable_correct` — on a pick made by a model that faced
+an index where `c004` was **not** reachable and had to translate to find it. The
+accuracy number was unaffected, the cross-tab was quietly wrong, and nothing
+said so.
+
+Every run therefore records `corpus_sha256` alongside `tasks_sha256`:
+
+```bash
+./scripts/eval_selection.py --corpus-digest
+```
+
+It hashes the four fields the index line actually carries — `id`, `division`,
+`name`, `description` — and nothing else. Editing an agent's **body** cannot
+change a pick made by grepping the index, so it must not invalidate one.
+
+### Drift is disclosed, never a hard error
+
+A changed task string is a hard error, because those picks answer a question the
+benchmark no longer asks. A changed corpus is not, and the asymmetry is
+deliberate: description tuning is the one improvement this project has evidence
+for, and a guard that invalidated 58 collected picks every time someone improved
+a description would make the honest move the expensive one. That is exactly the
+failure `tasks_digest` was designed to avoid.
+
+So when the corpus has drifted, the report marks `cross_tab_is_current: false`,
+prints an ADVISORY above the four cells, and leaves accuracy alone — accuracy is
+a property of the pick and still holds. Re-running the eval makes the cross-tab
+authoritative again.
+
 ## What this does not measure
 
 - **Whether the answer helps.** A correct pick is scored correct; nothing here

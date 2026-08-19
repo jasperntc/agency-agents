@@ -1,68 +1,586 @@
 {
-  "runner": "subagent",
+  "corpus_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f",
   "model": "claude-opus-5",
-  "scope": "full",
-  "recorded_at": "2026-08-15",
-  "tasks_sha256": "49fcf1d9018cc22a64f816f96dcc39f95f0a26761f504ca386d22df9b0e8233e",
   "notes": "MIGRATED 2026-08-16: `cases_sha256` (whole-file) became `tasks_sha256` (task text only). No pick was altered -- the task strings these subagents answered are byte-identical to the ones in cases.jsonl today; only `expect` and `why` changed, and no subagent ever saw those fields. All 58 cases. Collected in two batches on the same day with the same prompt and the same model: the 15 stratified pilot cases first (reproduced here verbatim, not re-run -- see 2026-08-15-subagent-pilot15.json), then the remaining 43. One blind general-purpose subagent per case, each given only the task text and a pointer to the shipped SKILL.md; none saw expect, why, or kind. Picks extracted by pattern rather than line position because several subagents prepended prose despite the two-line output contract. tool_calls is an effort proxy.",
   "picks": {
-    "c001": { "agent": "gis-cartography-designer", "tool_calls": 6, "queries": ["cartograph", "map design|label placement|choropleth", "color ramp|colour|color scale|data visualization"] },
-    "c002": { "agent": "marketing-app-store-optimizer", "tool_calls": 6, "queries": ["app store", "ASO|app.?store optimi", "screenshot|listing"] },
-    "c003": { "agent": "engineering-database-optimizer", "tool_calls": 6, "queries": ["query optimization", "index", "[Pp]ostgre"] },
-    "c004": { "agent": "security-penetration-tester", "tool_calls": 4, "queries": ["penetration|pentest|red team", "exploit|ethical hack|offensive security|vulnerabilit"] },
-    "c005": { "agent": "testing-accessibility-auditor", "tool_calls": 8, "queries": ["accessibility", "WCAG", "screen reader"] },
-    "c006": { "agent": "engineering-i18n-engineer", "tool_calls": 4, "queries": ["localization|internationalization|i18n", "locale|multilingual|translation"] },
-    "c007": { "agent": "finance-tax-strategist", "tool_calls": 4, "queries": ["tax", "entity structur|accrual|deferr"] },
-    "c008": { "agent": "legal-document-review", "tool_calls": 8, "queries": ["contract review", "renewal", "contract", "| legal |", "procurement|vendor manage"] },
-    "c009": { "agent": "narrative-designer", "tool_calls": 7, "queries": ["branching narrative", "narrative design", "player agency|player choice", "| game-development |"] },
-    "c010": { "agent": "technical-artist", "tool_calls": 7, "queries": ["shader", "technical art", "mobile", "VFX|real-time render"] },
-    "c011": { "agent": "engineering-payments-billing-engineer", "tool_calls": 7, "queries": ["proration|prorat", "dunning", "idempot", "subscription billing|usage-based|metering"] },
-    "c012": { "agent": "security-secrets-credential-engineer", "tool_calls": 7, "queries": ["secret", "credential", "rotation|leak response", "incident response"] },
-    "c013": { "agent": "product-feedback-synthesizer", "tool_calls": 6, "queries": ["feedback", "sentiment", "survey|voice of the customer|qualitative"] },
-    "c014": { "agent": "engineering-sre", "tool_calls": 5, "queries": ["error budget", "alerting", "observability|on-call|incident"] },
-    "c015": { "agent": "marketing-seo-specialist", "tool_calls": 5, "queries": ["search engine optimization", "organic search", "keyword|SERP|crawl"] },
-    "c016": { "agent": "paid-media-ppc-strategist", "tool_calls": 8, "queries": ["paid search", "Google Ads", "| paid-media |", "campaign structure|account structure|wasted spend"] },
-    "c017": { "agent": "hr-onboarding", "tool_calls": 7, "queries": ["onboarding", "ramp", "new hire|time to productivity|orientation"] },
-    "c018": { "agent": "engineering-frontend-developer", "tool_calls": 10, "queries": ["bundle", "Core Web Vital", "code split|lazy load|tree shak", "React", "frontend", "Performance", "page speed|load time|asset|minif"] },
-    "c019": { "agent": "engineering-webassembly-engineer", "tool_calls": 6, "queries": ["WebAssembly", "wasm", "image processing"] },
-    "c020": { "agent": "gis-spatial-data-engineer", "tool_calls": 10, "queries": ["remote sensing", "tile", "raster|satellite|imagery", "| gis |", "geospatial web service|map service|basemap", "ingest"] },
-    "c021": { "agent": "engineering-embedded-firmware-engineer", "tool_calls": 7, "queries": ["low-power|low power", "firmware", "battery|coin cell|sleep mode|duty cycl", "power consumption|hardware|sensor"] },
-    "c022": { "agent": "sales-discovery-coach", "tool_calls": 5, "queries": ["discovery call", "discovery"] },
-    "c023": { "agent": "specialized-pricing-analyst", "tool_calls": 7, "queries": ["pricing", "monetiz", "subscription", "packaging|tiered"] },
-    "c024": { "agent": "engineering-incident-response-commander", "tool_calls": 5, "queries": ["postmortem", "incident"] },
-    "c025": { "agent": "security-compliance-auditor", "tool_calls": 6, "queries": ["SOC 2", "complianc", "audit readiness|evidence collection"] },
-    "c026": { "agent": "testing-performance-benchmarker", "tool_calls": 8, "queries": ["load test", "stress test|throughput|concurren", "performance test|benchmark|capacity", "latency|scal"] },
-    "c027": { "agent": "design-ux-researcher", "tool_calls": 10, "queries": ["user research", "adoption", "usability", "customer (interview|discovery|insight|feedback)", "product analytics|retention|engagement metric|funnel", "product manager|feature prioriti"] },
-    "c028": { "agent": "engineering-rag-pipeline-engineer", "tool_calls": 6, "queries": ["retrieval", "RAG|vector|embedding|semantic search", "hallucinat|grounding|knowledge base"] },
-    "c029": { "agent": "specialized-mcp-builder", "tool_calls": 5, "queries": ["MCP|Model Context Protocol", "tool call|tool use|function calling|API integration"] },
-    "c030": { "agent": "unity-multiplayer-engineer", "tool_calls": 6, "queries": ["lag compensation", "netcode", "interpolation|client-side prediction|multiplayer"] },
-    "c031": { "agent": "level-designer", "tool_calls": 8, "queries": ["level design", "wayfinding", "playtest", "| game", "critical path|player guidance|sightline|navigation"] },
-    "c032": { "agent": "economy-designer", "tool_calls": 5, "queries": ["econom", "currency sink|virtual currenc|in-game econom"] },
-    "c033": { "agent": "marketing-email-strategist", "tool_calls": 6, "queries": ["email marketing", "lifecycle marketing|deliverability|drip|nurture", "newsletter|unsubscribe|open rate"] },
-    "c034": { "agent": "engineering-technical-writer", "tool_calls": 7, "queries": ["API documentation", "technical writ", "documentation", "developer experience|API reference|docs"] },
-    "c035": { "agent": "specialized-salesforce-architect", "tool_calls": 7, "queries": ["Salesforce", "CRM", "low-code|no-code|declarative automation", "revenue operations"] },
-    "c036": { "agent": "finance-fpa-analyst", "tool_calls": 6, "queries": ["cash flow", "financial planning", "treasury", "variance"] },
-    "c037": { "agent": "engineering-network-engineer", "tool_calls": 6, "queries": ["packet loss", "network", "BGP|WAN|MPLS|congestion|latency|interconnect|data ?cent"] },
-    "c038": { "agent": "specialized-civil-engineer", "tool_calls": 12, "queries": ["stormwater", "drainage", "hydrolog", "runoff|watershed|flood", "civil|land development|site plan|zoning|permit", "| gis |", "| specialized |", "environmental|water|infrastructure|municipal", "urban plan|sewer|detention|catchment|terrain|earthwork|surveying", "architect(ure|s)? (firm|practice)|construction|building code|AHJ"] },
-    "c039": { "agent": "gis-geoai-ml-engineer", "tool_calls": 10, "queries": ["deforestation", "change detection", "remote sensing", "satellite", "imagery", "| gis |", "computer vision"] },
-    "c040": { "agent": "healthcare-clinical-evidence-agent", "tool_calls": 9, "queries": ["clinical trial", "efficacy", "evidence", "patient|drug|pharma|clinician", "| healthcare |", "subgroup|biostat|regulatory submission"] },
-    "c041": { "agent": "engineering-code-reviewer", "tool_calls": 5, "queries": ["code review", "pull request"] },
-    "c042": { "agent": "project-management-meeting-notes-specialist", "tool_calls": 6, "queries": ["meeting", "decision log|action item|decision record", "facilitat"] },
-    "c043": { "agent": "marketing-tiktok-strategist", "tool_calls": 9, "queries": ["short-form video", "TikTok", "Reels", "viral content", "video"] },
-    "c044": { "agent": "design-brand-guardian", "tool_calls": 8, "queries": ["design system", "brand identity", "style guide|brand guideline|visual consistency", "typography"] },
-    "c045": { "agent": "engineering-git-workflow-master", "tool_calls": 4, "queries": ["branching", "version control"] },
-    "c046": { "agent": "testing-workflow-optimizer", "tool_calls": 10, "queries": ["workflow automation", "business process", "repetitive|manual process|toil", "no-code|Zapier|integration platform", "workflow optimiz|process improvement|operational efficiency", "systems integration|data integration|ETL", "Automation Engineer|automation specialist|task automation|internal tool"] },
-    "c047": { "agent": "testing-test-automation-engineer", "tool_calls": 6, "queries": ["test automation", "regression", "| testing |"] },
-    "c048": { "agent": "engineering-privacy-engineer", "tool_calls": 8, "queries": ["right to be forgotten|erasure", "privacy engineer", "DSAR|data governance|retention", "backup|warehouse", "GDPR|CCPA"] },
-    "c049": { "agent": "sales-proposal-strategist", "tool_calls": 6, "queries": ["proposal", "RFP", "win rate|deal|pitch deck"] },
-    "c050": { "agent": "support-analytics-reporter", "tool_calls": 17, "queries": ["report automation", "product analytics", "release note", "recurring", "digest", "dashboard", "workflow automation", "weekly", "reporting", "| product |", "| project |", "business intelligence", "executive summar"] },
-    "c051": { "agent": "xr-immersive-developer", "tool_calls": 9, "queries": ["hand tracking", "immersive", "| spatial-computing |", "grab|gesture|Quest|Unity|Unreal|headset", "physics|manipulat|haptic|3D interaction"] },
-    "c052": { "agent": "engineering-solidity-smart-contract-engineer", "tool_calls": 7, "queries": ["smart contract", "multisig|multi-sig", "escrow", "blockchain|web3|on-chain"] },
-    "c053": { "agent": "recruitment-specialist", "tool_calls": 6, "queries": ["talent acquisition", "screening|candidate|applicant", "hiring|recruit|interview"] },
-    "c054": { "agent": "engineering-minimal-change-engineer", "tool_calls": 6, "queries": ["legacy", "refactor", "technical debt|brownfield|regression"] },
-    "c055": { "agent": "marketing-xiaohongshu-specialist", "tool_calls": 6, "queries": ["Xiaohongshu", "China|Chinese|WeChat|Douyin", "lifestyle"] },
-    "c056": { "agent": "engineering-drupal-performance", "tool_calls": 4, "queries": ["drupal", "page.?(speed|load)|render.?blocking|caching layer"] },
-    "c057": { "agent": "engineering-codebase-onboarding-engineer", "tool_calls": 6, "queries": ["legacy", "codebase", "onboard"] },
-    "c058": { "agent": "testing-test-automation-engineer", "tool_calls": 7, "queries": ["test automation", "end-to-end|e2e", "tool evaluation", "technology selection|trade-off|architecture decision", "test strategy"] }
-  }
+    "c001": {
+      "agent": "gis-cartography-designer",
+      "queries": [
+        "cartograph",
+        "map design|label placement|choropleth",
+        "color ramp|colour|color scale|data visualization"
+      ],
+      "tool_calls": 6
+    },
+    "c002": {
+      "agent": "marketing-app-store-optimizer",
+      "queries": [
+        "app store",
+        "ASO|app.?store optimi",
+        "screenshot|listing"
+      ],
+      "tool_calls": 6
+    },
+    "c003": {
+      "agent": "engineering-database-optimizer",
+      "queries": [
+        "query optimization",
+        "index",
+        "[Pp]ostgre"
+      ],
+      "tool_calls": 6
+    },
+    "c004": {
+      "agent": "security-penetration-tester",
+      "queries": [
+        "penetration|pentest|red team",
+        "exploit|ethical hack|offensive security|vulnerabilit"
+      ],
+      "tool_calls": 4
+    },
+    "c005": {
+      "agent": "testing-accessibility-auditor",
+      "queries": [
+        "accessibility",
+        "WCAG",
+        "screen reader"
+      ],
+      "tool_calls": 8
+    },
+    "c006": {
+      "agent": "engineering-i18n-engineer",
+      "queries": [
+        "localization|internationalization|i18n",
+        "locale|multilingual|translation"
+      ],
+      "tool_calls": 4
+    },
+    "c007": {
+      "agent": "finance-tax-strategist",
+      "queries": [
+        "tax",
+        "entity structur|accrual|deferr"
+      ],
+      "tool_calls": 4
+    },
+    "c008": {
+      "agent": "legal-document-review",
+      "queries": [
+        "contract review",
+        "renewal",
+        "contract",
+        "| legal |",
+        "procurement|vendor manage"
+      ],
+      "tool_calls": 8
+    },
+    "c009": {
+      "agent": "narrative-designer",
+      "queries": [
+        "branching narrative",
+        "narrative design",
+        "player agency|player choice",
+        "| game-development |"
+      ],
+      "tool_calls": 7
+    },
+    "c010": {
+      "agent": "technical-artist",
+      "queries": [
+        "shader",
+        "technical art",
+        "mobile",
+        "VFX|real-time render"
+      ],
+      "tool_calls": 7
+    },
+    "c011": {
+      "agent": "engineering-payments-billing-engineer",
+      "queries": [
+        "proration|prorat",
+        "dunning",
+        "idempot",
+        "subscription billing|usage-based|metering"
+      ],
+      "tool_calls": 7
+    },
+    "c012": {
+      "agent": "security-secrets-credential-engineer",
+      "queries": [
+        "secret",
+        "credential",
+        "rotation|leak response",
+        "incident response"
+      ],
+      "tool_calls": 7
+    },
+    "c013": {
+      "agent": "product-feedback-synthesizer",
+      "queries": [
+        "feedback",
+        "sentiment",
+        "survey|voice of the customer|qualitative"
+      ],
+      "tool_calls": 6
+    },
+    "c014": {
+      "agent": "engineering-sre",
+      "queries": [
+        "error budget",
+        "alerting",
+        "observability|on-call|incident"
+      ],
+      "tool_calls": 5
+    },
+    "c015": {
+      "agent": "marketing-seo-specialist",
+      "queries": [
+        "search engine optimization",
+        "organic search",
+        "keyword|SERP|crawl"
+      ],
+      "tool_calls": 5
+    },
+    "c016": {
+      "agent": "paid-media-ppc-strategist",
+      "queries": [
+        "paid search",
+        "Google Ads",
+        "| paid-media |",
+        "campaign structure|account structure|wasted spend"
+      ],
+      "tool_calls": 8
+    },
+    "c017": {
+      "agent": "hr-onboarding",
+      "queries": [
+        "onboarding",
+        "ramp",
+        "new hire|time to productivity|orientation"
+      ],
+      "tool_calls": 7
+    },
+    "c018": {
+      "agent": "engineering-frontend-developer",
+      "queries": [
+        "bundle",
+        "Core Web Vital",
+        "code split|lazy load|tree shak",
+        "React",
+        "frontend",
+        "Performance",
+        "page speed|load time|asset|minif"
+      ],
+      "tool_calls": 10
+    },
+    "c019": {
+      "agent": "engineering-webassembly-engineer",
+      "queries": [
+        "WebAssembly",
+        "wasm",
+        "image processing"
+      ],
+      "tool_calls": 6
+    },
+    "c020": {
+      "agent": "gis-spatial-data-engineer",
+      "queries": [
+        "remote sensing",
+        "tile",
+        "raster|satellite|imagery",
+        "| gis |",
+        "geospatial web service|map service|basemap",
+        "ingest"
+      ],
+      "tool_calls": 10
+    },
+    "c021": {
+      "agent": "engineering-embedded-firmware-engineer",
+      "queries": [
+        "low-power|low power",
+        "firmware",
+        "battery|coin cell|sleep mode|duty cycl",
+        "power consumption|hardware|sensor"
+      ],
+      "tool_calls": 7
+    },
+    "c022": {
+      "agent": "sales-discovery-coach",
+      "queries": [
+        "discovery call",
+        "discovery"
+      ],
+      "tool_calls": 5
+    },
+    "c023": {
+      "agent": "specialized-pricing-analyst",
+      "queries": [
+        "pricing",
+        "monetiz",
+        "subscription",
+        "packaging|tiered"
+      ],
+      "tool_calls": 7
+    },
+    "c024": {
+      "agent": "engineering-incident-response-commander",
+      "queries": [
+        "postmortem",
+        "incident"
+      ],
+      "tool_calls": 5
+    },
+    "c025": {
+      "agent": "security-compliance-auditor",
+      "queries": [
+        "SOC 2",
+        "complianc",
+        "audit readiness|evidence collection"
+      ],
+      "tool_calls": 6
+    },
+    "c026": {
+      "agent": "testing-performance-benchmarker",
+      "queries": [
+        "load test",
+        "stress test|throughput|concurren",
+        "performance test|benchmark|capacity",
+        "latency|scal"
+      ],
+      "tool_calls": 8
+    },
+    "c027": {
+      "agent": "design-ux-researcher",
+      "queries": [
+        "user research",
+        "adoption",
+        "usability",
+        "customer (interview|discovery|insight|feedback)",
+        "product analytics|retention|engagement metric|funnel",
+        "product manager|feature prioriti"
+      ],
+      "tool_calls": 10
+    },
+    "c028": {
+      "agent": "engineering-rag-pipeline-engineer",
+      "queries": [
+        "retrieval",
+        "RAG|vector|embedding|semantic search",
+        "hallucinat|grounding|knowledge base"
+      ],
+      "tool_calls": 6
+    },
+    "c029": {
+      "agent": "specialized-mcp-builder",
+      "queries": [
+        "MCP|Model Context Protocol",
+        "tool call|tool use|function calling|API integration"
+      ],
+      "tool_calls": 5
+    },
+    "c030": {
+      "agent": "unity-multiplayer-engineer",
+      "queries": [
+        "lag compensation",
+        "netcode",
+        "interpolation|client-side prediction|multiplayer"
+      ],
+      "tool_calls": 6
+    },
+    "c031": {
+      "agent": "level-designer",
+      "queries": [
+        "level design",
+        "wayfinding",
+        "playtest",
+        "| game",
+        "critical path|player guidance|sightline|navigation"
+      ],
+      "tool_calls": 8
+    },
+    "c032": {
+      "agent": "economy-designer",
+      "queries": [
+        "econom",
+        "currency sink|virtual currenc|in-game econom"
+      ],
+      "tool_calls": 5
+    },
+    "c033": {
+      "agent": "marketing-email-strategist",
+      "queries": [
+        "email marketing",
+        "lifecycle marketing|deliverability|drip|nurture",
+        "newsletter|unsubscribe|open rate"
+      ],
+      "tool_calls": 6
+    },
+    "c034": {
+      "agent": "engineering-technical-writer",
+      "queries": [
+        "API documentation",
+        "technical writ",
+        "documentation",
+        "developer experience|API reference|docs"
+      ],
+      "tool_calls": 7
+    },
+    "c035": {
+      "agent": "specialized-salesforce-architect",
+      "queries": [
+        "Salesforce",
+        "CRM",
+        "low-code|no-code|declarative automation",
+        "revenue operations"
+      ],
+      "tool_calls": 7
+    },
+    "c036": {
+      "agent": "finance-fpa-analyst",
+      "queries": [
+        "cash flow",
+        "financial planning",
+        "treasury",
+        "variance"
+      ],
+      "tool_calls": 6
+    },
+    "c037": {
+      "agent": "engineering-network-engineer",
+      "queries": [
+        "packet loss",
+        "network",
+        "BGP|WAN|MPLS|congestion|latency|interconnect|data ?cent"
+      ],
+      "tool_calls": 6
+    },
+    "c038": {
+      "agent": "specialized-civil-engineer",
+      "queries": [
+        "stormwater",
+        "drainage",
+        "hydrolog",
+        "runoff|watershed|flood",
+        "civil|land development|site plan|zoning|permit",
+        "| gis |",
+        "| specialized |",
+        "environmental|water|infrastructure|municipal",
+        "urban plan|sewer|detention|catchment|terrain|earthwork|surveying",
+        "architect(ure|s)? (firm|practice)|construction|building code|AHJ"
+      ],
+      "tool_calls": 12
+    },
+    "c039": {
+      "agent": "gis-geoai-ml-engineer",
+      "queries": [
+        "deforestation",
+        "change detection",
+        "remote sensing",
+        "satellite",
+        "imagery",
+        "| gis |",
+        "computer vision"
+      ],
+      "tool_calls": 10
+    },
+    "c040": {
+      "agent": "healthcare-clinical-evidence-agent",
+      "queries": [
+        "clinical trial",
+        "efficacy",
+        "evidence",
+        "patient|drug|pharma|clinician",
+        "| healthcare |",
+        "subgroup|biostat|regulatory submission"
+      ],
+      "tool_calls": 9
+    },
+    "c041": {
+      "agent": "engineering-code-reviewer",
+      "queries": [
+        "code review",
+        "pull request"
+      ],
+      "tool_calls": 5
+    },
+    "c042": {
+      "agent": "project-management-meeting-notes-specialist",
+      "queries": [
+        "meeting",
+        "decision log|action item|decision record",
+        "facilitat"
+      ],
+      "tool_calls": 6
+    },
+    "c043": {
+      "agent": "marketing-tiktok-strategist",
+      "queries": [
+        "short-form video",
+        "TikTok",
+        "Reels",
+        "viral content",
+        "video"
+      ],
+      "tool_calls": 9
+    },
+    "c044": {
+      "agent": "design-brand-guardian",
+      "queries": [
+        "design system",
+        "brand identity",
+        "style guide|brand guideline|visual consistency",
+        "typography"
+      ],
+      "tool_calls": 8
+    },
+    "c045": {
+      "agent": "engineering-git-workflow-master",
+      "queries": [
+        "branching",
+        "version control"
+      ],
+      "tool_calls": 4
+    },
+    "c046": {
+      "agent": "testing-workflow-optimizer",
+      "queries": [
+        "workflow automation",
+        "business process",
+        "repetitive|manual process|toil",
+        "no-code|Zapier|integration platform",
+        "workflow optimiz|process improvement|operational efficiency",
+        "systems integration|data integration|ETL",
+        "Automation Engineer|automation specialist|task automation|internal tool"
+      ],
+      "tool_calls": 10
+    },
+    "c047": {
+      "agent": "testing-test-automation-engineer",
+      "queries": [
+        "test automation",
+        "regression",
+        "| testing |"
+      ],
+      "tool_calls": 6
+    },
+    "c048": {
+      "agent": "engineering-privacy-engineer",
+      "queries": [
+        "right to be forgotten|erasure",
+        "privacy engineer",
+        "DSAR|data governance|retention",
+        "backup|warehouse",
+        "GDPR|CCPA"
+      ],
+      "tool_calls": 8
+    },
+    "c049": {
+      "agent": "sales-proposal-strategist",
+      "queries": [
+        "proposal",
+        "RFP",
+        "win rate|deal|pitch deck"
+      ],
+      "tool_calls": 6
+    },
+    "c050": {
+      "agent": "support-analytics-reporter",
+      "queries": [
+        "report automation",
+        "product analytics",
+        "release note",
+        "recurring",
+        "digest",
+        "dashboard",
+        "workflow automation",
+        "weekly",
+        "reporting",
+        "| product |",
+        "| project |",
+        "business intelligence",
+        "executive summar"
+      ],
+      "tool_calls": 17
+    },
+    "c051": {
+      "agent": "xr-immersive-developer",
+      "queries": [
+        "hand tracking",
+        "immersive",
+        "| spatial-computing |",
+        "grab|gesture|Quest|Unity|Unreal|headset",
+        "physics|manipulat|haptic|3D interaction"
+      ],
+      "tool_calls": 9
+    },
+    "c052": {
+      "agent": "engineering-solidity-smart-contract-engineer",
+      "queries": [
+        "smart contract",
+        "multisig|multi-sig",
+        "escrow",
+        "blockchain|web3|on-chain"
+      ],
+      "tool_calls": 7
+    },
+    "c053": {
+      "agent": "recruitment-specialist",
+      "queries": [
+        "talent acquisition",
+        "screening|candidate|applicant",
+        "hiring|recruit|interview"
+      ],
+      "tool_calls": 6
+    },
+    "c054": {
+      "agent": "engineering-minimal-change-engineer",
+      "queries": [
+        "legacy",
+        "refactor",
+        "technical debt|brownfield|regression"
+      ],
+      "tool_calls": 6
+    },
+    "c055": {
+      "agent": "marketing-xiaohongshu-specialist",
+      "queries": [
+        "Xiaohongshu",
+        "China|Chinese|WeChat|Douyin",
+        "lifestyle"
+      ],
+      "tool_calls": 6
+    },
+    "c056": {
+      "agent": "engineering-drupal-performance",
+      "queries": [
+        "drupal",
+        "page.?(speed|load)|render.?blocking|caching layer"
+      ],
+      "tool_calls": 4
+    },
+    "c057": {
+      "agent": "engineering-codebase-onboarding-engineer",
+      "queries": [
+        "legacy",
+        "codebase",
+        "onboard"
+      ],
+      "tool_calls": 6
+    },
+    "c058": {
+      "agent": "testing-test-automation-engineer",
+      "queries": [
+        "test automation",
+        "end-to-end|e2e",
+        "tool evaluation",
+        "technology selection|trade-off|architecture decision",
+        "test strategy"
+      ],
+      "tool_calls": 7
+    }
+  },
+  "recorded_at": "2026-08-15",
+  "runner": "subagent",
+  "scope": "full",
+  "tasks_sha256": "49fcf1d9018cc22a64f816f96dcc39f95f0a26761f504ca386d22df9b0e8233e"
 }

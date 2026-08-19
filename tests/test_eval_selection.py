@@ -229,5 +229,93 @@ class Sampling(unittest.TestCase):
                          [c["case"] for c in es.sample(self.cases, 15)])
 
 
+class CorpusBinding(unittest.TestCase):
+    """A pick answers "given THIS corpus, which specialist?"
+
+    tasks_digest binds a pick to the task string. That is necessary and was not
+    sufficient: the model grepped the index to produce the pick, so changing a
+    description can change the answer. The failure was real and silent -- tuning
+    `security-penetration-tester` moved case c004 from `translated` into
+    `reachable_correct` on a pick made against an index where c004 was NOT
+    reachable, and nothing said so.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.cases = es.load_cases()
+
+    def test_digest_is_stable(self):
+        self.assertEqual(es.corpus_digest(), es.corpus_digest())
+        self.assertRegex(es.corpus_digest(), r"^[0-9a-f]{64}$")
+
+    def test_a_changed_description_changes_the_digest(self):
+        registry = REPO_ROOT / "registry.json"
+        original = registry.read_bytes()
+        before = es.corpus_digest()
+        try:
+            data = json.loads(original.decode("utf-8"))
+            data["agents"][0]["description"] += " Now with extra words."
+            registry.write_bytes(
+                (json.dumps(data, indent=2, sort_keys=True,
+                            ensure_ascii=False) + "\n").encode("utf-8"))
+            self.assertNotEqual(before, es.corpus_digest())
+        finally:
+            registry.write_bytes(original)
+        self.assertEqual(before, es.corpus_digest())
+
+    def test_an_agent_body_edit_does_not_change_the_digest(self):
+        """Only the four index fields can change a pick made by grepping.
+
+        Hashing the whole corpus would invalidate every recorded pick on any
+        prose edit anywhere -- a guard that expensive gets switched off.
+        """
+        registry = REPO_ROOT / "registry.json"
+        original = registry.read_bytes()
+        before = es.corpus_digest()
+        try:
+            data = json.loads(original.decode("utf-8"))
+            data["agents"][0]["body_words"] = 999999
+            data["agents"][0]["vibe"] = "totally different vibe"
+            registry.write_bytes(
+                (json.dumps(data, indent=2, sort_keys=True,
+                            ensure_ascii=False) + "\n").encode("utf-8"))
+            self.assertEqual(before, es.corpus_digest())
+        finally:
+            registry.write_bytes(original)
+
+    def test_every_recorded_run_declares_the_corpus_it_answered(self):
+        for run in es.load_runs(self.cases):
+            self.assertRegex(run.get("corpus_sha256", ""), r"^[0-9a-f]{64}$",
+                             f"{run['_name']} does not say which index its "
+                             f"picks were collected against")
+
+    def test_drift_marks_the_cross_tab_advisory_and_not_the_accuracy(self):
+        run = dict(es.load_runs(self.cases)[0])
+        run["corpus_sha256"] = "0" * 64
+        reachable = {c["case"]: True for c in self.cases}
+        drifted = es.score_run(run, self.cases, reachable, es.agent_ids(),
+                               es.corpus_digest())
+        self.assertFalse(drifted["corpus"]["cross_tab_is_current"])
+        self.assertIn("advisory", drifted["corpus"]["_note"].lower())
+        # Accuracy is a property of the pick, not of the corpus, so it stands.
+        matching = es.score_run(dict(run, corpus_sha256=es.corpus_digest()),
+                                self.cases, reachable, es.agent_ids(),
+                                es.corpus_digest())
+        self.assertTrue(matching["corpus"]["cross_tab_is_current"])
+        self.assertEqual(drifted["accuracy_pct"], matching["accuracy_pct"])
+
+    def test_drift_is_not_a_hard_error(self):
+        """Description tuning is the one improvement with evidence behind it.
+
+        A guard that invalidated 58 picks every time someone improved a
+        description would make the honest move the expensive one, which is the
+        failure tasks_digest was explicitly designed to avoid.
+        """
+        es.build_report()  # runs currently carry a drifted digest; must not raise
+
+    def test_report_publishes_the_current_corpus_digest(self):
+        self.assertRegex(es.build_report()["corpus_sha256"], r"^[0-9a-f]{64}$")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

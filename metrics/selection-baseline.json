@@ -4,13 +4,20 @@
     "tasks_sha256": "49fcf1d9018cc22a64f816f96dcc39f95f0a26761f504ca386d22df9b0e8233e",
     "total": 58
   },
-  "literal_reachability_pct": 65.52,
+  "corpus_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+  "literal_reachability_pct": 67.24,
   "runs": [
     {
       "accuracy_pct": 100.0,
       "accuracy_when_answered_pct": 100.0,
       "cases_missing": [],
       "cases_scored": 58,
+      "corpus": {
+        "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
+        "cross_tab_is_current": false,
+        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "recorded_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f"
+      },
       "declined": [],
       "effort_tool_calls": {
         "max": 17,
@@ -23,6 +30,7 @@
         "reachable_correct": [
           "c001",
           "c003",
+          "c004",
           "c005",
           "c006",
           "c008",
@@ -63,7 +71,6 @@
         "reachable_wrong": [],
         "translated": [
           "c002",
-          "c004",
           "c007",
           "c011",
           "c013",
@@ -133,7 +140,7 @@
           "expect": [
             "security-penetration-tester"
           ],
-          "literally_reachable": false,
+          "literally_reachable": true,
           "picked": "security-penetration-tester",
           "queries": [
             "penetration|pentest|red team",
@@ -967,9 +974,9 @@
       "scope": "full",
       "translation": {
         "_note": "The cell scripts/eval_routing.py cannot measure. These cases share no word with the right agent's index line, so a correct pick means the model translated the task into the field's vocabulary before searching -- which is exactly what the router skill instructs.",
-        "recovered": 20,
+        "recovered": 19,
         "recovery_pct": 100.0,
-        "unreachable_cases": 20
+        "unreachable_cases": 19
       }
     },
     {
@@ -1021,6 +1028,12 @@
         "c058"
       ],
       "cases_scored": 15,
+      "corpus": {
+        "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
+        "cross_tab_is_current": false,
+        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "recorded_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f"
+      },
       "declined": [],
       "effort_tool_calls": {
         "max": 17,
@@ -1033,6 +1046,7 @@
         "reachable_correct": [
           "c001",
           "c003",
+          "c004",
           "c008",
           "c009",
           "c016",
@@ -1043,7 +1057,6 @@
         "reachable_wrong": [],
         "translated": [
           "c002",
-          "c004",
           "c007",
           "c013",
           "c022",
@@ -1100,7 +1113,7 @@
           "expect": [
             "security-penetration-tester"
           ],
-          "literally_reachable": false,
+          "literally_reachable": true,
           "picked": "security-penetration-tester",
           "queries": [
             "penetration|pentest|red team",
@@ -1291,9 +1304,9 @@
       "scope": "pilot-15",
       "translation": {
         "_note": "The cell scripts/eval_routing.py cannot measure. These cases share no word with the right agent's index line, so a correct pick means the model translated the task into the field's vocabulary before searching -- which is exactly what the router skill instructs.",
-        "recovered": 7,
+        "recovered": 6,
         "recovery_pct": 100.0,
-        "unreachable_cases": 7
+        "unreachable_cases": 6
       }
     }
   ]
