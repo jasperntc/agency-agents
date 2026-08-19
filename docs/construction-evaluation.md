@@ -180,6 +180,13 @@ do by hand.
 each writing one module to a given path, with no knowledge of how it would be
 graded. Model: `claude-opus-5`.
 
+That model is recorded in the run itself, not only here. A run is one model's
+answers, so two runs are two arms, and an arm whose model is unrecorded cannot
+be read — a lift figure means nothing without knowing what produced it. The run
+name is a label rather than a record: this one says nothing about Opus. So
+`--execute` requires `--model`, `--check` fails any run missing it, and the
+operator asserts the value, which nothing in the harness can verify.
+
 | condition | stated | implied | modules that import | implied vs `none` |
 |---|---|---|---|---|
 | `none` | 24/24 (100%) | 24/24 (100%) | 6/6 | — |

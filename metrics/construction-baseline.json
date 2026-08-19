@@ -428,6 +428,7 @@
           "none": 0.0
         }
       },
+      "model": "claude-opus-5",
       "python": "3.12.6",
       "run": "2026-08-18-subagent-c6"
     }

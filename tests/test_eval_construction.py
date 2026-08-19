@@ -30,10 +30,16 @@ the properties whose absence made each failure possible.
                              the delivery mechanism.
   NO AGGREGATE HIDES A KIND  stated and implied are never blended into the
                              figure the phase is read from.
+  EVERY ARM NAMES ITS MODEL  A run is one model's answers. Two runs are two
+                             arms, and an arm whose model is unrecorded cannot
+                             be read. The run NAME is a label, not a record --
+                             the first run here was `2026-08-18-subagent-c6`
+                             and said nothing about Opus.
 """
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -359,6 +365,42 @@ class Report(unittest.TestCase):
 
     def test_amended_suites_are_disclosed(self):
         self.assertIn("suites_amended_since_registration", self.report)
+
+    def test_every_run_records_the_model_that_produced_it(self):
+        for run in self.report["runs"]:
+            self.assertTrue(
+                run.get("model"),
+                f"{run['run']} records no model. A lift figure is unreadable "
+                f"without knowing what produced it, and the run name is a "
+                f"label rather than a record.")
+
+    def test_check_rejects_a_run_that_names_no_model(self):
+        """The guard has to be able to fail, or it is not a guard.
+
+        Proven end to end through the CLI rather than by calling a predicate.
+        The assertion lives inside main(); a test of a helper main() did not
+        call would be exactly the kind of green check that measures nothing,
+        which this project has now found five times.
+        """
+        sources = sorted(ec.RESULTS.glob("*.json"))
+        if not sources:
+            self.skipTest("no executed run")
+        data = json.loads(sources[0].read_text(encoding="utf-8"))
+        data.pop("model", None)
+        probe = ec.RESULTS / "_zz-nomodel.json"
+        probe.write_bytes(dump_json(data))
+        try:
+            proc = subprocess.run(
+                [sys.executable,
+                 str(ec.REPO_ROOT / "scripts" / "eval_construction.py"),
+                 "--check"],
+                capture_output=True, text=True, cwd=str(ec.REPO_ROOT))
+            self.assertEqual(proc.returncode, 1,
+                             f"--check passed a run with no model. "
+                             f"{proc.stdout}{proc.stderr}")
+            self.assertIn("record no model", proc.stderr)
+        finally:
+            probe.unlink()
 
     def test_the_committed_baseline_matches(self):
         if not self.report["runs"]:
