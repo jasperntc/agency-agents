@@ -276,10 +276,20 @@ def score_run(run: dict, cases: list[dict], reachable: dict[str, bool],
             continue
         pick = picks[cid]
         chosen = pick.get("agent")
-        correct = chosen in case["expect"]
+        declined = chosen in (None, "NONE")
+
+        # An empty `expect` means the corpus has NO agent for this task, so
+        # declining IS the right answer. Without this the benchmark punished the
+        # exact behaviour SKILL.md instructs -- "if nothing matches well, say
+        # so", "a poorly fitting specialist is worse than none" -- and there was
+        # no way for any answer to score correct. Found on c038, where the
+        # corpus has no stormwater engineer: the weaker model declined and was
+        # marked wrong, while the stronger one searched twelve times, settled on
+        # a structural engineer who cannot size drainage, and was marked right.
+        correct = declined if not case["expect"] else chosen in case["expect"]
         reach = reachable.get(cid, False)
 
-        if chosen in (None, "NONE"):
+        if declined:
             cell = None  # an honest miss is not scored as a wrong pick
         elif correct:
             cell = "reachable_correct" if reach else "translated"
