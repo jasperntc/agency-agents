@@ -95,16 +95,16 @@ CLAIMS: list[tuple[str, str, callable]] = [
     # findings.md is the summary a reader reaches first and the one most likely
     # to be quoted onward, so every figure in it is bound to its artifact here.
     # The README carries the same headline for the same reason.
-    ("docs/findings.md", "literal reachability: 67.24%",
+    ("docs/findings.md", "literal reachability: 70.18%",
      lambda: f"literal reachability: "
              f"{load('metrics/selection-baseline.json')['literal_reachability_pct']}%"),
     ("docs/findings.md", "58 blind cases, one model, no access to the answer. "
-                         "**100% accuracy.**",
+                         "**98.28% accuracy.**",
      lambda: f"{load('metrics/selection-baseline.json')['cases']['total']} blind "
              f"cases, one model, no access to the answer. "
              f"**{load('metrics/selection-baseline.json')['runs'][0]['accuracy_pct']:g}% "
              f"accuracy.**"),
-    ("README.md", "**yes** — 100% on 58 blind cases",
+    ("README.md", "**yes** — 98.28% on 58 blind cases",
      lambda: f"**yes** — "
              f"{load('metrics/selection-baseline.json')['runs'][0]['accuracy_pct']:g}% on "
              f"{load('metrics/selection-baseline.json')['cases']['total']} blind cases"),

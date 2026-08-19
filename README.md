@@ -35,7 +35,7 @@ This fork adds one thing upstream does not have — **evidence about whether the
 
 | axis | question | verdict |
 | --- | --- | --- |
-| **Selection** | does a model pick the right specialist? | **yes** — 100% on 58 blind cases |
+| **Selection** | does a model pick the right specialist? | **yes** — 98.28% on 58 blind cases |
 | **Diagnosis** | does the agent file help find a defect? | **no measurable effect** (36 blind subagents) |
 | **Construction** | does the agent file help write the code? | **no measurable effect** (18 blind subagents) |
 

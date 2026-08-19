@@ -4,7 +4,7 @@
     "_note": "Token overlap between each case and its expected agent's index line. This is a property of the BENCHMARK, not of routing. If it rises, the cases are being written in the agents' own vocabulary and the scores above stop meaning anything.",
     "cases_over_0_25": [],
     "max_overlap": 0.125,
-    "mean_overlap": 0.0228,
+    "mean_overlap": 0.0236,
     "median_overlap": 0.0286
   },
   "cases": {
@@ -24,8 +24,8 @@
     "no_expected_agent": [
       "c038"
     ],
-    "pct": 68.42,
-    "reachable": 39,
+    "pct": 70.18,
+    "reachable": 40,
     "requires_expansion": [
       "c002",
       "c007",
@@ -43,7 +43,6 @@
       "c044",
       "c046",
       "c049",
-      "c050",
       "c053"
     ],
     "scored_cases": 57
@@ -71,8 +70,7 @@
       "c042",
       "c044",
       "c046",
-      "c049",
-      "c050"
+      "c049"
     ]
   },
   "negative_control": {
@@ -139,7 +137,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 28,
+      "bag_matches": 29,
       "case": "c004",
       "description_overlap": 0.0909,
       "expect": [
@@ -151,7 +149,7 @@
       "narrowest_query": "exactly",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 74,
+      "stemmed_matches": 75,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -268,7 +266,7 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 32,
+      "bag_matches": 33,
       "case": "c011",
       "description_overlap": 0.0,
       "expect": [
@@ -280,7 +278,7 @@
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 49,
+      "stemmed_matches": 50,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -298,7 +296,7 @@
       "narrowest_query": "found",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 28,
+      "stemmed_matches": 29,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -358,7 +356,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 27,
+      "bag_matches": 28,
       "case": "c016",
       "description_overlap": 0.05,
       "expect": [
@@ -371,7 +369,7 @@
       "narrowest_query": "google\\s+ads",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 35,
+      "stemmed_matches": 36,
       "verbatim_phrase_hit": true,
       "verbatim_phrase_matches": 2
     },
@@ -389,7 +387,7 @@
       "narrowest_query": "new",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 58,
+      "stemmed_matches": 59,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -461,7 +459,7 @@
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 24,
+      "stemmed_matches": 25,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -485,7 +483,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 10,
+      "bag_matches": 11,
       "case": "c023",
       "description_overlap": 0.0333,
       "expect": [
@@ -497,13 +495,13 @@
       "narrowest_query": "cost",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 11,
+      "stemmed_matches": 12,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
     {
       "bag_hit": true,
-      "bag_matches": 50,
+      "bag_matches": 51,
       "case": "c024",
       "description_overlap": 0.0312,
       "expect": [
@@ -515,7 +513,7 @@
       "narrowest_query": "production",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 66,
+      "stemmed_matches": 67,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -557,7 +555,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 85,
+      "bag_matches": 86,
       "case": "c027",
       "description_overlap": 0.0,
       "expect": [
@@ -569,7 +567,7 @@
       "narrowest_query": "find",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 112,
+      "stemmed_matches": 113,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -647,7 +645,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 25,
+      "bag_matches": 26,
       "case": "c032",
       "description_overlap": 0.037,
       "expect": [
@@ -659,7 +657,7 @@
       "narrowest_query": "currency",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 29,
+      "stemmed_matches": 30,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -719,7 +717,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 23,
+      "bag_matches": 24,
       "case": "c036",
       "description_overlap": 0.0303,
       "expect": [
@@ -731,7 +729,7 @@
       "narrowest_query": "rolling",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 28,
+      "stemmed_matches": 29,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -771,7 +769,7 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 6,
+      "bag_matches": 7,
       "case": "c039",
       "description_overlap": 0.0357,
       "expect": [
@@ -783,7 +781,7 @@
       "narrowest_query": "satellite",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 6,
+      "stemmed_matches": 7,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -825,7 +823,7 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 5,
+      "bag_matches": 6,
       "case": "c042",
       "description_overlap": 0.0,
       "expect": [
@@ -837,7 +835,7 @@
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 63,
+      "stemmed_matches": 64,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -898,7 +896,7 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 15,
+      "bag_matches": 16,
       "case": "c046",
       "description_overlap": 0.0,
       "expect": [
@@ -910,13 +908,13 @@
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 21,
+      "stemmed_matches": 22,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
     {
       "bag_hit": true,
-      "bag_matches": 36,
+      "bag_matches": 37,
       "case": "c047",
       "description_overlap": 0.0,
       "expect": [
@@ -970,26 +968,26 @@
       "verbatim_phrase_matches": 0
     },
     {
-      "bag_hit": false,
-      "bag_matches": 40,
+      "bag_hit": true,
+      "bag_matches": 41,
       "case": "c050",
-      "description_overlap": 0.0,
+      "description_overlap": 0.0513,
       "expect": [
         "support-analytics-reporter"
       ],
       "has_target": true,
       "kind": "independent",
-      "narrowest_matches": 0,
-      "narrowest_query": null,
-      "reachable": false,
-      "stemmed_hit": false,
-      "stemmed_matches": 40,
+      "narrowest_matches": 1,
+      "narrowest_query": "assemble",
+      "reachable": true,
+      "stemmed_hit": true,
+      "stemmed_matches": 41,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
     {
       "bag_hit": true,
-      "bag_matches": 67,
+      "bag_matches": 68,
       "case": "c051",
       "description_overlap": 0.0,
       "expect": [
@@ -1002,7 +1000,7 @@
       "narrowest_query": "app",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 90,
+      "stemmed_matches": 91,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -1026,7 +1024,7 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 9,
+      "bag_matches": 10,
       "case": "c053",
       "description_overlap": 0.0,
       "expect": [
@@ -1038,7 +1036,7 @@
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": true,
-      "stemmed_matches": 12,
+      "stemmed_matches": 13,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -1139,33 +1137,33 @@
     "_note": "Recall is identical for bag and narrowest_oracle by construction: a phrase can only match a line whose text contains its first word, so anything a narrow query finds the word soup finds too. The pair differ only in NOISE, and that difference is the entire argument for searching narrowly. verbatim_phrases is NOT a strategy evaluation -- see the docstring of strategy_phrases().",
     "bag": {
       "control_hit_pct": 8.62,
-      "hit_pct": 67.24,
-      "hits": 39,
-      "lift_over_control": 58.62,
+      "hit_pct": 68.97,
+      "hits": 40,
+      "lift_over_control": 60.35,
       "max_matches": 127,
-      "mean_matches": 34.47,
-      "median_matches": 30.0,
-      "misses": 19
+      "mean_matches": 34.72,
+      "median_matches": 30.5,
+      "misses": 18
     },
     "narrowest_oracle": {
       "control_hit_pct": 8.62,
-      "hit_pct": 67.24,
-      "hits": 39,
-      "lift_over_control": 58.62,
+      "hit_pct": 68.97,
+      "hits": 40,
+      "lift_over_control": 60.35,
       "max_matches": 46,
-      "mean_matches": 7.08,
-      "median_matches": 2,
-      "misses": 19
+      "mean_matches": 6.92,
+      "median_matches": 2.0,
+      "misses": 18
     },
     "stemmed": {
       "control_hit_pct": 17.24,
-      "hit_pct": 74.14,
-      "hits": 43,
-      "lift_over_control": 56.9,
+      "hit_pct": 75.86,
+      "hits": 44,
+      "lift_over_control": 58.62,
       "max_matches": 214,
-      "mean_matches": 57.09,
+      "mean_matches": 57.38,
       "median_matches": 44.5,
-      "misses": 15
+      "misses": 14
     },
     "verbatim_phrases": {
       "control_hit_pct": 0.0,

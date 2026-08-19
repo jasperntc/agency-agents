@@ -162,6 +162,12 @@ def sample(cases: list[dict], n: int) -> list[dict]:
 
     buckets: dict[str, list[dict]] = {}
     for case in sorted(cases, key=lambda c: c["case"]):
+        # A case with no expected agent has no division, so it cannot take part
+        # in a sample stratified BY division -- it is excluded rather than
+        # bucketed under "?", which would both crash on expect[0] and let a
+        # corpus-gap case displace a real division from a small pilot.
+        if not case["expect"]:
+            continue
         buckets.setdefault(division_of.get(case["expect"][0], "?"), []).append(case)
 
     picked: list[dict] = []

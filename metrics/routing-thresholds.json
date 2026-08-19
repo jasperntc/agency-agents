@@ -4,9 +4,9 @@
   "known_bad_does_not_separate": {
     "_note": "Recorded because a threshold file that silently omitted this would imply a calibration that was never done. Re-measured 2026-08-16 against the corrected benchmark -- these are absolute scores of old refs against TODAY's cases, so they move whenever a case moves. The finding is the EQUALITY of the last two rows, not their values.",
     "measured": {
-      "clean_head": {"literal_reachability_pct": 65.52, "bag_lift": 56.9, "bag_control_pct": 8.62},
-      "merge_base_459dce8": {"literal_reachability_pct": 63.79, "bag_lift": 56.89, "bag_control_pct": 6.9},
-      "archive_fable_upgrade": {"literal_reachability_pct": 63.79, "bag_lift": 56.89, "bag_control_pct": 6.9}
+      "clean_head": {"literal_reachability_pct": 70.18, "bag_lift": 60.35, "bag_control_pct": 8.62},
+      "merge_base_459dce8": {"literal_reachability_pct": 64.91, "bag_lift": 56.89, "bag_control_pct": 6.9},
+      "archive_fable_upgrade": {"literal_reachability_pct": 64.91, "bag_lift": 56.89, "bag_control_pct": 6.9}
     },
     "finding": "The Fable upgrade rewrote 263 of 264 agent bodies and moved nine corpus-diversity dimensions by up to +1442%. It moved every routing metric by exactly zero -- the known-bad ref and its own merge base are identical on all of them. Routing is computed from frontmatter descriptions; the upgrade rewrote bodies. The two instruments are blind to each other's failure mode, which is precisely why this project reports metrics individually and refuses an aggregate score.",
     "consequence": "Do not treat a passing routing gate as evidence the corpus is healthy, and do not treat a passing diversity gate as evidence routing works. See docs/routing-evaluation.md."
@@ -20,7 +20,7 @@
     },
     "literal_reachability.pct": {
       "min": 55.0,
-      "observed": 67.24,
+      "observed": 70.18,
       "rationale": "Share of tasks where some word the user typed appears in the right agent's index line. Falls if descriptions drift toward generic marketing language and stop naming the concrete problems they solve. Margin is wide because adding deliberately hard cases lowers this legitimately -- it guards against description rot, not against an honest benchmark getting harder.",
       "observation_history": [
         {"value": 67.24, "until": "2026-08-16", "why": "Included c046, which counted as reachable only because the word `every` appears in both `every morning` (task) and `every system` (the WRONG agent's description). Correcting c046's expectation removed that coincidence. The metric got lower and more honest at the same time, which is the direction a benchmark correction is supposed to be allowed to go."}
@@ -28,7 +28,7 @@
     },
     "strategies.bag.lift_over_control": {
       "min": 45.0,
-      "observed": 58.62,
+      "observed": 60.35,
       "rationale": "Hit rate minus the same query's score against the wrong agent. The one number that measures discrimination rather than match volume. Collapses toward zero if descriptions converge on shared vocabulary, which is the failure mode that would make the index useless while every individual description still reads well."
     },
     "negative_control.bag_hit_pct": {
