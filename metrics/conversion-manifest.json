@@ -22,7 +22,7 @@
   },
   "tools": {
     "aider": {
-      "CONVENTIONS.md": "1b45ea3d6c24f03d25a7b61033223deaf6599dddf03ff58f35d60a6dd54a2848"
+      "CONVENTIONS.md": "bbb88e11189756ffb99e1e031984e04dcb24004f9797067ab9e24c0e84b3862c"
     },
     "antigravity": {
       "agency-3d-scene-developer/SKILL.md": "e48edc2b70c85877a3940aec1da2b00f4a2cb44e650a325851a253fb60f2af5b",
@@ -39,7 +39,7 @@
       "agency-ai-data-remediation-engineer/SKILL.md": "c583732aef211ea04330df1eb1afeeba58fb89da09ea3a207fc80fd1c34fcf36",
       "agency-ai-engineer/SKILL.md": "6f7f6b2af21303b3337595e73125f0e1bec6b28cfd939efe9c55dbc45cca0923",
       "agency-ai-generated-code-security-auditor/SKILL.md": "d3a3dfb23d0d0722f881af48617577c185a49a4c4d3eb7d61bdeb0622f60232e",
-      "agency-analytics-reporter/SKILL.md": "d0f3ed0c7efc8e2bde523d4ed610e933f86cdf68eea3583b8173b41ee2406810",
+      "agency-analytics-reporter/SKILL.md": "aa5c845e3347da226ea44b5e2198dc370184d7198ba5c5dcc94b1ee4ad4c8992",
       "agency-anthropologist/SKILL.md": "2c672d660d047d5a435886487d33995eced1cca8b9b10570da525c4bc4f5b961",
       "agency-api-platform-engineer/SKILL.md": "7e5b732030d1deb8ea80b606f6f3c41ef19c4fb991235527b3a874f1cbef7e62",
       "agency-api-tester/SKILL.md": "6a3a3d6d71a3b33898d5d14828b76f032542fdea174201d82a4a6c58c8336a3c",
@@ -311,7 +311,7 @@
       "agents/ai-data-remediation-engineer.toml": "cb5a2176ec0d9bf899d6146f3f288ed05fcca96e23f295dde6f7321aea2dfefb",
       "agents/ai-engineer.toml": "f97d62e63a20c01ad879725250a38adbce719a66c03b89a06493259076073ad5",
       "agents/ai-generated-code-security-auditor.toml": "a2ed19652eb0d81a394344bb8fbe6b6c362b3f5654ab8ef64477aec95595cfb7",
-      "agents/analytics-reporter.toml": "0781f66674e03bc03e481de1aa8d0f2bb1aaa2f3c7e00155746d59fa46f0d298",
+      "agents/analytics-reporter.toml": "c3cf0078f85ce0e76da9d609a5f4e49db10e2279e9953c13a3e243030e129c5d",
       "agents/anthropologist.toml": "9f80ca52af0281b2d7dea679c6dfdf077b9c28ac5d7b36d1ff5b41652a8a4f20",
       "agents/api-platform-engineer.toml": "e5645137da4f831fec2446aede90a89d3c30c20b38f230159e4ac41c4840e6dd",
       "agents/api-tester.toml": "9e6e5addf754b2740b4bc8e4c87f01f245ce5f2e4150fc4a1d9b0e22c4646045",
@@ -583,7 +583,7 @@
       "rules/ai-data-remediation-engineer.mdc": "b688ae6806a824c00fad5389690de9352021ce06ceb1dbb8ceff08ae7b70480c",
       "rules/ai-engineer.mdc": "f2bd78f9d2ea5a01b40ec6d3656445d2c956f81939546d341218a424fbd735e1",
       "rules/ai-generated-code-security-auditor.mdc": "70c70ad8753b77ac76b24458f4151faee83487414a0efdee23c39ce2c8707163",
-      "rules/analytics-reporter.mdc": "a91d4c4e262fc1f6f23ff456f8b7ae03181da27ad1f1cd09681105dc3c212f20",
+      "rules/analytics-reporter.mdc": "4ab79f14eb38f62031089fe51c75706d18522df379763bb36b12d76a3d80b559",
       "rules/anthropologist.mdc": "0f611d6e7c7d681c88a86a9222e33ed9c9de2763c22d1a9a0fc848d9b1529545",
       "rules/api-platform-engineer.mdc": "6f926bc0e2ae503104b3c73c450b1ca977e13a63063300d156e4e7d999c2cde0",
       "rules/api-tester.mdc": "af6db01cc5c54870235fe47acc7f1851066566eb8006fa17528d1b940612e94e",
@@ -855,7 +855,7 @@
       "agents/ai-data-remediation-engineer.md": "d39e3c2dddf8813cf6c585ce763a3e277a025b92f1722262e9d2ce8cebb24863",
       "agents/ai-engineer.md": "2367287ffde115f7afcae4c785743df2bcf0b8e9f8d16d843d13b252dacd0c43",
       "agents/ai-generated-code-security-auditor.md": "899d9be0545638ebd794324babeffe016602769af44b6e1529a113ea995dd8c2",
-      "agents/analytics-reporter.md": "d6de19da78b31547a095532ef8b82066ac4c7fdd7556fc6548496f44288b11ca",
+      "agents/analytics-reporter.md": "b27f96f521d1c1f6db9e54bc8b7de309bc89e42456d5390d8326ad34316fa821",
       "agents/anthropologist.md": "da6522684d91e6c85d07526c6b60aadc9b94c9e383065921c44ba2a3129e7328",
       "agents/api-platform-engineer.md": "78af0742f76cb8a181144da4e910fee4994162938cab2ec3928f6ea8b8aa6166",
       "agents/api-tester.md": "474077251277d3846f0d12220c66554a4d8f216f97d1ba1268453f917010ac8f",
@@ -1114,7 +1114,7 @@
     },
     "hermes": {
       "agency-agents-router/__init__.py": "086e19aca4cb38418983d78b4c54cd9568875d00b1198c8ebd9865548b64121f",
-      "agency-agents-router/data/agents.json": "626387396257080be71f5be9af3d83d7e8f4544b44df30f7696c8947da301d65",
+      "agency-agents-router/data/agents.json": "9856c439659c9b102ad81d56c7b0d7fa7b36839e8757e0c8f997c5a1afe17645",
       "agency-agents-router/plugin.yaml": "79c441a8398be768e550e67adce25f32dc25552a586fbe5a3f726b3729ba0a37"
     },
     "kimi": {
@@ -1147,7 +1147,7 @@
       "ai-generated-code-security-auditor/agent.yaml": "1d0ab06631d0493b544435dd38eb5289f781895cd4b9be87c2a2bc15bf394c66",
       "ai-generated-code-security-auditor/system.md": "d4ac4ad715105fee2ff8df59a1e7487308601a143827243114c76df9ee2dae77",
       "analytics-reporter/agent.yaml": "b6bfc5a3b609d4f85e753d3ae9234f8a1ef574001b3c7db98943b99b379c2ca1",
-      "analytics-reporter/system.md": "a3ee5ab4d483b8be98f7c62b6cfb500f346e7de902c3efba0c18b4cb04ec7729",
+      "analytics-reporter/system.md": "4530b021ade92ac2c9fcef05923cdc84cc77ce791aca6b73cd8165dacee11d48",
       "anthropologist/agent.yaml": "86b75b5ce8c7c76a6b71c4219bc73c5484965ed0588d96086bd0c17d3dd1a99a",
       "anthropologist/system.md": "62d4fa6dba5185f27553c41350ce1987f7ee4303db6b4b2e56934610ebc6c04c",
       "api-platform-engineer/agent.yaml": "ab6f1d07dcf3a85ea567d568c895ba6bf4ebadcbe11903a24a0e8bef386e0b90",
@@ -2486,7 +2486,7 @@
       "agents/ai-data-remediation-engineer.md": "676a37869912baec30faec2bc4e8837f911849b78632abab8950645fdda6919a",
       "agents/ai-engineer.md": "c60e7191ac23e588f948bfae958328e5fed83f8be8a61901e8619fe61c116a2b",
       "agents/ai-generated-code-security-auditor.md": "b99fdeec49640605c46d322af429e5cb6e770fe0cdd6253bf5547cbda8f694a1",
-      "agents/analytics-reporter.md": "3b8a62f7867c3fc88d9f7c78250a0cec89aa4caad83fd71e30ce79ced26e98df",
+      "agents/analytics-reporter.md": "a4f311b48106cfc1c17a08b0e3a6718b38fa67596a9833c201a33f575185859a",
       "agents/anthropologist.md": "0cf64f663bf699924296eb3845f88c7fa5c876e66153a974dac813689481fee0",
       "agents/api-platform-engineer.md": "dcf42c94ee7448bec67938d47659b6c1cfdb8de969cd0fd9384a96174df5e6c6",
       "agents/api-tester.md": "b0f90fea7a5a9afe764f4ecc4c94b9217274a9546d1215e347f888c6c3a24857",
@@ -2758,7 +2758,7 @@
       "agency-ai-data-remediation-engineer/SKILL.md": "c583732aef211ea04330df1eb1afeeba58fb89da09ea3a207fc80fd1c34fcf36",
       "agency-ai-engineer/SKILL.md": "6f7f6b2af21303b3337595e73125f0e1bec6b28cfd939efe9c55dbc45cca0923",
       "agency-ai-generated-code-security-auditor/SKILL.md": "d3a3dfb23d0d0722f881af48617577c185a49a4c4d3eb7d61bdeb0622f60232e",
-      "agency-analytics-reporter/SKILL.md": "d0f3ed0c7efc8e2bde523d4ed610e933f86cdf68eea3583b8173b41ee2406810",
+      "agency-analytics-reporter/SKILL.md": "aa5c845e3347da226ea44b5e2198dc370184d7198ba5c5dcc94b1ee4ad4c8992",
       "agency-anthropologist/SKILL.md": "2c672d660d047d5a435886487d33995eced1cca8b9b10570da525c4bc4f5b961",
       "agency-api-platform-engineer/SKILL.md": "7e5b732030d1deb8ea80b606f6f3c41ef19c4fb991235527b3a874f1cbef7e62",
       "agency-api-tester/SKILL.md": "6a3a3d6d71a3b33898d5d14828b76f032542fdea174201d82a4a6c58c8336a3c",
@@ -3030,7 +3030,7 @@
       "agents/ai-data-remediation-engineer.md": "d39e3c2dddf8813cf6c585ce763a3e277a025b92f1722262e9d2ce8cebb24863",
       "agents/ai-engineer.md": "2367287ffde115f7afcae4c785743df2bcf0b8e9f8d16d843d13b252dacd0c43",
       "agents/ai-generated-code-security-auditor.md": "899d9be0545638ebd794324babeffe016602769af44b6e1529a113ea995dd8c2",
-      "agents/analytics-reporter.md": "d6de19da78b31547a095532ef8b82066ac4c7fdd7556fc6548496f44288b11ca",
+      "agents/analytics-reporter.md": "b27f96f521d1c1f6db9e54bc8b7de309bc89e42456d5390d8326ad34316fa821",
       "agents/anthropologist.md": "da6522684d91e6c85d07526c6b60aadc9b94c9e383065921c44ba2a3129e7328",
       "agents/api-platform-engineer.md": "78af0742f76cb8a181144da4e910fee4994162938cab2ec3928f6ea8b8aa6166",
       "agents/api-tester.md": "474077251277d3846f0d12220c66554a4d8f216f97d1ba1268453f917010ac8f",
@@ -3572,7 +3572,7 @@
       "prompts/ai-data-remediation-engineer.md": "1c430482062a5fb069c3c62bc72071759162409497ba744b27a913151b0496d6",
       "prompts/ai-engineer.md": "7a351eb1eeda653148da7b6cdde5c9535e11a5c9ae59bd0d5dc7099037be032e",
       "prompts/ai-generated-code-security-auditor.md": "d4ac4ad715105fee2ff8df59a1e7487308601a143827243114c76df9ee2dae77",
-      "prompts/analytics-reporter.md": "a3ee5ab4d483b8be98f7c62b6cfb500f346e7de902c3efba0c18b4cb04ec7729",
+      "prompts/analytics-reporter.md": "4530b021ade92ac2c9fcef05923cdc84cc77ce791aca6b73cd8165dacee11d48",
       "prompts/anthropologist.md": "62d4fa6dba5185f27553c41350ce1987f7ee4303db6b4b2e56934610ebc6c04c",
       "prompts/api-platform-engineer.md": "0445a112a34b08e3ef4f4b5b6dbc0e11f6a146d37caf8d9cd33cf4128f36064d",
       "prompts/api-tester.md": "f308b3c7dec753266304ff0d89fe00e8a88362a76f6e8262e42521e58b9c88b2",
@@ -3830,7 +3830,7 @@
       "prompts/zk-steward.md": "dea52b9485c598d0fb1f1536802195492d66fcb035a6a6c71d6a9563938cc6fb"
     },
     "windsurf": {
-      ".windsurfrules": "d0342675e659dedc1717d561030a0232abaafb4b7eaf8c7d5a1af550261a06c0"
+      ".windsurfrules": "051061b7d4e32cd1f19846c1cf9e3bd10204c7d16d0e1bd7dd912a233ea27f05"
     },
     "zcode": {
       "agents/3d-scene-developer.md": "366762e8ea6ff65ea3970b971a6d8b6dcb60b286849e1a315c1ed0b8197adbc0",
@@ -3847,7 +3847,7 @@
       "agents/ai-data-remediation-engineer.md": "d39e3c2dddf8813cf6c585ce763a3e277a025b92f1722262e9d2ce8cebb24863",
       "agents/ai-engineer.md": "2367287ffde115f7afcae4c785743df2bcf0b8e9f8d16d843d13b252dacd0c43",
       "agents/ai-generated-code-security-auditor.md": "899d9be0545638ebd794324babeffe016602769af44b6e1529a113ea995dd8c2",
-      "agents/analytics-reporter.md": "d6de19da78b31547a095532ef8b82066ac4c7fdd7556fc6548496f44288b11ca",
+      "agents/analytics-reporter.md": "b27f96f521d1c1f6db9e54bc8b7de309bc89e42456d5390d8326ad34316fa821",
       "agents/anthropologist.md": "da6522684d91e6c85d07526c6b60aadc9b94c9e383065921c44ba2a3129e7328",
       "agents/api-platform-engineer.md": "78af0742f76cb8a181144da4e910fee4994162938cab2ec3928f6ea8b8aa6166",
       "agents/api-tester.md": "474077251277d3846f0d12220c66554a4d8f216f97d1ba1268453f917010ac8f",

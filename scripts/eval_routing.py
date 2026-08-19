@@ -331,7 +331,12 @@ def evaluate(cases: list[dict], entries: list[dict],
         stm = strategy_stemmed(task, entries)
         narrow = strategy_narrowest(task, entries, expect)
 
-        target = by_id.get(expect[0])
+        # An empty `expect` means the corpus has NO agent for this task and the
+        # correct answer is to decline. Such a case has no reachability question
+        # -- there is no target to reach -- so it is excluded from the literal
+        # reachability figure rather than counted as an unreachable miss, which
+        # would blame the index for a gap in the corpus.
+        target = by_id.get(expect[0]) if expect else None
         overlap = jaccard(
             set(content(task)),
             set(content(f"{target['name']} {target['description']}")) if target else set(),
@@ -339,6 +344,7 @@ def evaluate(cases: list[dict], entries: list[dict],
 
         rows.append({
             "case": case["case"],
+            "has_target": bool(expect),
             "kind": case.get("kind", "independent"),
             "expect": expect,
             "bag_hit": any(a in bag["matched"] for a in expect),
@@ -404,7 +410,11 @@ def build_report(ref: str | None = None) -> dict:
     for c in cases:
         by_kind[c.get("kind", "independent")] = by_kind.get(c.get("kind", "independent"), 0) + 1
 
-    unreachable = sorted(r["case"] for r in rows if not r["reachable"])
+    # Cases with no expected agent are excluded from reachability entirely: they
+    # ask whether the model correctly DECLINES, and there is no target to reach.
+    targeted = [r for r in rows if r.get("has_target", True)]
+    no_target = sorted(r["case"] for r in rows if not r.get("has_target", True))
+    unreachable = sorted(r["case"] for r in targeted if not r["reachable"])
     known_ids = {e["id"] for e in entries}
     unknown = sorted({a for c in cases for a in c["expect"] if a not in known_ids})
 
@@ -426,10 +436,12 @@ def build_report(ref: str | None = None) -> dict:
                       "into 'code review' before grepping, and the harness cannot. It "
                       "is the share of tasks where routing does NOT depend on that "
                       "translation, and the misses name exactly where it does."),
-            "pct": round(100.0 * sum(1 for r in rows if r["reachable"]) / len(rows), 2)
-            if rows else 0.0,
-            "reachable": sum(1 for r in rows if r["reachable"]),
+            "pct": round(100.0 * sum(1 for r in targeted if r["reachable"])
+                         / len(targeted), 2) if targeted else 0.0,
+            "reachable": sum(1 for r in targeted if r["reachable"]),
+            "scored_cases": len(targeted),
             "requires_expansion": unreachable,
+            "no_expected_agent": no_target,
         },
         "strategies": {
             "_note": ("Recall is identical for bag and narrowest_oracle by "
@@ -592,7 +604,11 @@ def main() -> int:
           f"Cases: {report['cases']['total']} {report['cases']['by_kind']}")
     print(f"\nLiteral reachability: {report['literal_reachability']['pct']}%  "
           f"({report['literal_reachability']['reachable']}/"
-          f"{report['cases']['total']} tasks share a word with the right agent)")
+          f"{report['literal_reachability']['scored_cases']} tasks share a word "
+          f"with the right agent)")
+    if report["literal_reachability"]["no_expected_agent"]:
+        print(f"  excluded, no agent in the corpus fits: "
+              f"{' '.join(report['literal_reachability']['no_expected_agent'])}")
 
     print(f"\n{'query':<22}{'hit%':>8}{'control%':>10}{'lift':>8}"
           f"{'median noise':>14}{'max noise':>11}")

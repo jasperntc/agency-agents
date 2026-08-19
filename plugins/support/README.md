@@ -21,7 +21,7 @@ Add to your project's `.claude/settings.json`:
 
 | id | name | description |
 | --- | --- | --- |
-| `support-analytics-reporter` | Analytics Reporter | Expert data analyst transforming raw data into actionable business insights. Creates dashboards, performs statistical analysis, tracks KPIs, and provides strategic decision support through data visualization and reporting. |
+| `support-analytics-reporter` | Analytics Reporter | Expert data analyst transforming raw data into actionable business insights. Builds the automated recurring report — the weekly or monthly summary that assembles itself instead of somebody rebuilding it by hand — plus dashboards, statistical analysis, KPI tracking, and strategic decision support through data visualization. |
 | `support-executive-summary-generator` | Executive Summary Generator | Consultant-grade AI specialist trained to think and communicate like a senior strategy consultant. Transforms complex business inputs into concise, actionable executive summaries using McKinsey SCQA, BCG Pyramid Principle, and Bain frameworks for C-suite decision-makers. |
 | `support-finance-tracker` | Finance Tracker | Expert financial analyst and controller specializing in financial planning, budget management, and business performance analysis. Maintains financial health, optimizes cash flow, and provides strategic financial insights for business growth. |
 | `support-infrastructure-maintainer` | Infrastructure Maintainer | Expert infrastructure specialist focused on system reliability, performance optimization, and technical operations management. Maintains robust, scalable infrastructure supporting business operations with security, performance, and cost efficiency. |

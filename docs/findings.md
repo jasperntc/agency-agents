@@ -18,7 +18,7 @@ links to the full account, including the parts that went wrong.
 
 | axis | what it asks | verdict |
 |---|---|---|
-| **Selection** | does a model pick the right specialist? | **yes** — 100% on 58 blind cases |
+| **Selection** | does a model pick the right specialist? | **yes** — 98.28% on 58 blind cases |
 | **Diagnosis** | does the agent file help find a defect? | **no measurable effect** — 36 blind subagents |
 | **Construction** | does the agent file help write the code? | **no measurable effect** — 18 blind subagents |
 
@@ -30,10 +30,10 @@ links to the full account, including the parts that went wrong.
 
 [selection-evaluation.md](selection-evaluation.md)
 
-58 blind cases, one model, no access to the answer. **100% accuracy.**
+58 blind cases, one model, no access to the answer. **98.28% accuracy.**
 
 The figure worth keeping is not the accuracy, which is a ceiling and should be
-read as one. It is **literal reachability: 67.24%**. Only about two thirds of
+read as one. It is **literal reachability: 70.18%**. Only about two thirds of
 realistic tasks share even one word with the correct specialist's index line.
 The other third are reachable only if the request is first translated into the
 field's own vocabulary — *"second pair of eyes on this pull request"* →
@@ -45,58 +45,65 @@ project.
 
 ---
 
-## The first positive result: reachability is load-bearing below Opus
+## The Sonnet arm: suggestive, and smaller than it first looked
 
-Every null above was measured on `claude-opus-5`. The obvious objection — that
-the base model is simply strong enough not to need help — was stated in *What is
-NOT claimed* and left untested. It has now been tested.
-
-**27 blind Sonnet subagents**, deliberately split: all **19** cases literal
-search cannot reach, where a correct pick *requires* translating the request
-into the field's vocabulary, plus **8 reachable controls** so a miss can be
-attributed to translation rather than to the model being weaker everywhere.
+Every null above was measured on `claude-opus-5`, and the obvious objection —
+that the base model is simply strong enough not to need help — was stated as
+untested. It has now been tested on **27 blind Sonnet subagents**: all the cases
+literal search cannot reach, where a correct pick *requires* translating the
+request into the field's vocabulary, plus **8 reachable controls** so a miss can
+be attributed to translation rather than to the model being weaker everywhere.
 
 | | `claude-opus-5` | `claude-sonnet-5` |
 |---|---:|---:|
 | reachable (control) | — | **8/8 (100%)** |
-| unreachable (needs translation) | **19/19 (100%)** | **15/19 (78.95%)** |
+| unreachable (needs translation) | **17/17 (100%)** | **15/17 (88.24%)** |
 
-**Sonnet is perfect on every case where the description shares a word with the
-task, and loses a fifth of the cases where it has to translate.** The failure is
-entirely concentrated in the cases reachability governs. That is the cleanest
-result this project has produced, and the first one where an intervention has a
-measurable payoff.
+**The control is perfect and every miss is an unreachable case.** That part is
+clean: Sonnet matches Opus wherever the description shares a word with the task.
 
-### The four misses, audited rather than counted
+### The audit cut the effect roughly in half, including against my own reading
 
-A result that confirms the hypothesis is the one to distrust, so each was
-checked against the expected agent's own description:
+First reported as 15/19 against 19/19 — a 21-point gap. Auditing each miss
+against the agent's own file rather than its expectation label changed two of
+them, and the corrected gap is **two cases**, both arguable:
 
-| case | expected | picked | verdict |
-|---|---|---|---|
-| c038 stormwater drainage | `specialized-civil-engineer` | NONE | **description gap** — it advertises structural analysis and geotechnical design, never hydrology or drainage |
-| c050 weekly product summary | `support-analytics-reporter` | NONE | **description gap** — it advertises dashboards and KPIs, never a recurring written summary |
-| c044 decks, blues and fonts | `design-brand-guardian` | `design-ui-designer` | genuine near-miss; the task says *decks*, which is brand territory rather than UI |
-| c046 manual copying between tools | `testing-workflow-optimizer` | `automation-governance-architect` | genuinely ambiguous — two agents overlap heavily here |
+| case | what happened | verdict |
+|---|---|---|
+| c038 stormwater | Sonnet declined; Opus picked a structural engineer | **Sonnet was right.** No agent in the corpus sizes drainage. The benchmark was scoring the wrong answer as correct — see below. |
+| c050 weekly summary | Sonnet declined | **real description gap**, now fixed. The pick predates the fix, so the run's cross-tab is marked advisory until re-run. |
+| c044 decks and fonts | picked `design-ui-designer` over `design-brand-guardian` | defensible; the task says *decks*, which is brand territory, but it is a judgement call |
+| c046 manual copying | picked `automation-governance-architect` over `testing-workflow-optimizer` | **corpus overlap**, not a routing failure — two agents claim the same job |
 
-Two are description defects and two are benchmark or corpus ambiguity. Counting
-only the two unambiguous declines still leaves Sonnet at 17/19 against Opus's
-19/19, so the conclusion survives the least favourable reading.
+So the honest statement is: **suggestive, not conclusive.** One sample per cell,
+and the surviving difference is two cases where the "wrong" pick is defensible.
+It is consistent with reachability mattering more for weaker models, and it is
+nowhere near enough to prove it.
 
-### What this changes
+### The benchmark punished the behaviour the skill instructs
 
-The corpus is not uniformly inert. **The description carries measurable value,
-and how much depends on the model.** For a strong model reachability is close to
-cosmetic — Opus translates its way to the right specialist every time. For a
-weaker one it is load-bearing, and improving it has a payoff that can be
-measured for free, with no model in the loop.
+Scoring was `correct = chosen in case["expect"]`, so declining could never be
+correct — while SKILL.md tells the model *"if nothing matches well, say so"* and
+*"a poorly fitting specialist is worse than none."*
 
-Tuning one description moved reachability 65.52% → 67.24% and cost ten minutes.
-Nineteen cases remain. The constraint on doing them is in
-[selection-evaluation.md](selection-evaluation.md): tuning descriptions toward
-the benchmark's own vocabulary raises `benchmark_leakage`, so the remaining
-cases must be tuned against held-out phrasings or the benchmark stops being
-independent evidence.
+On c038 Sonnet declined and was marked wrong. Opus searched twelve times,
+settled on a structural engineer who cannot size stormwater drainage, and was
+marked right. **The weaker model gave the better answer and lost for it.**
+
+An empty `expect` now means the corpus has no fit and declining is correct.
+Opus's headline drops from 58/58 to 57/58 as a result. A benchmark corrected
+until every failure disappears has stopped measuring; this correction runs the
+other way.
+
+### What it does and does not say
+
+It says the **description** carries value that varies with model strength, and
+that the instrument to find gaps is free.
+
+It does **not** say the agent files improve answers on Sonnet. Nothing here
+compares *with agent* against *without agent* — that is the diagnosis and
+construction work below, which is null and was run only on Opus. Whether the
+corpus helps a weaker model **produce better work** remains untested.
 
 ---
 

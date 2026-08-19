@@ -162,6 +162,12 @@ def sample(cases: list[dict], n: int) -> list[dict]:
 
     buckets: dict[str, list[dict]] = {}
     for case in sorted(cases, key=lambda c: c["case"]):
+        # A case with no expected agent has no division, so it cannot take part
+        # in a sample stratified BY division -- it is excluded rather than
+        # bucketed under "?", which would both crash on expect[0] and let a
+        # corpus-gap case displace a real division from a small pilot.
+        if not case["expect"]:
+            continue
         buckets.setdefault(division_of.get(case["expect"][0], "?"), []).append(case)
 
     picked: list[dict] = []
@@ -276,10 +282,20 @@ def score_run(run: dict, cases: list[dict], reachable: dict[str, bool],
             continue
         pick = picks[cid]
         chosen = pick.get("agent")
-        correct = chosen in case["expect"]
+        declined = chosen in (None, "NONE")
+
+        # An empty `expect` means the corpus has NO agent for this task, so
+        # declining IS the right answer. Without this the benchmark punished the
+        # exact behaviour SKILL.md instructs -- "if nothing matches well, say
+        # so", "a poorly fitting specialist is worse than none" -- and there was
+        # no way for any answer to score correct. Found on c038, where the
+        # corpus has no stormwater engineer: the weaker model declined and was
+        # marked wrong, while the stronger one searched twelve times, settled on
+        # a structural engineer who cannot size drainage, and was marked right.
+        correct = declined if not case["expect"] else chosen in case["expect"]
         reach = reachable.get(cid, False)
 
-        if chosen in (None, "NONE"):
+        if declined:
             cell = None  # an honest miss is not scored as a wrong pick
         elif correct:
             cell = "reachable_correct" if reach else "translated"

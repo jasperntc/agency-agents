@@ -187,10 +187,18 @@ class Scoring(unittest.TestCase):
                 f"{run['run']}: cells plus declines do not cover the run")
 
     def test_accuracy_matches_the_cells(self):
-        """The headline number is not computed independently of the breakdown."""
+        """The headline number is not computed independently of the breakdown.
+
+        Correct DECLINES sit outside the four cells on purpose -- a case with no
+        expected agent has no reachability, so it belongs in neither column --
+        so they are added back here explicitly rather than by widening a cell.
+        """
+        by_id = {c["case"]: c for c in es.load_cases()}
         for run in self.report["runs"]:
             c = run["outcome_cells"]
             correct = len(c["reachable_correct"]) + len(c["translated"])
+            correct += sum(1 for cid in run["declined"]
+                           if cid in by_id and not by_id[cid]["expect"])
             self.assertEqual(
                 round(100.0 * correct / run["cases_scored"], 2),
                 run["accuracy_pct"], run["run"])

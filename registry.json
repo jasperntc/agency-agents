@@ -5934,10 +5934,10 @@
     },
     {
       "body_words": 1763,
-      "byte_count": 15828,
+      "byte_count": 15934,
       "color": "teal",
-      "content_hash": "55c70e4a6009214d56959a030e0e4b955b17cc57a333cdefa091ba96d349346a",
-      "description": "Expert data analyst transforming raw data into actionable business insights. Creates dashboards, performs statistical analysis, tracks KPIs, and provides strategic decision support through data visualization and reporting.",
+      "content_hash": "0a4b2fb8a12348a84ef6d773c47b85200cf78873559459ff09ec4c9eb3971679",
+      "description": "Expert data analyst transforming raw data into actionable business insights. Builds the automated recurring report — the weekly or monthly summary that assembles itself instead of somebody rebuilding it by hand — plus dashboards, statistical analysis, KPI tracking, and strategic decision support through data visualization.",
       "division": "support",
       "emoji": "📊",
       "id": "support-analytics-reporter",
@@ -5949,9 +5949,9 @@
       "name": "Analytics Reporter",
       "path": "support/support-analytics-reporter.md",
       "provenance": {
-        "commits": 4,
+        "commits": 5,
         "created": "2025-10-13T07:17:29-05:00",
-        "last_modified": "2026-08-15T00:27:07+08:00"
+        "last_modified": "2026-08-19T18:21:57+08:00"
       },
       "vibe": "Transforms raw data into the insights that drive your next decision."
     },

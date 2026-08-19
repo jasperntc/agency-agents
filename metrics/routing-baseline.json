@@ -4,7 +4,7 @@
     "_note": "Token overlap between each case and its expected agent's index line. This is a property of the BENCHMARK, not of routing. If it rises, the cases are being written in the agents' own vocabulary and the scores above stop meaning anything.",
     "cases_over_0_25": [],
     "max_overlap": 0.125,
-    "mean_overlap": 0.0228,
+    "mean_overlap": 0.0236,
     "median_overlap": 0.0286
   },
   "cases": {
@@ -21,8 +21,11 @@
   },
   "literal_reachability": {
     "_note": "Share of cases where SOME word the user actually typed appears in the right agent's index line. This is not a ceiling on routing accuracy -- a model can translate 'second pair of eyes' into 'code review' before grepping, and the harness cannot. It is the share of tasks where routing does NOT depend on that translation, and the misses name exactly where it does.",
-    "pct": 67.24,
-    "reachable": 39,
+    "no_expected_agent": [
+      "c038"
+    ],
+    "pct": 70.18,
+    "reachable": 40,
     "requires_expansion": [
       "c002",
       "c007",
@@ -35,15 +38,14 @@
       "c026",
       "c033",
       "c037",
-      "c038",
       "c041",
       "c042",
       "c044",
       "c046",
       "c049",
-      "c050",
       "c053"
-    ]
+    ],
+    "scored_cases": 57
   },
   "morphology_headroom": {
     "_note": "Cases the plain word bag misses but stemming reaches. These fail on word endings alone, not on domain vocabulary, and the fix is one sentence of guidance: grep the stem. Everything still missing after stemming is a genuine semantic gap.",
@@ -68,8 +70,7 @@
       "c042",
       "c044",
       "c046",
-      "c049",
-      "c050"
+      "c049"
     ]
   },
   "negative_control": {
@@ -88,6 +89,7 @@
       "expect": [
         "gis-cartography-designer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 18,
       "narrowest_query": "map",
@@ -105,6 +107,7 @@
       "expect": [
         "marketing-app-store-optimizer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -122,6 +125,7 @@
       "expect": [
         "engineering-database-optimizer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "postgres",
@@ -133,18 +137,19 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 28,
+      "bag_matches": 29,
       "case": "c004",
       "description_overlap": 0.0909,
       "expect": [
         "security-penetration-tester"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "exactly",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 74,
+      "stemmed_matches": 75,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -157,6 +162,7 @@
         "testing-accessibility-auditor",
         "engineering-section-508-specialist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "against\\s+wcag",
@@ -174,6 +180,7 @@
       "expect": [
         "engineering-i18n-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "layout",
@@ -191,6 +198,7 @@
       "expect": [
         "finance-tax-strategist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -208,6 +216,7 @@
       "expect": [
         "legal-document-review"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "agreements",
@@ -225,6 +234,7 @@
       "expect": [
         "narrative-designer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "branching",
@@ -244,6 +254,7 @@
         "godot-shader-developer",
         "unity-shader-graph-artist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 5,
       "narrowest_query": "effect",
@@ -255,18 +266,19 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 32,
+      "bag_matches": 33,
       "case": "c011",
       "description_overlap": 0.0,
       "expect": [
         "engineering-payments-billing-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 49,
+      "stemmed_matches": 50,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -278,12 +290,13 @@
       "expect": [
         "security-secrets-credential-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 8,
       "narrowest_query": "found",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 28,
+      "stemmed_matches": 29,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -295,6 +308,7 @@
       "expect": [
         "product-feedback-synthesizer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -312,6 +326,7 @@
       "expect": [
         "engineering-sre"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -329,6 +344,7 @@
       "expect": [
         "marketing-seo-specialist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -340,19 +356,20 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 27,
+      "bag_matches": 28,
       "case": "c016",
       "description_overlap": 0.05,
       "expect": [
         "paid-media-ppc-strategist",
         "paid-media-auditor"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "google\\s+ads",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 35,
+      "stemmed_matches": 36,
       "verbatim_phrase_hit": true,
       "verbatim_phrase_matches": 2
     },
@@ -364,12 +381,13 @@
       "expect": [
         "hr-onboarding"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 4,
       "narrowest_query": "new",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 58,
+      "stemmed_matches": 59,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -381,6 +399,7 @@
       "expect": [
         "engineering-frontend-developer"
       ],
+      "has_target": true,
       "kind": "adversarial",
       "narrowest_matches": 3,
       "narrowest_query": "react",
@@ -398,6 +417,7 @@
       "expect": [
         "engineering-webassembly-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "c\\+\\+",
@@ -415,6 +435,7 @@
       "expect": [
         "gis-spatial-data-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 29,
       "narrowest_query": "pipeline",
@@ -432,12 +453,13 @@
       "expect": [
         "engineering-embedded-firmware-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 24,
+      "stemmed_matches": 25,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -449,6 +471,7 @@
       "expect": [
         "sales-discovery-coach"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -460,35 +483,37 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 10,
+      "bag_matches": 11,
       "case": "c023",
       "description_overlap": 0.0333,
       "expect": [
         "specialized-pricing-analyst"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 5,
       "narrowest_query": "cost",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 11,
+      "stemmed_matches": 12,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
     {
       "bag_hit": true,
-      "bag_matches": 50,
+      "bag_matches": 51,
       "case": "c024",
       "description_overlap": 0.0312,
       "expect": [
         "engineering-incident-response-commander"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 11,
       "narrowest_query": "production",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 66,
+      "stemmed_matches": 67,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -500,6 +525,7 @@
       "expect": [
         "security-compliance-auditor"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "soc\\s+2",
@@ -517,6 +543,7 @@
       "expect": [
         "testing-performance-benchmarker"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -528,18 +555,19 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 85,
+      "bag_matches": 86,
       "case": "c027",
       "description_overlap": 0.0,
       "expect": [
         "design-ux-researcher"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 8,
       "narrowest_query": "find",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 112,
+      "stemmed_matches": 113,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -551,6 +579,7 @@
       "expect": [
         "engineering-rag-pipeline-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "retrieval",
@@ -568,6 +597,7 @@
       "expect": [
         "specialized-mcp-builder"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 11,
       "narrowest_query": "tool",
@@ -585,6 +615,7 @@
       "expect": [
         "unity-multiplayer-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 6,
       "narrowest_query": "player",
@@ -602,6 +633,7 @@
       "expect": [
         "level-designer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 22,
       "narrowest_query": "game",
@@ -613,18 +645,19 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 25,
+      "bag_matches": 26,
       "case": "c032",
       "description_overlap": 0.037,
       "expect": [
         "economy-designer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "currency",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 29,
+      "stemmed_matches": 30,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -636,6 +669,7 @@
       "expect": [
         "marketing-email-strategist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -653,6 +687,7 @@
       "expect": [
         "engineering-technical-writer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "api\\s+reference",
@@ -670,6 +705,7 @@
       "expect": [
         "specialized-salesforce-architect"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "salesforce",
@@ -681,18 +717,19 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 23,
+      "bag_matches": 24,
       "case": "c036",
       "description_overlap": 0.0303,
       "expect": [
         "finance-fpa-analyst"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "rolling",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 28,
+      "stemmed_matches": 29,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -704,6 +741,7 @@
       "expect": [
         "engineering-network-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -718,9 +756,8 @@
       "bag_matches": 10,
       "case": "c038",
       "description_overlap": 0.0,
-      "expect": [
-        "specialized-civil-engineer"
-      ],
+      "expect": [],
+      "has_target": false,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -732,18 +769,19 @@
     },
     {
       "bag_hit": true,
-      "bag_matches": 6,
+      "bag_matches": 7,
       "case": "c039",
       "description_overlap": 0.0357,
       "expect": [
         "gis-geoai-ml-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "satellite",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 6,
+      "stemmed_matches": 7,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -755,6 +793,7 @@
       "expect": [
         "healthcare-clinical-evidence-agent"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 8,
       "narrowest_query": "evidence",
@@ -772,6 +811,7 @@
       "expect": [
         "engineering-code-reviewer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -783,18 +823,19 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 5,
+      "bag_matches": 6,
       "case": "c042",
       "description_overlap": 0.0,
       "expect": [
         "project-management-meeting-notes-specialist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 63,
+      "stemmed_matches": 64,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -807,6 +848,7 @@
         "marketing-tiktok-strategist",
         "marketing-short-video-editing-coach"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 4,
       "narrowest_query": "short",
@@ -824,6 +866,7 @@
       "expect": [
         "design-brand-guardian"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -841,6 +884,7 @@
       "expect": [
         "engineering-git-workflow-master"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 2,
       "narrowest_query": "branching",
@@ -852,29 +896,31 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 15,
+      "bag_matches": 16,
       "case": "c046",
       "description_overlap": 0.0,
       "expect": [
         "testing-workflow-optimizer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": false,
-      "stemmed_matches": 21,
+      "stemmed_matches": 22,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
     {
       "bag_hit": true,
-      "bag_matches": 36,
+      "bag_matches": 37,
       "case": "c047",
       "description_overlap": 0.0,
       "expect": [
         "testing-test-automation-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 15,
       "narrowest_query": "testing",
@@ -893,6 +939,7 @@
         "engineering-privacy-engineer",
         "data-privacy-officer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 46,
       "narrowest_query": "data",
@@ -910,6 +957,7 @@
       "expect": [
         "sales-proposal-strategist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
@@ -920,37 +968,39 @@
       "verbatim_phrase_matches": 0
     },
     {
-      "bag_hit": false,
-      "bag_matches": 40,
+      "bag_hit": true,
+      "bag_matches": 41,
       "case": "c050",
-      "description_overlap": 0.0,
+      "description_overlap": 0.0513,
       "expect": [
         "support-analytics-reporter"
       ],
+      "has_target": true,
       "kind": "independent",
-      "narrowest_matches": 0,
-      "narrowest_query": null,
-      "reachable": false,
-      "stemmed_hit": false,
-      "stemmed_matches": 40,
+      "narrowest_matches": 1,
+      "narrowest_query": "assemble",
+      "reachable": true,
+      "stemmed_hit": true,
+      "stemmed_matches": 41,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
     {
       "bag_hit": true,
-      "bag_matches": 67,
+      "bag_matches": 68,
       "case": "c051",
       "description_overlap": 0.0,
       "expect": [
         "xr-immersive-developer",
         "xr-cockpit-interaction-specialist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 39,
       "narrowest_query": "app",
       "reachable": true,
       "stemmed_hit": true,
-      "stemmed_matches": 90,
+      "stemmed_matches": 91,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -962,6 +1012,7 @@
       "expect": [
         "engineering-solidity-smart-contract-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 3,
       "narrowest_query": "chain",
@@ -973,18 +1024,19 @@
     },
     {
       "bag_hit": false,
-      "bag_matches": 9,
+      "bag_matches": 10,
       "case": "c053",
       "description_overlap": 0.0,
       "expect": [
         "recruitment-specialist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 0,
       "narrowest_query": null,
       "reachable": false,
       "stemmed_hit": true,
-      "stemmed_matches": 12,
+      "stemmed_matches": 13,
       "verbatim_phrase_hit": false,
       "verbatim_phrase_matches": 0
     },
@@ -996,6 +1048,7 @@
       "expect": [
         "engineering-minimal-change-engineer"
       ],
+      "has_target": true,
       "kind": "adversarial",
       "narrowest_matches": 2,
       "narrowest_query": "diff",
@@ -1013,6 +1066,7 @@
       "expect": [
         "marketing-xiaohongshu-specialist"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "lifestyle",
@@ -1030,6 +1084,7 @@
       "expect": [
         "engineering-drupal-performance"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 3,
       "narrowest_query": "page",
@@ -1048,6 +1103,7 @@
         "specialized-codebase-archaeologist",
         "engineering-codebase-onboarding-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "understand",
@@ -1066,6 +1122,7 @@
         "testing-tool-evaluator",
         "testing-test-automation-engineer"
       ],
+      "has_target": true,
       "kind": "independent",
       "narrowest_matches": 1,
       "narrowest_query": "cypress",
@@ -1080,33 +1137,33 @@
     "_note": "Recall is identical for bag and narrowest_oracle by construction: a phrase can only match a line whose text contains its first word, so anything a narrow query finds the word soup finds too. The pair differ only in NOISE, and that difference is the entire argument for searching narrowly. verbatim_phrases is NOT a strategy evaluation -- see the docstring of strategy_phrases().",
     "bag": {
       "control_hit_pct": 8.62,
-      "hit_pct": 67.24,
-      "hits": 39,
-      "lift_over_control": 58.62,
+      "hit_pct": 68.97,
+      "hits": 40,
+      "lift_over_control": 60.35,
       "max_matches": 127,
-      "mean_matches": 34.47,
-      "median_matches": 30.0,
-      "misses": 19
+      "mean_matches": 34.72,
+      "median_matches": 30.5,
+      "misses": 18
     },
     "narrowest_oracle": {
       "control_hit_pct": 8.62,
-      "hit_pct": 67.24,
-      "hits": 39,
-      "lift_over_control": 58.62,
+      "hit_pct": 68.97,
+      "hits": 40,
+      "lift_over_control": 60.35,
       "max_matches": 46,
-      "mean_matches": 7.08,
-      "median_matches": 2,
-      "misses": 19
+      "mean_matches": 6.92,
+      "median_matches": 2.0,
+      "misses": 18
     },
     "stemmed": {
       "control_hit_pct": 17.24,
-      "hit_pct": 74.14,
-      "hits": 43,
-      "lift_over_control": 56.9,
+      "hit_pct": 75.86,
+      "hits": 44,
+      "lift_over_control": 58.62,
       "max_matches": 214,
-      "mean_matches": 57.09,
+      "mean_matches": 57.38,
       "median_matches": 44.5,
-      "misses": 15
+      "misses": 14
     },
     "verbatim_phrases": {
       "control_hit_pct": 0.0,

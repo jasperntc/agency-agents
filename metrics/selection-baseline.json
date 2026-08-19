@@ -4,18 +4,18 @@
     "tasks_sha256": "49fcf1d9018cc22a64f816f96dcc39f95f0a26761f504ca386d22df9b0e8233e",
     "total": 58
   },
-  "corpus_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
-  "literal_reachability_pct": 67.24,
+  "corpus_sha256": "2a553fc41cff1c31d365af187248c0c15902af6e8fded0988dc3305b485e6033",
+  "literal_reachability_pct": 70.18,
   "runs": [
     {
-      "accuracy_pct": 100.0,
-      "accuracy_when_answered_pct": 100.0,
+      "accuracy_pct": 98.28,
+      "accuracy_when_answered_pct": 98.28,
       "cases_missing": [],
       "cases_scored": 58,
       "corpus": {
         "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
         "cross_tab_is_current": false,
-        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "current_sha256": "2a553fc41cff1c31d365af187248c0c15902af6e8fded0988dc3305b485e6033",
         "recorded_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f"
       },
       "declined": [],
@@ -60,6 +60,7 @@
           "c045",
           "c047",
           "c048",
+          "c050",
           "c051",
           "c052",
           "c054",
@@ -68,7 +69,9 @@
           "c057",
           "c058"
         ],
-        "reachable_wrong": [],
+        "reachable_wrong": [
+          "c038"
+        ],
         "translated": [
           "c002",
           "c007",
@@ -81,13 +84,11 @@
           "c026",
           "c033",
           "c037",
-          "c038",
           "c041",
           "c042",
           "c044",
           "c046",
           "c049",
-          "c050",
           "c053"
         ]
       },
@@ -634,11 +635,9 @@
         },
         {
           "case": "c038",
-          "correct": true,
-          "expect": [
-            "specialized-civil-engineer"
-          ],
-          "literally_reachable": false,
+          "correct": false,
+          "expect": [],
+          "literally_reachable": true,
           "picked": "specialized-civil-engineer",
           "queries": [
             "stormwater",
@@ -829,7 +828,7 @@
           "expect": [
             "support-analytics-reporter"
           ],
-          "literally_reachable": false,
+          "literally_reachable": true,
           "picked": "support-analytics-reporter",
           "queries": [
             "report automation",
@@ -974,9 +973,9 @@
       "scope": "full",
       "translation": {
         "_note": "The cell scripts/eval_routing.py cannot measure. These cases share no word with the right agent's index line, so a correct pick means the model translated the task into the field's vocabulary before searching -- which is exactly what the router skill instructs.",
-        "recovered": 19,
+        "recovered": 17,
         "recovery_pct": 100.0,
-        "unreachable_cases": 19
+        "unreachable_cases": 17
       }
     },
     {
@@ -1031,7 +1030,7 @@
       "corpus": {
         "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
         "cross_tab_is_current": false,
-        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "current_sha256": "2a553fc41cff1c31d365af187248c0c15902af6e8fded0988dc3305b485e6033",
         "recorded_sha256": "d1aa2ad6bc6d06005db882a93e0b2db020e765549b6f14fb8f96773cba6fcc7f"
       },
       "declined": [],
@@ -1052,6 +1051,7 @@
           "c016",
           "c027",
           "c040",
+          "c050",
           "c051"
         ],
         "reachable_wrong": [],
@@ -1060,8 +1060,7 @@
           "c007",
           "c013",
           "c022",
-          "c042",
-          "c050"
+          "c042"
         ]
       },
       "per_case": [
@@ -1261,7 +1260,7 @@
           "expect": [
             "support-analytics-reporter"
           ],
-          "literally_reachable": false,
+          "literally_reachable": true,
           "picked": "support-analytics-reporter",
           "queries": [
             "report automation",
@@ -1304,14 +1303,14 @@
       "scope": "pilot-15",
       "translation": {
         "_note": "The cell scripts/eval_routing.py cannot measure. These cases share no word with the right agent's index line, so a correct pick means the model translated the task into the field's vocabulary before searching -- which is exactly what the router skill instructs.",
-        "recovered": 6,
+        "recovered": 5,
         "recovery_pct": 100.0,
-        "unreachable_cases": 6
+        "unreachable_cases": 5
       }
     },
     {
-      "accuracy_pct": 85.19,
-      "accuracy_when_answered_pct": 92.0,
+      "accuracy_pct": 88.89,
+      "accuracy_when_answered_pct": 96.0,
       "cases_missing": [
         "c003",
         "c004",
@@ -1347,9 +1346,9 @@
       ],
       "cases_scored": 27,
       "corpus": {
-        "_note": "Picks were collected against this exact index, so the cross-tab is authoritative.",
-        "cross_tab_is_current": true,
-        "current_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+        "_note": "`outcome_cells` and `translation` are computed against TODAY's index. When cross_tab_is_current is false the picks were made against a different corpus, so read those two as advisory -- accuracy still holds. Re-run the eval to make them authoritative again.",
+        "cross_tab_is_current": false,
+        "current_sha256": "2a553fc41cff1c31d365af187248c0c15902af6e8fded0988dc3305b485e6033",
         "recorded_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc"
       },
       "declined": [
@@ -1623,11 +1622,9 @@
         },
         {
           "case": "c038",
-          "correct": false,
-          "expect": [
-            "specialized-civil-engineer"
-          ],
-          "literally_reachable": false,
+          "correct": true,
+          "expect": [],
+          "literally_reachable": true,
           "picked": "NONE",
           "queries": [
             "stormwater|drainage|civil engineer|hydrology|hydraulic",
@@ -1727,7 +1724,7 @@
           "expect": [
             "support-analytics-reporter"
           ],
-          "literally_reachable": false,
+          "literally_reachable": true,
           "picked": "NONE",
           "queries": [
             "changelog|release notes|weekly|digest|status report|summary",
@@ -1769,8 +1766,8 @@
       "translation": {
         "_note": "The cell scripts/eval_routing.py cannot measure. These cases share no word with the right agent's index line, so a correct pick means the model translated the task into the field's vocabulary before searching -- which is exactly what the router skill instructs.",
         "recovered": 15,
-        "recovery_pct": 78.95,
-        "unreachable_cases": 19
+        "recovery_pct": 88.24,
+        "unreachable_cases": 17
       }
     }
   ]

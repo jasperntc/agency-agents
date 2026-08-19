@@ -83,7 +83,7 @@ right one, then load only that one.
 
 1. **Translate the task into the field's own words before searching.** Each line
    describes a specialist the way that specialist's field talks, which is
-   usually not how the user talks. Measured on a 58-task benchmark, only **67%
+   usually not how the user talks. Measured on a 58-task benchmark, only **70%
    of tasks share even one word** with the right specialist's line, and phrases
    lifted straight out of the user's sentence match anything only 7% of the
    time. Searching the user's words is the single most common way to miss.
