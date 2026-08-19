@@ -1,0 +1,239 @@
+{
+  "corpus_sha256": "4310ae142622cda3a8b1be021069588f641b0e28fec97bf05f1a439360feecbc",
+  "model": "claude-sonnet-5",
+  "notes": "SONNET ARM. A separate arm, not a continuation of the opus runs -- the harness stamps `model` per run so the two never blend. 27 cases rather than 58, chosen deliberately: all 19 that literal search cannot reach (where a correct pick REQUIRES translating the request into the field's vocabulary) plus 8 reachable controls, so a miss can be attributed to translation rather than to the model simply being weaker everywhere. One blind general-purpose subagent per case, model=sonnet, each given only the task text and a pointer to the shipped SKILL.md; none saw expect, why or kind. Picks extracted by pattern -- several prepended prose despite the two-line contract. tool_calls is an effort proxy.",
+  "picks": {
+    "c001": {
+      "agent": "gis-cartography-designer",
+      "queries": [
+        "label placement",
+        "color ramp",
+        "colour ramp"
+      ],
+      "tool_calls": 4
+    },
+    "c002": {
+      "agent": "marketing-app-store-optimizer",
+      "queries": [
+        "app store",
+        "ASO",
+        "screenshots title conversion"
+      ],
+      "tool_calls": 2
+    },
+    "c007": {
+      "agent": "finance-tax-strategist",
+      "queries": [
+        "tax",
+        "entity structure tax planning",
+        "expense timing tax deduction"
+      ],
+      "tool_calls": 4
+    },
+    "c008": {
+      "agent": "legal-document-review",
+      "queries": [
+        "contract",
+        "renewal",
+        "vendor agreement"
+      ],
+      "tool_calls": 5
+    },
+    "c011": {
+      "agent": "engineering-payments-billing-engineer",
+      "queries": [
+        "proration|usage-based|subscription billing|idempotent"
+      ],
+      "tool_calls": 4
+    },
+    "c013": {
+      "agent": "product-feedback-synthesizer",
+      "queries": [
+        "feedback"
+      ],
+      "tool_calls": 3
+    },
+    "c014": {
+      "agent": "engineering-sre",
+      "queries": [
+        "error budget"
+      ],
+      "tool_calls": 4
+    },
+    "c015": {
+      "agent": "marketing-seo-specialist",
+      "queries": [
+        "seo|indexing|search engine|crawl",
+        "technical SEO organic search growth"
+      ],
+      "tool_calls": 4
+    },
+    "c017": {
+      "agent": "hr-onboarding",
+      "queries": [
+        "onboard"
+      ],
+      "tool_calls": 4
+    },
+    "c021": {
+      "agent": "engineering-embedded-firmware-engineer",
+      "queries": [
+        "power consumption|low.power|battery life|embedded"
+      ],
+      "tool_calls": 5
+    },
+    "c022": {
+      "agent": "sales-discovery-coach",
+      "queries": [
+        "discovery call",
+        "sales"
+      ],
+      "tool_calls": 5
+    },
+    "c024": {
+      "agent": "engineering-incident-response-commander",
+      "queries": [
+        "post-mortem|incident",
+        "production incident review",
+        "incident coordination"
+      ],
+      "tool_calls": 5
+    },
+    "c026": {
+      "agent": "testing-performance-benchmarker",
+      "queries": [
+        "load test|capacity|concurrent|throughput|performance testing|stress test"
+      ],
+      "tool_calls": 4
+    },
+    "c030": {
+      "agent": "unity-multiplayer-engineer",
+      "queries": [
+        "unity",
+        "netcode",
+        "interpolation",
+        "multiplayer"
+      ],
+      "tool_calls": 5
+    },
+    "c033": {
+      "agent": "marketing-email-strategist",
+      "queries": [
+        "email",
+        "unsubscribe|deliverability|open rate",
+        "newsletter"
+      ],
+      "tool_calls": 6
+    },
+    "c036": {
+      "agent": "finance-fpa-analyst",
+      "queries": [
+        "rolling forecast|cash forecast|13-week|thirteen week|budget vs|variance analysis"
+      ],
+      "tool_calls": 5
+    },
+    "c037": {
+      "agent": "engineering-network-engineer",
+      "queries": [
+        "network",
+        "infrastructure",
+        "packet loss",
+        "datacent|data center|congestion|bandwidth"
+      ],
+      "tool_calls": 10
+    },
+    "c038": {
+      "agent": "NONE",
+      "queries": [
+        "stormwater|drainage|civil engineer|hydrology|hydraulic",
+        "| gis |",
+        "environmental engineer|site engineer|land development|flood|runoff|water resource"
+      ],
+      "tool_calls": 7
+    },
+    "c041": {
+      "agent": "engineering-code-reviewer",
+      "queries": [
+        "code review"
+      ],
+      "tool_calls": 3
+    },
+    "c042": {
+      "agent": "project-management-meeting-notes-specialist",
+      "queries": [
+        "meeting",
+        "decision record",
+        "sync"
+      ],
+      "tool_calls": 4
+    },
+    "c044": {
+      "agent": "design-ui-designer",
+      "queries": [
+        "design system",
+        "brand guidelines",
+        "style guide",
+        "brand identity",
+        "visual identity",
+        "presentation",
+        "deck",
+        "slide"
+      ],
+      "tool_calls": 7
+    },
+    "c046": {
+      "agent": "automation-governance-architect",
+      "queries": [
+        "automation",
+        "workflow automation|no-code|zapier|n8n|integration"
+      ],
+      "tool_calls": 5
+    },
+    "c047": {
+      "agent": "testing-test-automation-engineer",
+      "queries": [
+        "regression",
+        "test automation"
+      ],
+      "tool_calls": 5
+    },
+    "c049": {
+      "agent": "sales-proposal-strategist",
+      "queries": [
+        "proposal",
+        "feature list",
+        "win theme",
+        "document stage losing deals"
+      ],
+      "tool_calls": 4
+    },
+    "c050": {
+      "agent": "NONE",
+      "queries": [
+        "changelog|release notes|weekly|digest|status report|summary",
+        "roadmap|shipped|newsletter|recap|standup|sprint|update"
+      ],
+      "tool_calls": 7
+    },
+    "c053": {
+      "agent": "recruitment-specialist",
+      "queries": [
+        "talent acquisition",
+        "screen.*resum|applicant|candidate screening",
+        "hiring|recruit|resume screen|ATS"
+      ],
+      "tool_calls": 6
+    },
+    "c055": {
+      "agent": "marketing-xiaohongshu-specialist",
+      "queries": [
+        "xiaohongshu"
+      ],
+      "tool_calls": 4
+    }
+  },
+  "recorded_at": "2026-08-19",
+  "runner": "subagent",
+  "scope": "targeted-27",
+  "tasks_sha256": "fff6a6bc4d69cbeee0a8ac87a660590b0c5467bd5ee2cda59276dccdb03fceaf"
+}
