@@ -29,6 +29,24 @@ Born from a Reddit thread and months of iteration, **The Agency** is a growing c
 
 ---
 
+## 🔬 This Fork: Measured, Not Asserted
+
+This fork adds one thing upstream does not have — **evidence about whether the agents actually work**, gathered with blind subagents and controls.
+
+| axis | question | verdict |
+| --- | --- | --- |
+| **Selection** | does a model pick the right specialist? | **yes** — 100% on 58 blind cases |
+| **Diagnosis** | does the agent file help find a defect? | **no measurable effect** (36 blind subagents) |
+| **Construction** | does the agent file help write the code? | **no measurable effect** (18 blind subagents) |
+
+Every experiment carries two controls: `none` (no agent file at all) and `flattened` (a generic agent file with the specialist body stripped out). An agent file that cannot beat *no agent file* is decoration, and one that cannot beat a *generic* agent file means the instrument is not measuring quality.
+
+**Read [docs/findings.md](docs/findings.md) before trusting any number here** — including the four times the measuring apparatus itself turned out to be wrong.
+
+The short version: **the frontmatter earns its place; the body has not yet been shown to.** Start with the router.
+
+---
+
 ## ⚡ Quick Start
 
 ### Option 1: Install the app (Recommended)

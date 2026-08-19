@@ -31,6 +31,20 @@ They complement each other. Use the router when you want the right perspective
 cheaply; use division plugins when you want to *delegate* to a subagent in
 parallel. Enabling both is reasonable.
 
+**Do not convert these 270 agents into Skills.** It is the tempting refactor and
+it would break routing quietly. Claude Code loads skill descriptions into a
+listing budgeted at about 1% of the context window, and [when that listing
+overflows it shortens descriptions and then drops them
+entirely](https://code.claude.com/docs/en/skills), starting with the skills you
+invoke least. At 270 entries the listing would exceed its budget several times
+over, so the specialists you reach for rarely — which is most of them, and the
+whole point of having 270 — would lose exactly the keywords routing depends on.
+No error is raised; matching just gets worse. `/doctor` estimates the listing
+cost and `/context` reports its size after the budget is applied.
+
+The router sidesteps this by construction: no agent description ever enters the
+listing, because there is only one skill. It greps the index instead.
+
 **Known limit, now measured.** The index describes each specialist in its own
 vocabulary, which is not always the task's. On a 58-task benchmark, only **66%
 of tasks share even one word** with the right specialist's index line — the
