@@ -5,7 +5,7 @@
     ./scripts/eval_construction.py --check               # CI: pure, no execution
     ./scripts/eval_construction.py --prompt c001 --condition current --run RUN
     ./scripts/eval_construction.py --self-test           # suites vs references
-    ./scripts/eval_construction.py --execute RUN         # LOCAL ONLY: runs code
+    ./scripts/eval_construction.py --execute RUN --model M   # LOCAL ONLY: runs code
     ./scripts/eval_construction.py --conditions | --checks | --digest
 
 WHY THIS PHASE EXISTS
@@ -89,6 +89,18 @@ claimed, and the report discloses any suite that no longer matches it.
 Amending a suite is allowed and visible. Locking it would force a broken check
 to stay broken, which is worse -- the Phase 7 oracle was rebuilt twice and both
 rebuilds were right.
+
+EVERY ARM RECORDS THE MODEL THAT PRODUCED IT
+
+A run is one model's answers. Two runs in one baseline are two arms, and an arm
+whose model is not recorded cannot be read -- a lift figure means nothing
+without knowing what produced it. The run NAME is a label, not a record: the
+first run here was called `2026-08-18-subagent-c6` and says nothing about Opus.
+
+So --execute requires --model and writes it into the results file, and --check
+fails any run that lacks it. The operator asserts the value; nothing in the
+harness can verify it, which is the same standing as the run name and is stated
+here rather than implied.
 
 THE REFERENCES EXIST BECAUSE THE AUTHOR OF A FIXTURE DOES NOT KNOW WHAT IS
 WRONG WITH IT
@@ -300,7 +312,7 @@ def run_one(artifact: Path, suite: Path) -> dict:
     return raw
 
 
-def execute(run: str, suites: Path) -> dict:
+def execute(run: str, suites: Path, model: str) -> dict:
     tasks = load_tasks()
     run_dir = ARTIFACTS / run
     if not run_dir.is_dir():
@@ -330,6 +342,7 @@ def execute(run: str, suites: Path) -> dict:
                   "the digests below against the committed bytes and re-scores "
                   "these recorded outcomes."),
         "run": run,
+        "model": model,
         "python": sys.version.split()[0],
         "tasks_sha256": tasks_digest(tasks),
         "conditions": out,
@@ -536,7 +549,8 @@ def build_report(suites: Path) -> dict:
                              - base["by_kind"][kind]["pass_pct"], 2)
                     for c, v in conditions.items()}
         runs.append({
-            "run": data["run"], "python": data.get("python"),
+            "run": data["run"], "model": data.get("model"),
+            "python": data.get("python"),
             "conditions": conditions,
             "lift_over_no_skill": lift,
             "_note": ("lift_over_no_skill['implied'] is the figure this phase "
@@ -560,7 +574,7 @@ def build_report(suites: Path) -> dict:
 
 def report_table(report: dict) -> None:
     for r in report["runs"]:
-        print(f"{r['run']}  [python {r['python']}]")
+        print(f"{r['run']}  [{r.get('model') or 'MODEL NOT RECORDED'}, python {r['python']}]")
         print(f"  {'condition':<11}{'stated':>16}{'implied':>16}"
               f"{'imports':>10}{'implied vs none':>18}")
         for cond in ("none", "current", "candidate", "flattened"):
@@ -598,6 +612,9 @@ def main() -> int:
     ap.add_argument("--checks", action="store_true",
                     help="print the acceptance catalogue: every check and why")
     ap.add_argument("--digest", nargs="*", metavar="TASK")
+    ap.add_argument("--model", metavar="NAME",
+                    help="Model that produced the artifacts. Required with "
+                         "--execute; recorded so arms stay readable.")
     ap.add_argument("--execute", metavar="RUN",
                     help="LOCAL ONLY: import each artifact and run its suite")
     ap.add_argument("--self-test", action="store_true",
@@ -659,9 +676,14 @@ def main() -> int:
         return 0
 
     if args.execute:
+        if not args.model:
+            print("--execute requires --model, e.g. --model claude-sonnet-5.\n"
+                  "A run whose model is not recorded cannot be compared with "
+                  "another arm.", file=sys.stderr)
+            return 2
         RESULTS.mkdir(parents=True, exist_ok=True)
         print(f"Executing {args.execute} -- this imports model-generated code.")
-        data = execute(args.execute, suites)
+        data = execute(args.execute, suites, args.model)
         out = RESULTS / f"{args.execute}.json"
         out.write_bytes(dump_json(data))
         print(f"\nWrote {out.relative_to(REPO_ROOT).as_posix()}")
@@ -674,6 +696,14 @@ def main() -> int:
         if not report["runs"]:
             print("PASSED: no executed runs yet; nothing to verify.")
             return 0
+        unlabelled = [r["run"] for r in report["runs"] if not r.get("model")]
+        if unlabelled:
+            print(f"FAILED: run(s) {', '.join(unlabelled)} record no model. "
+                  f"Add \"model\" to the matching "
+                  f"eval/construction/results/<run>.json -- a lift figure is "
+                  f"unreadable without knowing what produced it.",
+                  file=sys.stderr)
+            return 1
         if not BASELINE.exists():
             print(f"FAILED: {BASELINE.relative_to(REPO_ROOT).as_posix()} is "
                   f"missing. Run the script with no arguments.", file=sys.stderr)

@@ -854,6 +854,7 @@
       }
     }
   },
+  "model": "claude-opus-5",
   "python": "3.12.6",
   "run": "2026-08-18-subagent-c6",
   "tasks_sha256": "a77699a0a63d83efd47ee7c48d9be74cfedc60fbc6545f30cad9681337ec1867"
