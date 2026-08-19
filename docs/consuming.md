@@ -173,3 +173,37 @@ the function. CI verifies the committed copy is current, and regenerating is:
 ```bash
 ./scripts/build_plugins.py
 ```
+
+## Tools that sit alongside this repository
+
+Three Anthropic-supplied tools cover moments this repository deliberately does
+not. All three come from the official marketplace:
+
+```bash
+/plugin marketplace add anthropics/claude-plugins-official
+```
+
+| tool | when it runs | what it does |
+| --- | --- | --- |
+| `claude-code-setup` | **once per new project** | Scans the codebase and recommends hooks, MCP servers, subagents and slash commands worth setting up. Read-only — it suggests, you decide. |
+| `agency-router` (here) | **every task** | Picks which of the 270 specialists fits the request and loads only that one. |
+| `skill-creator` | **when authoring or tuning a skill** | Scaffolds a skill, and runs evals against a `without_skill` baseline with blind comparators. Also does description tuning: generates should-trigger and should-not-trigger prompts and measures the hit rate. |
+
+They do not overlap. `claude-code-setup` decides what a project should *have*;
+the router decides who handles *this request*; `skill-creator` improves a single
+skill in isolation.
+
+### Using skill-creator on these agents
+
+Only one thing here is worth tuning with it, and the evidence says which:
+[findings.md](findings.md) shows the **description** carries the measurable
+value while the body has not been shown to. So point `skill-creator`'s
+description tuning at agents that route badly, not at agent bodies.
+
+The ground truth for "routes badly" already exists — `eval/selection/cases.jsonl`
+and [selection-evaluation.md](selection-evaluation.md). One caution that matters:
+`skill-creator` tunes a description against *its own* should-trigger prompts,
+while the real problem here is winning against **269 competitors**. A
+description that triggers reliably in isolation can still lose a head-to-head.
+Re-run `scripts/eval_selection.py` after any tuning, because that is the only
+check that scores the competition rather than the candidate alone.
