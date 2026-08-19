@@ -31,6 +31,20 @@ They complement each other. Use the router when you want the right perspective
 cheaply; use division plugins when you want to *delegate* to a subagent in
 parallel. Enabling both is reasonable.
 
+**Do not convert these 270 agents into Skills.** It is the tempting refactor and
+it would break routing quietly. Claude Code loads skill descriptions into a
+listing budgeted at about 1% of the context window, and [when that listing
+overflows it shortens descriptions and then drops them
+entirely](https://code.claude.com/docs/en/skills), starting with the skills you
+invoke least. At 270 entries the listing would exceed its budget several times
+over, so the specialists you reach for rarely — which is most of them, and the
+whole point of having 270 — would lose exactly the keywords routing depends on.
+No error is raised; matching just gets worse. `/doctor` estimates the listing
+cost and `/context` reports its size after the budget is applied.
+
+The router sidesteps this by construction: no agent description ever enters the
+listing, because there is only one skill. It greps the index instead.
+
 **Known limit, now measured.** The index describes each specialist in its own
 vocabulary, which is not always the task's. On a 58-task benchmark, only **66%
 of tasks share even one word** with the right specialist's index line — the
@@ -159,3 +173,37 @@ the function. CI verifies the committed copy is current, and regenerating is:
 ```bash
 ./scripts/build_plugins.py
 ```
+
+## Tools that sit alongside this repository
+
+Three Anthropic-supplied tools cover moments this repository deliberately does
+not. All three come from the official marketplace:
+
+```bash
+/plugin marketplace add anthropics/claude-plugins-official
+```
+
+| tool | when it runs | what it does |
+| --- | --- | --- |
+| `claude-code-setup` | **once per new project** | Scans the codebase and recommends hooks, MCP servers, subagents and slash commands worth setting up. Read-only — it suggests, you decide. |
+| `agency-router` (here) | **every task** | Picks which of the 270 specialists fits the request and loads only that one. |
+| `skill-creator` | **when authoring or tuning a skill** | Scaffolds a skill, and runs evals against a `without_skill` baseline with blind comparators. Also does description tuning: generates should-trigger and should-not-trigger prompts and measures the hit rate. |
+
+They do not overlap. `claude-code-setup` decides what a project should *have*;
+the router decides who handles *this request*; `skill-creator` improves a single
+skill in isolation.
+
+### Using skill-creator on these agents
+
+Only one thing here is worth tuning with it, and the evidence says which:
+[findings.md](findings.md) shows the **description** carries the measurable
+value while the body has not been shown to. So point `skill-creator`'s
+description tuning at agents that route badly, not at agent bodies.
+
+The ground truth for "routes badly" already exists — `eval/selection/cases.jsonl`
+and [selection-evaluation.md](selection-evaluation.md). One caution that matters:
+`skill-creator` tunes a description against *its own* should-trigger prompts,
+while the real problem here is winning against **269 competitors**. A
+description that triggers reliably in isolation can still lose a head-to-head.
+Re-run `scripts/eval_selection.py` after any tuning, because that is the only
+check that scores the competition rather than the candidate alone.
