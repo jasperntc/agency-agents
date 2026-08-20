@@ -82,7 +82,17 @@ An answerer with repository access can read anything committed. tasks.jsonl
 therefore carries the QUESTION only -- id, agent, module name, brief. Every
 requirement, and the word "implied" itself, lives in eval/construction/suites/,
 which was written first, kept outside the working tree while the answers were
-collected, and moved in afterwards. tasks.jsonl records each suite's sha256 as
+collected, and moved in afterwards.
+
+That was the claim from the beginning and it was not true until c007. Every
+task also carried a `why` field IN tasks.jsonl, and `why` names the
+discriminator: c002's read "Offset paging satisfies every stated requirement
+and breaks the moment a row is inserted", which is the implied check written
+out in one sentence. The blindness guard in tests/ only ever inspected the
+brief, so nothing caught it. `why` now lives in the suite as WHY_THIS_TASK,
+where the rest of the answer key lives, and a test asserts it never comes back.
+The two committed arms were collected before the fix; see
+docs/construction-evaluation.md for what that does and does not cast doubt on. tasks.jsonl records each suite's sha256 as
 of registration so that pre-registration is checkable rather than merely
 claimed, and the report discloses any suite that no longer matches it.
 
@@ -98,7 +108,17 @@ without knowing what produced it. The run NAME is a label, not a record: the
 first run here was called `2026-08-18-subagent-c6` and says nothing about Opus.
 
 So --execute requires --model and writes it into the results file, and --check
-fails any run that lacks it. The operator asserts the value; nothing in the
+fails any run that lacks it.
+
+A run is also bound to the QUESTIONS IT WAS ASKED, which matters as soon as the
+task set grows. Registering c007 invalidated both committed arms, because the
+digest was taken over the whole registry rather than over the tasks a run
+answered, and re-executing them then scored the new task as an unwritten
+artifact and restated two published 100% arms as 85.71%. Both are fixed: the
+digest is scoped to the answered tasks, and re-executing an existing run
+re-scores exactly the tasks its results already record. A benchmark that cannot
+gain a task without invalidating its history is a benchmark under pressure to
+stay too easy, which is the state c007 exists to escape. The operator asserts the value; nothing in the
 harness can verify it, which is the same standing as the run name and is stated
 here rather than implied.
 
@@ -318,6 +338,21 @@ def execute(run: str, suites: Path, model: str) -> dict:
     if not run_dir.is_dir():
         raise SystemExit(f"no such run: {run_dir.relative_to(REPO_ROOT)}")
 
+    # A run answers the questions that existed when its subagents ran. Later
+    # tasks are not failures of it -- re-executing a 6-task arm after a 7th is
+    # registered must re-score the SAME six, not score the arm 24/28 for a
+    # question it was never asked. When results already exist they are the
+    # record of what was asked; a fresh run answers everything registered now.
+    prior = RESULTS / f"{run}.json"
+    if prior.exists():
+        recorded = json.loads(prior.read_text(encoding="utf-8"))["conditions"]
+        answered = {tid for results in recorded.values() for tid in results}
+        skipped = [t["task"] for t in tasks if t["task"] not in answered]
+        tasks = [t for t in tasks if t["task"] in answered]
+        if skipped:
+            print(f"  re-scoring the {len(tasks)} task(s) {run} answered; "
+                  f"not asked: {', '.join(skipped)}")
+
     conditions = sorted(p.name for p in run_dir.iterdir()
                         if p.is_dir() and p.name in CONDITIONS)
     out: dict = {}
@@ -492,14 +527,31 @@ def load_results(tasks: list[dict], suites: Path) -> list[dict]:
         rel = path.relative_to(REPO_ROOT).as_posix()
         data = json.loads(path.read_text(encoding="utf-8"))
 
-        expected = tasks_digest(tasks)
+        # Scoped to the questions THIS run answered. A run is bound to what it
+        # was asked, so registering a NEW task must not invalidate answers to
+        # the old ones -- otherwise the task set can never grow and every
+        # committed arm has to be re-run to add one. Editing or removing a
+        # brief this run DID answer still trips the guard, which is the part
+        # that matters.
+        covered = sorted({tid for results in data["conditions"].values()
+                          for tid in results})
+        missing = [tid for tid in covered if tid not in by_id]
+        if missing:
+            raise SystemExit(
+                f"{rel}: answered task(s) {', '.join(missing)}, which are no "
+                f"longer registered in tasks.jsonl. A question cannot be "
+                f"withdrawn while committed answers to it remain -- restore "
+                f"it, or delete the run.")
+
+        expected = tasks_digest(tasks, covered)
         if data.get("tasks_sha256") != expected:
             raise SystemExit(
                 f"{rel}: a brief or the prompt template changed after these "
                 f"artifacts were written.\n  recorded "
                 f"{data.get('tasks_sha256') or '(none)'}\n  current  {expected}\n"
                 f"  Re-run the agents, or restore the brief. Editing a SUITE "
-                f"does not trip this -- only the question does.")
+                f"does not trip this -- only the question does, and only for "
+                f"the {len(covered)} task(s) this run answered.")
 
         for condition, results in data["conditions"].items():
             for tid, result in results.items():

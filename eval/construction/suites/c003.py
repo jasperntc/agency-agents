@@ -1,5 +1,14 @@
 """c003 -- warehouse merge step. Acceptance suite."""
 
+# Why this task is in the set. It names the discriminator, so it lives
+# HERE -- with the answer key, which is withheld while answers are being
+# collected -- and never in tasks.jsonl, which any answerer can read.
+WHY_THIS_TASK = (
+    'Replay safety, in-batch duplicates and out-of-order delivery are '
+    'the daily reality of a loader and none of the three is stated. The '
+    'record carries updated_at, which is the only signal present.'
+)
+
 EXISTING = [
     {"key": "a", "updated_at": 100, "value": "old-a"},
     {"key": "b", "updated_at": 200, "value": "old-b"},

@@ -199,6 +199,20 @@ because it is the only movement in the matrix, not because it supports anything.
 axis currently has no discriminating power at all. That is a fact about the
 tasks, not about the corpus.
 
+### The attempt to fix it, which also ceilinged
+
+A seventh task (**c007**, renewal-date anchoring) was built specifically to
+have no *named* best practice to recall — the diagnosis being that every
+implied check in c001-c006 has a name, and frontier models recall names well.
+Eight blind probes on `none`, four per model tier, scored **32/32 implied**
+with the reference at 8/8 and the naive draft at 6/8 through the same scoring
+path, so the checks were live and the answers were simply right.
+
+That makes **44 blind construction subagents across two model tiers, and
+`none` has never once dropped below ceiling.** Three task designs have now
+failed to find headroom in the single-module-from-a-brief format, which is
+increasingly evidence about the format rather than about any one task.
+
 ---
 
 ## What is NOT claimed
@@ -235,6 +249,13 @@ flattering or catastrophic before being corrected.
   every one of them 0/8.
 - **Five separate CI checks** have been green in this repository while measuring
   nothing at all.
+- **The construction question file leaked its own answer key.** Every task
+  carried a `why` field in `tasks.jsonl` naming the discriminator — c002's said
+  offset paging *"breaks the moment a row is inserted"* — while the blindness
+  guard inspected only the `brief`. Both committed arms were collected with it
+  open. `why` now lives in the withheld suite; the arms' blindness is
+  correspondingly weakened and
+  [said so plainly](construction-evaluation.md) rather than restated.
 
 The standing defences, all enforced in CI:
 
