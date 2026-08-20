@@ -19,7 +19,7 @@ links to the full account, including the parts that went wrong.
 | axis | what it asks | verdict |
 |---|---|---|
 | **Selection** | does a model pick the right specialist? | **yes** — 98.28% on 58 blind cases |
-| **Diagnosis** | does the agent file help find a defect? | **no measurable effect** — 36 blind subagents |
+| **Diagnosis** | does the agent file help find a defect? | **no measurable effect** — 72 blind subagents, two model tiers |
 | **Construction** | does the agent file help write the code? | **inconclusive** — 36 blind subagents, both models at ceiling |
 
 **The frontmatter earns its place. The body has not yet been shown to.**
@@ -130,6 +130,37 @@ clinical trial methodology. **The no-agent control scored 100%.**
 This axis had genuine headroom — three defects went unfound by everyone — and
 the agent file did not recover a single one of them.
 
+### The Sonnet arm: the first non-zero lift, pointing the wrong way
+
+36 more blind subagents on `claude-sonnet-5`, all twelve tasks, and the first
+behaviour run whose blindness is structural rather than observed.
+
+| condition | recall | vs `none` |
+|---|---:|---:|
+| `none` | **37/40 (92.5%)** | — |
+| `current` | 35/40 (87.5%) | **-5.0** |
+| `flattened` | 35/40 (87.5%) | **-5.0** |
+
+**Sonnet's no-agent control equals Opus's**, 37/40 against 37/40. The standing
+hypothesis — that a weaker model is where the corpus should show its value —
+has now failed on both axes it was tested on.
+
+The negative lift is smaller than it looks and was audited before being
+written down. Of the four extra misses, one (`timing_unsafe_compare`) was
+missed by **all three Opus conditions** too, so the control finding it is the
+outlier; one is `flattened` simply reporting fewer findings. What remains is a
+single defect that **both** agent conditions missed and the control caught —
+and since `flattened` is a generic file with the body stripped, any effect
+there tracks *having a file to read*, not the file's content. One sample per
+cell, two defects out of forty: **not evidence that agent files make diagnosis
+worse**, and reported only because a number that moves gets reported whichever
+way it points.
+
+Two defects are missed by all six condition-arms across both models —
+`isinstance(True, int)` passing an integer guard, and wall-clock time used for
+an elapsed budget. That is the shape of thing the corpus would have to unlock
+to demonstrate value here.
+
 ---
 
 ## Construction — the tasks are too easy to measure with
@@ -219,9 +250,8 @@ increasingly evidence about the format rather than about any one task.
 
 - Not that the corpus is worthless. Selection works, and works well.
 - Not that agent files never help. Two task types, one sample per cell, ten
-  agents out of 270. Diagnosis was measured on `claude-opus-5` only;
-  construction now has an Opus and a Sonnet arm, and every run records its own
-  `model` field.
+  agents out of 270. Both axes now carry an Opus and a Sonnet arm, and every
+  run records its own `model` field.
 - Not that the construction result is a null at all. It is **inconclusive**:
   `none` sits at ceiling on both model tiers, so the comparison has no
   discriminating power. The most likely explanation remains that the base model
