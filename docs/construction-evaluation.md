@@ -176,6 +176,12 @@ do by hand.
 
 ## The run
 
+Two arms, one per model. `2026-08-18-subagent-c6` (Opus) is described first
+because it was run first; the Sonnet arm that followed is below it and is what
+settles how either should be read.
+
+### Arm 1 — `claude-opus-5`
+
 `2026-08-18-subagent-c6`. Eighteen blind subagents — 6 tasks × 3 conditions —
 each writing one module to a given path, with no knowledge of how it would be
 graded. Model: `claude-opus-5`.
@@ -196,6 +202,73 @@ operator asserts the value, which nothing in the harness can verify.
 144 checks executed, 72 stated and 72 implied, 18 of 18 modules importing
 cleanly. **Every condition passed everything.**
 
+### Arm 2 — `claude-sonnet-5`
+
+`2026-08-20-sonnet-c6`. The same six committed tasks, the same three
+conditions, the same suites, eighteen more blind subagents. Nothing was rebuilt
+for it: `tasks.jsonl`, the suites and both calibration sets were already
+committed, so the only new inputs are the artifacts.
+
+It exists because Arm 1 answered nothing. With `none` already at 24/24 there
+was no headroom for an agent file to show in, and a **+0.0** lift measured
+against a ceiling is not a null result — it is an absent measurement. The
+stated objection was that `claude-opus-5` is simply strong enough not to need
+help. A weaker model, the prediction went, would drop below ceiling on
+`implied`, and the `current`-vs-`none` comparison would finally carry
+information.
+
+| condition | stated | implied | modules that import | implied vs `none` |
+|---|---|---|---|---|
+| `none` | 24/24 (100%) | 24/24 (100%) | 6/6 | — |
+| `current` | 24/24 (100%) | 24/24 (100%) | 6/6 | **+0.0** |
+| `flattened` | 24/24 (100%) | 22/24 (91.67%) | 6/6 | **-8.33** |
+
+**The prediction failed.** `none` did not drop. Sonnet, with no agent file at
+all, met every stated requirement and every implied one — the same ceiling as
+Opus, on the same tasks, including the discriminators the naive draft fails.
+
+So the honest reading of this axis is not "agent files do not help writing
+code." It is:
+
+> **These six tasks are too easy for frontier models.** Two model tiers clear
+> every implied check with nothing but the brief. Until a construction task
+> exists that a bare frontier model fails, this instrument cannot detect an
+> agent file's contribution in either direction.
+
+That is a finding about the tasks. It was the stated limitation of Arm 1, and
+Arm 2 was the attempt to remove it; the attempt did not work, which promotes
+the limitation from *caveat* to *result*.
+
+#### The one cell that moved
+
+`flattened` c001 (proration) scored 6/8 — the only non-ceiling cell across 36
+subagents. It was hand-audited before being written down, because the one
+number that moves in an otherwise flat matrix is the one most likely to be
+over-read.
+
+Both failures have a **single root cause**: the answer treated `period_end` as
+the *inclusive* last billed day (`total_days = (period_end - period_start).days
++ 1`), while the suite assumes the *exclusive* convention. The brief pins the
+period **start** behaviour explicitly and never says which end convention
+applies.
+
+| check | why it failed |
+|---|---|
+| `i_period_end_is_zero` | under the inclusive reading one day of the new plan remains on the last day, so it charges 65 cents rather than 0 |
+| `i_symmetric_rounding` | fails the check's **secondary** assertion — distance from exact, which the convention shifts by up to 30.7 cents on the last day |
+
+The property `i_symmetric_rounding` is named for **holds**: the module's
+round-half-away-from-zero is exactly symmetric, `proration(A→B) == -proration(B→A)`
+for all thirty days, verified by hand. The check failed on the closeness
+assertion bundled with it, not on symmetry.
+
+One artifact, one ambiguous convention, two checks keying off it, n=1. It is
+recorded because it is the only movement in the matrix, and explicitly **not**
+offered as evidence that a generic agent file degrades output. A second suite
+amendment is not proposed either: the convention question is a real gap in the
+brief, and rewriting the brief after seeing the answers is fitting the question
+to the data.
+
 ### What this does and does not establish
 
 It **does** establish that the ceiling is not a trivial one. The naive draft —
@@ -208,23 +281,27 @@ key derived from the salt rather than a reversible encoding, the Slavic teen
 exception, a signature covering the expiry.
 
 It **does not** establish that an agent file cannot help, because at 100% there
-is no headroom in which it could show. This run cannot separate *"the agent
-file adds nothing"* from *"these tasks were too small to need it"*. What it
-rules out is the specific hypothesis it was built to test: that the base model
-writes naive code which a specialist file corrects. It does not write naive
-code here.
+is no headroom in which it could show. Neither arm can separate *"the agent
+file adds nothing"* from *"these tasks were too small to need it"* — and after
+Arm 2 that is no longer a caveat awaiting a test, it is the result. What both
+arms rule out is the specific hypothesis the phase was built on: that the base
+model writes naive code which a specialist file corrects. Neither model writes
+naive code here.
 
 That is a sharper limitation than Phase 7's, where `none` scored 37/40 and
-there was genuine room to beat it. Read the two together and the picture is
-consistent rather than merely repeated:
+there was genuine room to beat it. Read together:
 
-| axis | tasks | conditions | result |
+| axis | model | tasks | result |
 |---|---|---|---|
-| diagnosis (Phase 7) | 12, three tiers | none / current / flattened | 37/40 each — zero separation, with headroom |
-| construction (here) | 6 | none / current / flattened | 48/48 each — zero separation, at ceiling |
+| diagnosis (Phase 7) | `claude-opus-5` | 12, three tiers | 37/40 each — zero separation, **with headroom** |
+| construction, Arm 1 | `claude-opus-5` | 6 | 48/48 each — zero separation, **at ceiling** |
+| construction, Arm 2 | `claude-sonnet-5` | 6 | 48/48 `none` and `current` — zero separation, **still at ceiling** |
 
-**54 blind subagents across two axes, and the agent file has never yet moved a
-number.**
+**72 blind subagents across two axes and two model tiers, and the agent file
+has never yet moved a number upward.** On the diagnosis axis that is a null
+with headroom, which is real evidence. On the construction axis it is a ceiling
+on both tiers, which is an instrument that has not yet been given a hard enough
+question.
 
 ### Suites amended after registration
 

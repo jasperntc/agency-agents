@@ -37,7 +37,7 @@ This fork adds one thing upstream does not have — **evidence about whether the
 | --- | --- | --- |
 | **Selection** | does a model pick the right specialist? | **yes** — 98.28% on 58 blind cases |
 | **Diagnosis** | does the agent file help find a defect? | **no measurable effect** (36 blind subagents) |
-| **Construction** | does the agent file help write the code? | **no measurable effect** (18 blind subagents) |
+| **Construction** | does the agent file help write the code? | **inconclusive** (36 blind subagents; both model tiers at ceiling) |
 
 Every experiment carries two controls: `none` (no agent file at all) and `flattened` (a generic agent file with the specialist body stripped out). An agent file that cannot beat *no agent file* is decoration, and one that cannot beat a *generic* agent file means the instrument is not measuring quality.
 

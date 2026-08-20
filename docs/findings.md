@@ -20,7 +20,7 @@ links to the full account, including the parts that went wrong.
 |---|---|---|
 | **Selection** | does a model pick the right specialist? | **yes** — 98.28% on 58 blind cases |
 | **Diagnosis** | does the agent file help find a defect? | **no measurable effect** — 36 blind subagents |
-| **Construction** | does the agent file help write the code? | **no measurable effect** — 18 blind subagents |
+| **Construction** | does the agent file help write the code? | **inconclusive** — 36 blind subagents, both models at ceiling |
 
 **The frontmatter earns its place. The body has not yet been shown to.**
 
@@ -102,8 +102,10 @@ that the instrument to find gaps is free.
 
 It does **not** say the agent files improve answers on Sonnet. Nothing here
 compares *with agent* against *without agent* — that is the diagnosis and
-construction work below, which is null and was run only on Opus. Whether the
-corpus helps a weaker model **produce better work** remains untested.
+construction work below. Construction has since been re-run on Sonnet and found
+the same ceiling, so the question is still open: whether the corpus helps a
+weaker model **produce better work** remains untested, because no task in the
+set is hard enough to separate the conditions.
 
 ---
 
@@ -130,43 +132,87 @@ the agent file did not recover a single one of them.
 
 ---
 
-## Construction — no effect, at ceiling
+## Construction — the tasks are too easy to measure with
 
 [construction-evaluation.md](construction-evaluation.md)
 
-**18 blind subagents, 6 tasks, 144 executed acceptance checks.**
+**36 blind subagents, 6 tasks, two models, 288 executed acceptance checks.**
 
-| condition | stated | implied |
-|---|---:|---:|
-| `none` | 24/24 (100%) | 24/24 (100%) |
-| `current` | 24/24 (100%) | 24/24 (100%) |
-| `flattened` | 24/24 (100%) | 24/24 (100%) |
+| condition | Opus stated | Opus implied | Sonnet stated | Sonnet implied |
+|---|---:|---:|---:|---:|
+| `none` | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) |
+| `current` | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) |
+| `flattened` | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) | 22/24 (91.67%) |
 
 Checks split into `stated` (the brief says it — the floor) and `implied` (a
 practitioner meets it unasked — the discriminator). A deliberately naive draft
 clears the floor 24/24 and **fails 13 of 24 implied checks**, so the ceiling is
-not a cheap one. The base model, with no agent file, independently produced
+not a cheap one. Both models, with no agent file, independently produced
 symmetric integer money arithmetic, keyset cursors stable under insertion,
 idempotent merges, HMAC under a derived key, the Slavic teen exception, and a
 signature covering the token expiry.
 
-**Limit, stated rather than buried:** at 100% there is no headroom, so this
-cannot separate *"the agent file adds nothing"* from *"these tasks were too
-small to need one."* It does rule out the hypothesis it was built for — the base
-model does not write naive code here.
+### What the Sonnet arm was for, and what it actually settled
+
+The Opus arm scored 24/24 in every cell including `none`. With the control
+already at ceiling there was no headroom, so its **+0.0 lift is uninformative** —
+it cannot distinguish *"the agent file adds nothing"* from *"nothing was left to
+add."* The Sonnet arm was run to find that headroom: a weaker model, the
+prediction went, would drop below ceiling on `implied` without an agent file,
+and the comparison would finally carry information.
+
+**It did not drop.** `claude-sonnet-5` with no agent file scored 24/24 stated
+and **24/24 implied** — the same ceiling as Opus, on the same tasks.
+
+So the finding is not "agent files don't help." It is narrower and it is about
+the instrument:
+
+> **These six tasks are too easy for frontier models.** Two model tiers clear
+> every implied check with no agent file at all. Until a construction task
+> exists that a bare frontier model fails, this axis cannot measure an agent
+> file's contribution in either direction.
+
+The `current`-vs-`none` lift is **+0.0 on both arms**, and on both arms that
+number is a ceiling artefact rather than evidence.
+
+### The one cell that moved, audited before reporting
+
+`flattened` c001 (proration) scored 6/8, the only non-ceiling cell in 36
+subagents. It is **not** evidence that a generic agent file degrades output, and
+the audit is why:
+
+- Both failures are **one root cause**. The answer treated `period_end` as an
+  *inclusive* last billed day (`total_days = (end - start).days + 1`); the suite
+  assumes the *exclusive* convention. The brief pins only the period **start**
+  behaviour and never says which.
+- `i_period_end_is_zero` fails because under the inclusive reading one day of
+  the new plan remains on the last day, so it charges 65 cents rather than 0.
+- `i_symmetric_rounding` fails on its **secondary** assertion — distance from
+  exact, which the convention shifts by up to 30.7 cents. The property the check
+  is named for holds: the module's round-half-away-from-zero **is** symmetric in
+  both directions, verified by hand across all 30 days.
+
+One artifact, one ambiguous convention, two checks keying off it. Reported
+because it is the only movement in the matrix, not because it supports anything.
+
+**Limit, stated rather than buried:** with `none` at ceiling on both arms, this
+axis currently has no discriminating power at all. That is a fact about the
+tasks, not about the corpus.
 
 ---
 
 ## What is NOT claimed
 
 - Not that the corpus is worthless. Selection works, and works well.
-- Not that agent files never help. Two task types, one model (`claude-opus-5`
-  throughout — every run records its own `model` field), one sample per cell,
-  ten agents out of 270.
-- Not that the result generalises to weaker models. **It plausibly does not** —
-  the most likely explanation of both nulls is that the base model already
-  operates at specialist level on these tasks. That is a testable claim and the
-  harnesses are built to test it.
+- Not that agent files never help. Two task types, one sample per cell, ten
+  agents out of 270. Diagnosis was measured on `claude-opus-5` only;
+  construction now has an Opus and a Sonnet arm, and every run records its own
+  `model` field.
+- Not that the construction result is a null at all. It is **inconclusive**:
+  `none` sits at ceiling on both model tiers, so the comparison has no
+  discriminating power. The most likely explanation remains that the base model
+  already operates at specialist level on these tasks — and the Sonnet arm,
+  which was run to break that ceiling, did not break it.
 
 The honest summary: **on this evidence the router is the valuable artifact, and
 the 270 files are a routing surface more than a quality intervention.**
