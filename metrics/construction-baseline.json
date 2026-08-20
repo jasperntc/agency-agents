@@ -863,32 +863,32 @@
   ],
   "suites_amended_since_registration": [
     {
-      "current": "6f5a7b2cd9903c9c56fb17f7cc33bf9567f2b185563099d3c6b3782c102e479d",
+      "current": "695f3f67ead8179cc70f4811aa462d74605fbc06770f9f480c3056b5f9bc0970",
       "registered": "8f478a8fbcedf6d31e8bd0f6372b82b16f37b0441735017dbed943a7da073e8d",
       "task": "c001"
     },
     {
-      "current": "25b6d8d67f7810cff1f1dbef2dd5d9764fa393ee682d7afb04800cb9a32afb62",
+      "current": "88a958de6912e0b375faead5b01a7f9f529ce605ac18204fd7096333de277249",
       "registered": "0667ffec50fabeb3a666b42dc4ec66c1e820a62a3b18b1c1806fbc63fa8e74ea",
       "task": "c002"
     },
     {
-      "current": "a71191aba303aed096f04668b963b2f55a9bb18db6bf1a42e2856b5490c2b4f6",
+      "current": "5cb6e7b8f301f4449f87b26e58a92ab9f2e549c1d1dae2d58f76b784c61258b2",
       "registered": "9fd86fab7be3ac8c5403492487e5ca2f1bccea2cfc91752b5e054daa10107ad3",
       "task": "c003"
     },
     {
-      "current": "85186727b573ab7cd6bc867e2c2713034415fc554e25b344e0a01235174069f7",
+      "current": "5ac04b52fd113328364fe23dae130e6f30c38e208080b7c92619d43b516b4a12",
       "registered": "b03b8540852bc4516bc11085dcc3735a6e7a72d2420ccf658eaa7387cda8e6a8",
       "task": "c004"
     },
     {
-      "current": "871afeab90685898569b984f46cf21553443bbd2d1e0441f46fd43c36f3f867a",
+      "current": "88f2d3702e793fd63b89cbfb537e9144208d3e49e1828578e5dadc3620805949",
       "registered": "c21a69a4426d7234feabecdeca41181b68468253af42c05bc6f5c5d3e91b4ada",
       "task": "c005"
     },
     {
-      "current": "a5fa3103cce7bee04b4e35b447ee65f89bc1aa6bbdd9abff4802ef7b7cceca24",
+      "current": "3dcad40dea03590136775c9514dcc63f34e3178921a64d7355b098184aa7e18a",
       "registered": "41a0cf6a4e2ca6078df3a9ece991f82c8a1f3278fd2d6b55b459f8b8e1884937",
       "task": "c006"
     }

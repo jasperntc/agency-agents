@@ -417,6 +417,30 @@ class Results(unittest.TestCase):
             self.fail(f"registering an unanswered task invalidated a "
                       f"committed run: {exc}")
 
+    def test_no_digested_file_carries_crlf(self):
+        """A CRLF write passes locally and fails in CI, which is the worst shape.
+
+        --check compares sha256 over the bytes ON DISK against the bytes a run
+        recorded. .gitattributes stores every text file as LF, so a Windows
+        tool that writes CRLF -- Python's open() in text mode does, by
+        default -- produces a working copy whose digest matches locally and
+        cannot match a fresh Linux checkout. That is exactly how this suite
+        went green on a laptop and red in CI, and the .gitattributes header
+        records the same class of defect happening twice before.
+
+        Cheaper to assert than to rediscover.
+        """
+        roots = [ec.SUITES, ec.CONSTRUCTION / "reference",
+                 ec.CONSTRUCTION / "naive", ec.ARTIFACTS]
+        offenders = [p.relative_to(REPO_ROOT).as_posix()
+                     for root in roots if root.is_dir()
+                     for p in root.rglob("*.py")
+                     if b"\r\n" in p.read_bytes()]
+        self.assertEqual(
+            [], offenders,
+            "these files are digested by --check and contain CRLF, so their "
+            "sha256 differs between this checkout and CI")
+
     def test_a_run_is_never_scored_on_a_question_it_was_not_asked(self):
         """Registering c007 must not restate the c6 arms as 24/28.
 
