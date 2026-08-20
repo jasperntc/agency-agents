@@ -431,6 +431,434 @@
       "model": "claude-opus-5",
       "python": "3.12.6",
       "run": "2026-08-18-subagent-c6"
+    },
+    {
+      "_note": "lift_over_no_skill['implied'] is the figure this phase exists for. Read it ONLY if the stated rate is near ceiling in every condition -- if it is not, the answers failed for reasons unrelated to the agent file.",
+      "conditions": {
+        "current": {
+          "by_kind": {
+            "implied": {
+              "pass_pct": 100.0,
+              "passed": 24,
+              "total": 24
+            },
+            "stated": {
+              "pass_pct": 100.0,
+              "passed": 24,
+              "total": 24
+            }
+          },
+          "checks_passed": 48,
+          "checks_total": 48,
+          "combined_pass_pct": 100.0,
+          "modules_that_import": 6,
+          "per_task": [
+            {
+              "agent": "engineering-payments-billing-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "proration.py",
+              "task": "c001"
+            },
+            {
+              "agent": "engineering-api-platform-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "pagination.py",
+              "task": "c002"
+            },
+            {
+              "agent": "engineering-data-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "loader.py",
+              "task": "c003"
+            },
+            {
+              "agent": "engineering-privacy-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "pseudonymise.py",
+              "task": "c004"
+            },
+            {
+              "agent": "engineering-i18n-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "plurals.py",
+              "task": "c005"
+            },
+            {
+              "agent": "engineering-identity-access-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "tokens.py",
+              "task": "c006"
+            }
+          ],
+          "tasks": 6
+        },
+        "flattened": {
+          "by_kind": {
+            "implied": {
+              "pass_pct": 91.67,
+              "passed": 22,
+              "total": 24
+            },
+            "stated": {
+              "pass_pct": 100.0,
+              "passed": 24,
+              "total": 24
+            }
+          },
+          "checks_passed": 46,
+          "checks_total": 48,
+          "combined_pass_pct": 95.83,
+          "modules_that_import": 6,
+          "per_task": [
+            {
+              "agent": "engineering-payments-billing-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [
+                    "i_period_end_is_zero",
+                    "i_symmetric_rounding"
+                  ],
+                  "passed": 2,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "proration.py",
+              "task": "c001"
+            },
+            {
+              "agent": "engineering-api-platform-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "pagination.py",
+              "task": "c002"
+            },
+            {
+              "agent": "engineering-data-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "loader.py",
+              "task": "c003"
+            },
+            {
+              "agent": "engineering-privacy-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "pseudonymise.py",
+              "task": "c004"
+            },
+            {
+              "agent": "engineering-i18n-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "plurals.py",
+              "task": "c005"
+            },
+            {
+              "agent": "engineering-identity-access-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "tokens.py",
+              "task": "c006"
+            }
+          ],
+          "tasks": 6
+        },
+        "none": {
+          "by_kind": {
+            "implied": {
+              "pass_pct": 100.0,
+              "passed": 24,
+              "total": 24
+            },
+            "stated": {
+              "pass_pct": 100.0,
+              "passed": 24,
+              "total": 24
+            }
+          },
+          "checks_passed": 48,
+          "checks_total": 48,
+          "combined_pass_pct": 100.0,
+          "modules_that_import": 6,
+          "per_task": [
+            {
+              "agent": "engineering-payments-billing-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "proration.py",
+              "task": "c001"
+            },
+            {
+              "agent": "engineering-api-platform-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "pagination.py",
+              "task": "c002"
+            },
+            {
+              "agent": "engineering-data-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "loader.py",
+              "task": "c003"
+            },
+            {
+              "agent": "engineering-privacy-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "pseudonymise.py",
+              "task": "c004"
+            },
+            {
+              "agent": "engineering-i18n-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "plurals.py",
+              "task": "c005"
+            },
+            {
+              "agent": "engineering-identity-access-engineer",
+              "by_kind": {
+                "implied": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                },
+                "stated": {
+                  "failed": [],
+                  "passed": 4,
+                  "total": 4
+                }
+              },
+              "import_error": null,
+              "imported": true,
+              "module": "tokens.py",
+              "task": "c006"
+            }
+          ],
+          "tasks": 6
+        }
+      },
+      "lift_over_no_skill": {
+        "implied": {
+          "current": 0.0,
+          "flattened": -8.33,
+          "none": 0.0
+        },
+        "stated": {
+          "current": 0.0,
+          "flattened": 0.0,
+          "none": 0.0
+        }
+      },
+      "model": "claude-sonnet-5",
+      "python": "3.12.6",
+      "run": "2026-08-20-sonnet-c6"
     }
   ],
   "suites_amended_since_registration": [

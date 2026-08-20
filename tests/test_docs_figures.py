@@ -49,6 +49,29 @@ def text(rel: str) -> str:
     return " ".join((REPO_ROOT / rel).read_text(encoding="utf-8").split())
 
 
+def _construction_runs() -> list[dict]:
+    """Construction arms, in the order the baseline writes them.
+
+    Index 0 is the Opus arm and index 1 the Sonnet arm, but the claims below
+    look the model up by name rather than trusting that order -- an arm added
+    or reordered should fail loudly here, not silently rebind a figure to the
+    wrong model.
+    """
+    return load("metrics/construction-baseline.json")["runs"]
+
+
+def _arm(model: str) -> dict:
+    runs = [r for r in _construction_runs() if r["model"] == model]
+    assert len(runs) == 1, f"expected exactly one {model} construction arm, got {len(runs)}"
+    return runs[0]
+
+
+def _cell(model: str, condition: str, kind: str) -> str:
+    """One `passed/total (pct%)` cell of the construction matrix."""
+    k = _arm(model)["conditions"][condition]["by_kind"][kind]
+    return f"{k['passed']}/{k['total']} ({k['pass_pct']:g}%)"
+
+
 # (doc, substring that must appear, how to derive it)
 CLAIMS: list[tuple[str, str, callable]] = [
     # --- docs/metrics.md, from metrics/inventory-baseline.json ---
@@ -108,11 +131,35 @@ CLAIMS: list[tuple[str, str, callable]] = [
      lambda: f"**yes** — "
              f"{load('metrics/selection-baseline.json')['runs'][0]['accuracy_pct']:g}% on "
              f"{load('metrics/selection-baseline.json')['cases']['total']} blind cases"),
-    ("docs/findings.md", "**18 blind subagents, 6 tasks, 144 executed acceptance checks.**",
-     lambda: f"**18 blind subagents, "
+    # --- docs/findings.md, from metrics/construction-baseline.json ---
+    # Two arms now. The subagent and check counts are summed across every run
+    # so that adding a third arm cannot leave the headline quietly describing
+    # only the first two.
+    ("docs/findings.md",
+     "**36 blind subagents, 6 tasks, two models, 288 executed acceptance checks.**",
+     lambda: f"**{sum(len(r['conditions']) for r in _construction_runs()) * load('metrics/construction-baseline.json')['tasks']['total']}"
+             f" blind subagents, "
              f"{load('metrics/construction-baseline.json')['tasks']['total']} tasks, "
-             f"{sum(c['checks_total'] for c in load('metrics/construction-baseline.json')['runs'][0]['conditions'].values())}"
+             f"two models, "
+             f"{sum(c['checks_total'] for r in _construction_runs() for c in r['conditions'].values())}"
              f" executed acceptance checks.**"),
+
+    # The row that carries the whole Sonnet result: `none` at ceiling on both
+    # models is what makes the axis inconclusive rather than null, and the one
+    # non-ceiling cell in 36 subagents is the flattened one. Binding the full
+    # row keeps the ceiling claim and the exception honest together.
+    ("docs/findings.md",
+     "| `none` | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) |",
+     lambda: f"| `none` | {_cell('claude-opus-5', 'none', 'stated')} | "
+             f"{_cell('claude-opus-5', 'none', 'implied')} | "
+             f"{_cell('claude-sonnet-5', 'none', 'stated')} | "
+             f"{_cell('claude-sonnet-5', 'none', 'implied')} |"),
+    ("docs/findings.md",
+     "| `flattened` | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) | 22/24 (91.67%) |",
+     lambda: f"| `flattened` | {_cell('claude-opus-5', 'flattened', 'stated')} | "
+             f"{_cell('claude-opus-5', 'flattened', 'implied')} | "
+             f"{_cell('claude-sonnet-5', 'flattened', 'stated')} | "
+             f"{_cell('claude-sonnet-5', 'flattened', 'implied')} |"),
 ]
 
 
