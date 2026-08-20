@@ -303,6 +303,103 @@ with headroom, which is real evidence. On the construction axis it is a ceiling
 on both tiers, which is an instrument that has not yet been given a hard enough
 question.
 
+## c007 — an attempt to build headroom, which did not work
+
+Both arms ceilinged, so the axis is blocked on task difficulty rather than on
+model choice. c007 is the first attempt to unblock it, and it is written up
+here because **it failed to do so** and that is the useful part.
+
+### The design, and the reasoning behind it
+
+The diagnosis of why c001-c006 ceiling: every one of their implied checks is a
+**named** best practice — keyset pagination, idempotent replay, HMAC over a
+derived key, the Slavic teen exception. Frontier models recall named practices
+very well. So c007 was built to have no name to recall, only calendar case
+analysis:
+
+> `renewals(start, count, every_months=1)` — the next `count` renewal dates
+> for a subscription that began on `start`.
+
+The invariant is that the anchor is `start.day`, kept forever, clamped per
+month and **never written back**. Two plausible implementations get it wrong in
+opposite directions:
+
+| failure | what it does | what it produces |
+|---|---|---|
+| **drift** | computes each date from the previous one | Jan 31 → Feb 28 → Mar **28** |
+| **sticky** | infers "end of month" from a start on the 30th | Apr 30 → May **31** |
+
+Four implied checks probe it: month-end non-drift, the last-day-is-not-sticky
+case, a leap anchor that must return to Feb 29 in 2028, and a calendar-months
+check that `timedelta(days=30)` fails.
+
+The two-sided calibration holds: the reference passes 8/8, and the naive draft
+clears the stated floor 4/4 while failing 2 of 4 implied checks.
+
+### Eight blind probes, and the ceiling again
+
+Before registering c007 as a real arm, it was probed with **eight blind
+subagents on `none` only** — four `claude-opus-5`, four `claude-sonnet-5` — with
+the suites, references, naive drafts, harness, prior artifacts, results and
+`tasks.jsonl` all moved outside the working tree.
+
+| model | stated | implied | fully correct |
+|---|---:|---:|---:|
+| `claude-opus-5` | 16/16 | **16/16 (100%)** | 4/4 |
+| `claude-sonnet-5` | 16/16 | **16/16 (100%)** | 4/4 |
+
+**Every probe passed every check.** The scoring path was verified in the same
+run — the reference scored 8/8 and the naive draft 6/8 through it, so the
+checks were live and discriminating while the answers were perfect.
+
+The models are not pattern-matching a remembered idiom. One probe's own
+docstring reasons it out unprompted:
+
+> *"A subscription begun on January 31st renews February 28th, then March 31st
+> again, not March 28th. Each renewal is computed from the start date rather
+> than from the previous renewal, so the clamping never accumulates."*
+
+### What this adds
+
+The hypothesis behind c007 — that removing the *name* removes the recall
+advantage — is **wrong**, or at least insufficient. Month-end anchoring is
+unnamed and still known cold by both tiers.
+
+So the count is now **44 blind subagents on construction across two model
+tiers, and `none` has never once dropped below ceiling.** The task set gains a
+seventh task with a measured ceiling rather than measured headroom, which is
+honest but is not the fix the axis needs. What would be needed is a task where
+the correct answer requires knowledge these models demonstrably do not already
+have — and three attempts have now failed to find one in the
+single-module-from-a-brief format. That format may simply be the wrong
+instrument for this question.
+
+### A blindness hole this found, which predates it
+
+Registering c007 required grepping the tree for leaks, and that turned up one
+that had been there since the phase was built: **every task carried a `why`
+field in `tasks.jsonl`, and `why` names the discriminator.**
+
+    c002: "Offset paging satisfies every stated requirement and breaks the
+           moment a row is inserted."
+
+That is the implied check in one sentence, in the question file, in a public
+repository the answering subagents could read. The blindness guard in `tests/`
+inspected the `brief` only, so nothing caught it.
+
+`why` now lives in the suite as `WHY_THIS_TASK`, with the rest of the answer
+key, and a test asserts it never returns to `tasks.jsonl`.
+
+**What this does and does not cast doubt on.** Both committed arms were
+collected while the hole was open, so their blindness cannot be asserted as
+cleanly as it was. It is a genuine weakening of the claim, and it is recorded
+rather than argued away. Two things bound it: nothing in a subagent's task
+pushed it to open `tasks.jsonl` — the prompt gives the brief inline and names
+one output path — and the c007 probe above, run with `tasks.jsonl` withheld,
+ceilinged exactly as the arms did. The ceiling therefore does not depend on the
+hole. It remains the case that a result gathered under a leak is worth less
+than one gathered without it.
+
 ### Suites amended after registration
 
 Four of the six suites were corrected after the artifacts were collected, and

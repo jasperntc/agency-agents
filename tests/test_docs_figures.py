@@ -66,6 +66,20 @@ def _arm(model: str) -> dict:
     return runs[0]
 
 
+def _tasks_answered() -> int:
+    """How many tasks the committed arms actually answered.
+
+    Deliberately NOT `baseline['tasks']['total']`, which counts every task
+    registered in tasks.jsonl. Registering c007 raised that to 7 while both
+    committed arms still answer 6, and binding the sentence to the registry
+    would have silently restated the arms as covering a task they never saw.
+    """
+    counts = {len(c["per_task"])
+              for r in _construction_runs() for c in r["conditions"].values()}
+    assert len(counts) == 1, f"arms answer differing task counts: {counts}"
+    return counts.pop()
+
+
 def _cell(model: str, condition: str, kind: str) -> str:
     """One `passed/total (pct%)` cell of the construction matrix."""
     k = _arm(model)["conditions"][condition]["by_kind"][kind]
@@ -137,9 +151,9 @@ CLAIMS: list[tuple[str, str, callable]] = [
     # only the first two.
     ("docs/findings.md",
      "**36 blind subagents, 6 tasks, two models, 288 executed acceptance checks.**",
-     lambda: f"**{sum(len(r['conditions']) for r in _construction_runs()) * load('metrics/construction-baseline.json')['tasks']['total']}"
+     lambda: f"**{sum(len(c['per_task']) for r in _construction_runs() for c in r['conditions'].values())}"
              f" blind subagents, "
-             f"{load('metrics/construction-baseline.json')['tasks']['total']} tasks, "
+             f"{_tasks_answered()} tasks, "
              f"two models, "
              f"{sum(c['checks_total'] for r in _construction_runs() for c in r['conditions'].values())}"
              f" executed acceptance checks.**"),

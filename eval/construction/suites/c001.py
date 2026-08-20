@@ -8,6 +8,15 @@ the stated rate is not near ceiling in every condition then nothing the
 `implied` checks are the ones a billing engineer meets without being told. That
 is the whole hypothesis of this phase.
 """
+
+# Why this task is in the set. It names the discriminator, so it lives
+# HERE -- with the answer key, which is withheld while answers are being
+# collected -- and never in tasks.jsonl, which any answerer can read.
+WHY_THIS_TASK = (
+    'Money arithmetic has strong unwritten conventions -- symmetry of '
+    'rounding, boundary handling, what to do with a date outside the '
+    'period. None of it is in the brief.'
+)
 from datetime import date
 from fractions import Fraction
 

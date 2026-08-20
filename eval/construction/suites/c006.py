@@ -5,6 +5,14 @@ they require ValueError exactly as specified. The implied checks are about the
 security property -- not accepted -- so any exception counts as a rejection
 there. Refusing sloppily is still refusing.
 """
+
+# Why this task is in the set. It names the discriminator, so it lives
+# HERE -- with the answer key, which is withheld while answers are being
+# collected -- and never in tasks.jsonl, which any answerer can read.
+WHY_THIS_TASK = (
+    'What a signature must COVER is never stated, and a token that '
+    'signs only the subject round-trips perfectly.'
+)
 # Both are 45 characters. The first draft used the bare 28-character
 # passphrase, and one condition refused it for being under a 32-byte minimum --
 # a correct policy the fixture was punishing. OTHER differs from SECRET only in

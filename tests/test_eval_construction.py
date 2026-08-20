@@ -65,6 +65,13 @@ LEAKS = {
     "c005": ("teen", "modulo", "modulus", "exception", "11", "12", "21"),
     "c006": ("hmac", "constant-time", "cover", "splice", "tamper", "forge",
              "prefix", "payload"),
+    # c007's whole discriminator is that the anchor day is preserved and
+    # clamped per month rather than carried forward. Naming any shape that
+    # idea takes -- the anchor itself, the drift it prevents, the short
+    # months that expose it, or the leap year that proves it -- would turn
+    # the implied requirement into a stated one.
+    "c007": ("anchor", "drift", "clamp", "leap", "last day", "end of month",
+             "month-end", "shorter", "28", "29", "30th", "31"),
 }
 
 MIN_PER_KIND = 4
@@ -99,8 +106,30 @@ class Tasks(unittest.TestCase):
             self.assertRegex(t["suite_sha256_at_registration"], r"^[0-9a-f]{64}$")
 
     def test_every_task_says_why_it_is_here(self):
+        """...in its SUITE, which is withheld, not in the question file."""
+        if not suites_present():
+            self.skipTest("suites not in the tree")
         for t in self.tasks:
-            self.assertTrue(t.get("why", "").strip(), t["task"])
+            suite = ec.load_suite(ec.suite_path(t, ec.SUITES))
+            self.assertTrue(getattr(suite, "WHY_THIS_TASK", "").strip(),
+                            f"{t['task']} does not say why it is in the set")
+
+    def test_the_question_file_does_not_explain_the_discriminator(self):
+        """`why` names the answer, so it cannot live in a file answerers read.
+
+        It did, for every task, from the day the phase was built: c002's read
+        "Offset paging ... breaks the moment a row is inserted", which is the
+        implied check in one sentence. The blindness guard only ever inspected
+        `brief`, so nothing caught it, and every construction result collected
+        before this fix was gathered with the discriminators sitting in
+        eval/construction/tasks.jsonl inside the repository the answerers could
+        read.
+        """
+        for t in self.tasks:
+            self.assertNotIn(
+                "why", t,
+                f"{t['task']} carries `why` in tasks.jsonl again -- it names "
+                f"the discriminator and belongs in the withheld suite")
 
 
 class Blindness(unittest.TestCase):
@@ -282,6 +311,39 @@ class Digest(unittest.TestCase):
         finally:
             suite.write_bytes(original)
 
+    def test_registering_a_new_task_does_not_invalidate_old_answers(self):
+        """A run is bound to the questions IT was asked, not to the registry.
+
+        The digest was originally taken over every task in tasks.jsonl and
+        compared the same way, so adding c007 invalidated both committed c6
+        arms and demanded they be re-run to gain one task. That makes the task
+        set unable to grow, which is the opposite of what a benchmark needs --
+        and the pressure it creates is to leave the benchmark too easy, which
+        is exactly the state c007 exists to fix.
+
+        Scoping is not a loosening: editing a brief a run DID answer still
+        invalidates it, which is the next test.
+        """
+        answered = [t["task"] for t in self.tasks][:-1]
+        before = ec.tasks_digest(self.tasks, answered)
+        added = self.tasks + [dict(self.tasks[0], task="zzz_new",
+                                   brief="A brand new question.")]
+        self.assertEqual(
+            before, ec.tasks_digest(added, answered),
+            "registering an extra task changed the digest of a run that "
+            "never saw it -- committed arms would have to be re-run to add "
+            "a task")
+
+    def test_scoping_still_catches_an_edited_brief(self):
+        """The half of the guard that must survive the scoping fix."""
+        answered = [t["task"] for t in self.tasks]
+        before = ec.tasks_digest(self.tasks, answered)
+        edited = [dict(t) for t in self.tasks]
+        edited[0]["brief"] += " Handle invalid input."
+        self.assertNotEqual(
+            before, ec.tasks_digest(edited, answered),
+            "editing an answered brief no longer invalidates the run")
+
     def test_digest_ignores_the_registration_hash(self):
         before = ec.tasks_digest(self.tasks)
         edited = [dict(t) for t in self.tasks]
@@ -332,6 +394,82 @@ class Results(unittest.TestCase):
 
     def test_the_clean_tree_loads(self):
         ec.load_results(self.tasks, ec.SUITES)
+
+    def test_registering_a_task_does_not_invalidate_committed_runs(self):
+        """The call site, not just the digest function.
+
+        tasks_digest() has always taken a task_ids filter; nothing passed one,
+        so verification re-derived every run's digest over the WHOLE registry.
+        Registering c007 therefore invalidated both committed c6 arms, and the
+        only ways out were to re-run 36 subagents or to leave the benchmark at
+        the ceiling that made it useless. This asserts the fix where it
+        actually has to hold.
+        """
+        extra = dict(self.tasks[0], task="zzz_probe",
+                     brief="A question no committed run has ever been asked.",
+                     module="zzz_probe.py")
+        try:
+            ec.load_results(self.tasks + [extra], ec.SUITES)
+        except SystemExit as exc:
+            # Caught rather than propagated: load_results exits the process,
+            # which would abort the whole test run instead of reporting one
+            # failure.
+            self.fail(f"registering an unanswered task invalidated a "
+                      f"committed run: {exc}")
+
+    def test_no_digested_file_carries_crlf(self):
+        """A CRLF write passes locally and fails in CI, which is the worst shape.
+
+        --check compares sha256 over the bytes ON DISK against the bytes a run
+        recorded. .gitattributes stores every text file as LF, so a Windows
+        tool that writes CRLF -- Python's open() in text mode does, by
+        default -- produces a working copy whose digest matches locally and
+        cannot match a fresh Linux checkout. That is exactly how this suite
+        went green on a laptop and red in CI, and the .gitattributes header
+        records the same class of defect happening twice before.
+
+        Cheaper to assert than to rediscover.
+        """
+        roots = [ec.SUITES, ec.CONSTRUCTION / "reference",
+                 ec.CONSTRUCTION / "naive", ec.ARTIFACTS]
+        offenders = [p.relative_to(REPO_ROOT).as_posix()
+                     for root in roots if root.is_dir()
+                     for p in root.rglob("*.py")
+                     if b"\r\n" in p.read_bytes()]
+        self.assertEqual(
+            [], offenders,
+            "these files are digested by --check and contain CRLF, so their "
+            "sha256 differs between this checkout and CI")
+
+    def test_a_run_is_never_scored_on_a_question_it_was_not_asked(self):
+        """Registering c007 must not restate the c6 arms as 24/28.
+
+        --execute iterated every task in tasks.jsonl, so re-scoring a 6-task
+        arm after a 7th was registered recorded the new task as
+        "artifact was never written" and dropped both published arms from
+        100% to 85.71%. The arms did not get worse; they were asked a
+        question that did not exist when they ran.
+        """
+        for run in sorted(ec.RESULTS.glob("*.json")):
+            data = json.loads(run.read_text(encoding="utf-8"))
+            answered = {tid for results in data["conditions"].values()
+                        for tid in results}
+            for condition, results in data["conditions"].items():
+                for tid, result in results.items():
+                    self.assertIn(tid, answered)
+                    self.assertNotEqual(
+                        result.get("import_error"), "artifact was never written",
+                        f"{run.name}: {condition}/{tid} is recorded as an "
+                        f"unwritten artifact -- a task registered after the "
+                        f"run has been scored against it")
+
+    def test_an_edited_brief_still_invalidates_a_run_that_answered_it(self):
+        """The other side of the same fix -- scoping must not be a loosening."""
+        edited = [dict(t) for t in self.tasks]
+        edited[0]["brief"] += " Also handle invalid input."
+        with self.assertRaises(SystemExit) as ctx:
+            ec.load_results(edited, ec.SUITES)
+        self.assertIn("changed after these artifacts", str(ctx.exception))
 
 
 class Report(unittest.TestCase):

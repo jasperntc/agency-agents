@@ -1,4 +1,13 @@
 """c004 -- pseudonymising a user table for a vendor. Acceptance suite."""
+
+# Why this task is in the set. It names the discriminator, so it lives
+# HERE -- with the answer key, which is withheld while answers are being
+# collected -- and never in tasks.jsonl, which any answerer can read.
+WHY_THIS_TASK = (
+    'The brief says what a pseudonym is for and never says what it must '
+    'resist. Reversible encodings and partial masks pass every stated '
+    'requirement.'
+)
 import base64
 import binascii
 

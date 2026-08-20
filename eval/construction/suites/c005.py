@@ -1,5 +1,13 @@
 """c005 -- CLDR plural categories. Acceptance suite."""
 
+# Why this task is in the set. It names the discriminator, so it lives
+# HERE -- with the answer key, which is withheld while answers are being
+# collected -- and never in tasks.jsonl, which any answerer can read.
+WHY_THIS_TASK = (
+    'A named public standard with famous edge cases. If a specialist '
+    'file cannot help here it is hard to say where it would.'
+)
+
 VALID = {"zero", "one", "two", "few", "many", "other"}
 
 CHECKS = [

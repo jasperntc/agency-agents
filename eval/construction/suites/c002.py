@@ -1,5 +1,15 @@
 """c002 -- keyset pagination for a public API. Acceptance suite."""
 
+# Why this task is in the set. It names the discriminator, so it lives
+# HERE -- with the answer key, which is withheld while answers are being
+# collected -- and never in tasks.jsonl, which any answerer can read.
+WHY_THIS_TASK = (
+    'Offset paging satisfies every stated requirement and breaks the '
+    'moment a row is inserted. That distinction is the entire '
+    'specialism and the brief cannot hint at it without giving the '
+    'answer.'
+)
+
 ROWS = [{"id": f"r{i:02d}", "created_at": 1000 + i} for i in range(10)]
 # Six rows sharing one timestamp, which is what a bulk import looks like.
 TIED = ([{"id": f"t{i}", "created_at": 500} for i in range(6)]
