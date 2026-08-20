@@ -310,6 +310,36 @@ The standing defences, all enforced in CI:
 
 ---
 
+## What IS being built, and why it points at descriptions
+
+[proposals.md](proposals.md)
+
+The one improvement loop the evidence supports. Bodies have been measured on two
+model tiers across two axes and have never moved a number upward; descriptions
+sit on the axis that works and still has **~30% of realistic tasks unreachable
+by literal search**. So corrections observed in real work become proposed
+description changes, and each is scored — free, deterministically, no model —
+on whether it reaches a case it could not reach before **without starting to
+compete for cases it is not the answer to**.
+
+The gate's first version accepted both keyword-stuffed calibration proposals,
+because it counted phrase collisions and stuffing single words creates none. The
+corrected measure rejects them — and rejects **two of the three real proposals
+too**:
+
+| proposal | wins | competes for | verdict |
+|---|---:|---:|---|
+| add "pull request review" to the code reviewer | 1 | 1 | **ACCEPT** |
+| add load/concurrent/response-time to the benchmarker | 1 | 2 | REJECT |
+| add weekly-sync/standup to the meeting-notes agent | 1 | 4 | REJECT |
+
+That is the finding, not an inconvenience: **widening a description to reach one
+more task usually costs more than one task in new competition.** Reaching your
+own test case is easy; not trampling 269 neighbours is the work. Nothing in the
+loop edits an agent file — it scores, and a person applies.
+
+---
+
 ## What is not being built, and why
 
 Three planned phases were cancelled on evidence rather than fatigue.

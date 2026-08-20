@@ -1,0 +1,57 @@
+name: Check Proposals
+
+# The description-proposal gate. Three axes have been measured on two model
+# tiers each: selection works and has headroom (70.18% literal reachability),
+# while diagnosis and construction have never once shown the agent BODIES
+# moving a number upward. So the improvement loop this repository keeps is
+# pointed at descriptions, where the instrument demonstrably works, and it is
+# gated rather than trusted.
+#
+# NOTHING HERE CALLS A MODEL AND NOTHING HERE EDITS AN AGENT FILE.
+#
+# Reachability is literal grep over the shipped index, so scoring a proposed
+# description is a pure function of committed data -- index, cases, proposals.
+# That is what lets this run free on every push, the same property that makes
+# check-routing and check-selection free. A proposal that scores ACCEPT is a
+# suggestion a human may apply; applying it is a separate, reviewed commit.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  proposals:
+    name: Check Proposals
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dev dependencies
+        run: python3 -m pip install --quiet -r requirements-dev.txt
+
+      # Hard gate. The committed verdicts must still follow from the committed
+      # index and cases -- a description edited after a proposal was scored
+      # against it exits non-zero rather than leaving a stale ACCEPT standing.
+      - name: Proposal baseline is current
+        run: python3 scripts/propose_descriptions.py --check
+
+      # The anti-vacuity gate, and the reason this workflow is worth running.
+      # eval/proposals/calibration.jsonl holds proposals written to be
+      # unacceptable: they reach their own target case and grab a large slice
+      # of the corpus doing it. Every one must be REJECTED.
+      #
+      # This is not hypothetical. The gate's first version counted adjacent
+      # phrase collisions only and accepted both of them, because stuffing
+      # single topic words into a description creates no adjacent-phrase
+      # collisions. A gate that accepts keyword stuffing has stopped measuring,
+      # and every ACCEPT it has ever issued would be worthless.
+      - name: The gate can say no
+        run: python3 scripts/propose_descriptions.py --calibrate
+
+      - name: Regression tests
+        run: python3 -m unittest tests.test_proposals -v
