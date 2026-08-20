@@ -318,7 +318,75 @@ Recall is reported **per tier**, never blended. An easy tier at ceiling would
 otherwise hide whatever the hard tier is doing — the same rule that governs
 every other metric in this repository.
 
-### The leak this could not have caught
+### The Sonnet arm — the first non-zero lift, and it is negative
+
+`2026-08-20-sonnet-all12`. All twelve tasks, three conditions, **36 blind
+subagents on `claude-sonnet-5`**. The first behaviour run collected after the
+key.jsonl split, so the first whose blindness is structural rather than
+observed. Output contract held 36/36.
+
+This axis was chosen over construction for one reason: it has **headroom**.
+Construction ceilinged on both model tiers and can no longer separate anything;
+diagnosis leaves three defects unfound by every Opus condition, so a better
+answer had somewhere to go.
+
+| condition | recall | lines cited | density | vs `none` |
+|---|---:|---:|---:|---:|
+| `none` | **37/40 (92.5%)** | 43 | 0.86 | — |
+| `current` | 35/40 (87.5%) | 48 | 0.729 | **-5.0** |
+| `flattened` | 35/40 (87.5%) | 40 | 0.875 | **-5.0** |
+
+Two things are worth more than the headline.
+
+**Sonnet's no-agent control equals Opus's.** 37/40 against 37/40, on the same
+twelve tasks. The standing hypothesis — that a weaker model is where the corpus
+should finally show value — fails here as it failed on construction. It is not
+that the agent file helps less than hoped; it is that the control keeps
+arriving at the same answer without one.
+
+**The agent file did not recover a single unfound defect.** The three that
+`none` missed are exactly the three `current` and `flattened` also missed. The
+headroom this axis has is not headroom the corpus reaches into.
+
+### Auditing the negative lift, which is smaller than -5.0 makes it look
+
+Four extra misses produce the gap. They are not four independent signals:
+
+| defect | who missed it | reading |
+|---|---|---|
+| `pool_sized_per_process` (b006) | **both** `current` and `flattened` | the only signal that looks like anything |
+| `timing_unsafe_compare` (b008) | `current` | **all three Opus conditions missed it too** — `none` finding it is the outlier, not `current` losing it |
+| `double_evaluation` (b001) | `flattened` | `flattened` declared 41 findings against `none`'s 43; it simply said less |
+| — | | |
+
+So the gap rests on **one defect that both agent conditions missed and the
+control caught**, plus noise. And the mechanism that would explain it is not
+"the specialist file misdirected the reviewer" — `flattened` is a *generic*
+file with the body stripped, and it missed the same defect. If anything moved
+here, it tracks **having a file to read at all**, not the file's content. That
+is precisely the distinction the `flattened` control exists to expose, and it
+points away from skill quality rather than toward it.
+
+**One sample per cell, two defects out of forty.** This is not evidence that
+agent files make diagnosis worse. It is the first time the number has moved off
+zero in either direction, it moved the wrong way, and it is well inside what one
+sample can produce by chance. Reported because a result that moves gets reported
+whichever way it points.
+
+### A stable blind spot across both model tiers
+
+Two defects were missed by **all six condition-arms across both models**:
+
+- `bool_passes_int_guard` (b004) — `isinstance(True, int)` is `True` in Python,
+  so `quantity: true` passes an integer guard.
+- `wall_clock_for_elapsed` (b006) — `time.time()` for an elapsed-time budget,
+  where `time.monotonic()` is the correct source.
+
+Neither model finds these, with or without a specialist file. If the corpus is
+ever to demonstrate value on this axis, these are the shape of thing it would
+have to unlock.
+
+## The leak this could not have caught
 
 Every run above was collected while `eval/behaviour/tasks.jsonl` carried the
 **complete answer key in the same record as the prompt** — all 40 planted

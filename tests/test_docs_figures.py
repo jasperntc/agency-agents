@@ -80,6 +80,20 @@ def _tasks_answered() -> int:
     return counts.pop()
 
 
+def _diag(condition: str) -> dict:
+    """The Sonnet diagnosis arm's numbers for one condition."""
+    runs = [r for r in load("metrics/behaviour-baseline.json")["runs"]
+            if r["model"] == "claude-sonnet-5"]
+    assert len(runs) == 1, f"expected one Sonnet diagnosis arm, got {len(runs)}"
+    return runs[0]["conditions"][condition]
+
+
+def _diag_lift(condition: str) -> float:
+    runs = [r for r in load("metrics/behaviour-baseline.json")["runs"]
+            if r["model"] == "claude-sonnet-5"]
+    return runs[0]["lift_over_no_skill"][condition]
+
+
 def _cell(model: str, condition: str, kind: str) -> str:
     """One `passed/total (pct%)` cell of the construction matrix."""
     k = _arm(model)["conditions"][condition]["by_kind"][kind]
@@ -168,6 +182,18 @@ CLAIMS: list[tuple[str, str, callable]] = [
              f"{_cell('claude-opus-5', 'none', 'implied')} | "
              f"{_cell('claude-sonnet-5', 'none', 'stated')} | "
              f"{_cell('claude-sonnet-5', 'none', 'implied')} |"),
+    # --- docs/findings.md, from metrics/behaviour-baseline.json ---
+    # The Sonnet diagnosis arm is the first number in the project to move off
+    # zero, so it is the one most likely to be quoted onward and the one that
+    # most needs binding to its artifact.
+    ("docs/findings.md", "| `none` | **37/40 (92.5%)** | — |",
+     lambda: f"| `none` | **{_diag('none')['found']}/{_diag('none')['planted_total']} "
+             f"({_diag('none')['recall_pct']:g}%)** | — |"),
+    ("docs/findings.md", "| `current` | 35/40 (87.5%) | **-5.0** |",
+     lambda: f"| `current` | {_diag('current')['found']}/{_diag('current')['planted_total']} "
+             f"({_diag('current')['recall_pct']:g}%) | "
+             f"**{_diag_lift('current'):.1f}** |"),
+
     ("docs/findings.md",
      "| `flattened` | 24/24 (100%) | 24/24 (100%) | 24/24 (100%) | 22/24 (91.67%) |",
      lambda: f"| `flattened` | {_cell('claude-opus-5', 'flattened', 'stated')} | "
