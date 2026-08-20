@@ -158,9 +158,11 @@ assumes a complete defect inventory inherits that.
 
 Nothing about agent quality yet. Two things about the method:
 
-- **Blindness held.** No subagent read the answer key, every answer was
-  attributable, and the output contract was followed in 12 of 12 — better than
-  the selection pilot managed.
+- **Blindness held**, on the evidence of the transcripts: no subagent read the
+  answer key, every answer was attributable, and the output contract was
+  followed in 12 of 12 — better than the selection pilot managed. Read that as
+  an observation, not a guarantee: until 2026-08-20 the key was *reachable*.
+  See [The leak this could not have caught](#the-leak-this-could-not-have-caught).
 - **A depth gradient exists**, visible by eye rather than by score: on `b004`,
   `current` produced 11 findings, `flattened` 7, `none` 3, and the extra ones are
   real (idempotency, missing auth, connection exhaustion on the sold-out path).
@@ -316,7 +318,63 @@ Recall is reported **per tier**, never blended. An easy tier at ceiling would
 otherwise hide whatever the hard tier is doing — the same rule that governs
 every other metric in this repository.
 
-### Anchors, and why a defect may declare several
+### The leak this could not have caught
+
+Every run above was collected while `eval/behaviour/tasks.jsonl` carried the
+**complete answer key in the same record as the prompt** — all 40 planted
+defects with their ids, their exact line ranges, and a description of each:
+
+    {"task": "b009", "prompt": "These catchment queries return the wrong
+     stops...", "planted": [{"id": "distance_in_degrees", "lines": [[11, 14]],
+     "what": "ST_Distance on 4326 geometry returns degrees..."}]}
+
+Scoring here is *cite the line number*. That file was therefore not a hint at
+the answer key, it **was** the answer key, sitting in a public repository the
+answering subagents could read.
+
+The guard that existed, `test_prompt_never_carries_the_answer_key`, checks the
+**rendered prompt**. It passed the whole time and was never wrong — it was
+answering a narrower question than the one that mattered. The thing to check is
+what an answerer can *reach*, not what it was *handed*.
+
+### What it does and does not cast doubt on
+
+It weakens the blindness claim on all three recorded runs, and that is stated
+rather than argued away. Two things bound it:
+
+- **The scores are inconsistent with exploitation.** A subagent reading
+  `tasks.jsonl` scores 40/40 trivially, because the file lists the lines it
+  would need to cite. The run scored **37/40**, and three defects went unfound
+  by *every* condition. A leak that was actually used does not leave misses
+  behind, and certainly not the same misses in all three arms.
+- **Nothing in the task pushed a subagent toward the file.** The prompt carries
+  the numbered fixture inline and asks a question about it; there is no reason
+  to open `eval/behaviour/` at all.
+
+So the likeliest reading is that the door was unlocked and nobody walked
+through it. That is still worth less than a door that was locked.
+
+### The fix
+
+The question and the key are now separate files:
+
+| file | holds | during a run |
+|---|---|---|
+| `eval/behaviour/tasks.jsonl` | id, agent, fixture, tier, prompt | stays |
+| `eval/behaviour/key.jsonl` | `planted`, `why` | **moved out of the tree** |
+
+`--prompt` renders from the questions alone and works with the key absent, so
+the blind procedure is now possible rather than merely intended: render every
+prompt, move `key.jsonl` out, collect, move it back, score. Scoring without the
+key fails loudly instead of silently scoring nothing.
+
+Three tests enforce it — the question file may not carry `planted`, `why` or
+`clean`; the key must cover every question; and a prompt must render without
+the key. The digest is unaffected: it was always taken over the question and
+the fixture bytes, never over the expected answers, so this split re-scores
+every committed run unchanged.
+
+## Anchors, and why a defect may declare several
 
 `lines` is a list of `[lo, hi]` ranges. Some defects have more than one
 defensible home: a wall-clock timeout lives both where the timestamp is taken

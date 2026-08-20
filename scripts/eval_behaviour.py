@@ -99,6 +99,7 @@ for _s in (sys.stdout, sys.stderr):
 
 BEHAVIOUR = REPO_ROOT / "eval" / "behaviour"
 TASKS = BEHAVIOUR / "tasks.jsonl"
+KEY = BEHAVIOUR / "key.jsonl"
 FIXTURES = BEHAVIOUR / "fixtures"
 RESPONSES = BEHAVIOUR / "responses"
 BASELINE = REPO_ROOT / "metrics" / "behaviour-baseline.json"
@@ -195,10 +196,47 @@ def flattened_text(agent_id: str) -> str:
     return f"---{frontmatter}---\n\n{FLATTENED_BODY}"
 
 
-def load_tasks() -> list[dict]:
+def load_questions() -> list[dict]:
+    """The QUESTION only: id, agent, fixture, tier, prompt.
+
+    This is the file an answering subagent may read without the run being
+    compromised, which is the whole reason it is separate from key.jsonl.
+    """
     return [json.loads(line)
             for line in TASKS.read_text(encoding="utf-8").splitlines()
             if line.strip()]
+
+
+def load_key() -> dict[str, dict]:
+    """The ANSWER: every planted defect, its line ranges, and why it is here.
+
+    Withheld while answers are collected. Rendering a prompt never touches it,
+    so the blind procedure is: render every prompt, move key.jsonl out of the
+    tree, collect, move it back, score.
+    """
+    if not KEY.exists():
+        raise SystemExit(
+            f"{KEY.relative_to(REPO_ROOT).as_posix()} is missing. It is moved "
+            f"out of the tree while answers are collected; restore it before "
+            f"scoring.")
+    return {e["task"]: e for e in (
+        json.loads(line) for line in KEY.read_text(encoding="utf-8").splitlines()
+        if line.strip())}
+
+
+def load_tasks() -> list[dict]:
+    """Questions merged with the key. For SCORING; never for rendering.
+
+    The two were one file until 2026-08-20, which meant the exact line number
+    of all 40 planted defects sat in the same record as the prompt, in a public
+    repository the answering subagents could read. The blindness guard only
+    ever inspected the rendered prompt, so nothing caught it.
+    """
+    key = load_key()
+    missing = [q["task"] for q in load_questions() if q["task"] not in key]
+    if missing:
+        raise SystemExit(f"no key entry for: {', '.join(missing)}")
+    return [{**q, **key[q["task"]]} for q in load_questions()]
 
 
 def tasks_digest(tasks: list[dict], task_ids: list[str] | None = None) -> str:
@@ -487,7 +525,7 @@ def main() -> int:
 
     if args.emit_controls:
         flattened_dir().mkdir(parents=True, exist_ok=True)
-        for agent in sorted({t["agent"] for t in load_tasks()}):
+        for agent in sorted({t["agent"] for t in load_questions()}):
             out = flattened_dir() / f"{agent}.md"
             out.write_text(flattened_text(agent), encoding="utf-8", newline="\n")
             print(f"wrote {out.relative_to(REPO_ROOT).as_posix()}")
@@ -503,7 +541,9 @@ def main() -> int:
         return 0
 
     if args.prompt:
-        task = next((t for t in load_tasks() if t["task"] == args.prompt), None)
+        # load_questions, not load_tasks: rendering a prompt must work with the
+        # key moved out of the tree, or the blind procedure is impossible.
+        task = next((t for t in load_questions() if t["task"] == args.prompt), None)
         if task is None:
             print(f"No such task: {args.prompt}", file=sys.stderr)
             return 1

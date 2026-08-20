@@ -119,6 +119,49 @@ class Blindness(unittest.TestCase):
                                      f"{t['task']}: prompt describes {d['id']}")
                     self.assertNotIn(d["id"], prompt, t["task"])
 
+    def test_the_question_file_does_not_carry_the_answer_key(self):
+        """The guard that was missing, and the one that actually matters.
+
+        test_prompt_never_carries_the_answer_key checks the RENDERED PROMPT.
+        It passed throughout while eval/behaviour/tasks.jsonl held every
+        planted defect -- id, exact line ranges, description -- in the same
+        record as the prompt, in a public repository the answering subagents
+        could read. Scoring here is "cite the line number", so that file WAS
+        the scoring key sitting next to the question.
+
+        Checking the prompt is necessary and was never sufficient: the thing
+        to check is what an answerer can reach, not what it was handed.
+        """
+        import json as _json
+        raw = eb.TASKS.read_text(encoding="utf-8")
+        for line in raw.splitlines():
+            if not line.strip():
+                continue
+            record = _json.loads(line)
+            for field in ("planted", "why", "clean"):
+                self.assertNotIn(
+                    field, record,
+                    f"{record['task']}: tasks.jsonl carries {field!r} again. "
+                    f"It names the answer and belongs in key.jsonl, which is "
+                    f"withheld while answers are collected.")
+
+    def test_the_key_covers_every_question(self):
+        keyed = set(eb.load_key())
+        asked = {q["task"] for q in eb.load_questions()}
+        self.assertEqual(asked, keyed, "questions and key have drifted apart")
+
+    def test_a_prompt_renders_without_the_key(self):
+        """If rendering needs the key, the run can never be blind at all."""
+        import json as _json
+        questions = eb.load_questions()
+        for field in ("planted", "why"):
+            self.assertFalse(
+                any(field in q for q in questions),
+                f"prompt rendering would see {field!r}")
+        for q in questions[:2]:
+            for cond in sorted(eb.CONDITIONS):
+                self.assertIn("TASK", eb.prompt_for(q, cond))
+
     def test_line_numbering_is_uniform(self):
         """Every line is numbered, so the numbering marks nothing."""
         for t in self.tasks:

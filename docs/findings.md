@@ -249,6 +249,15 @@ flattering or catastrophic before being corrected.
   every one of them 0/8.
 - **Five separate CI checks** have been green in this repository while measuring
   nothing at all.
+- **The diagnosis question file *was* its own answer key.** All 40 planted
+  defects — ids, exact line ranges, descriptions — sat in the same record as
+  the prompt in `eval/behaviour/tasks.jsonl`, while scoring is *cite the line
+  number*. The guard checked the rendered prompt, which is a narrower question
+  than the one that mattered: what an answerer can reach, not what it was
+  handed. Question and key are now separate files, the key is withheld during a
+  run, and three tests enforce it. The recorded runs scored 37/40 with three
+  defects missed by every condition, which is not what exploitation looks like
+  — but the door was unlocked.
 - **The construction question file leaked its own answer key.** Every task
   carried a `why` field in `tasks.jsonl` naming the discriminator — c002's said
   offset paging *"breaks the moment a row is inserted"* — while the blindness
